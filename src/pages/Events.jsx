@@ -1707,26 +1707,47 @@ export default function Events({ events, setEvents }) {
     setIsModalOpen(true);
   };
 
-  const handleSave = () => {
-    if (!form.name || !form.location || !form.date || form.persons <= 0) {
-      toast("All fields are required.", { variant: "destructive" });
-      return;
-    }
+  // const handleSave = () => {
+  //   if (!form.name || !form.location || !form.date || form.persons <= 0) {
+  //     toast("All fields are required.", { variant: "destructive" });
+  //     return;
+  //   }
 
-    if (editingEvent) {
-      setEvents(
-        events.map((e) => (e.id === editingEvent.id ? { ...e, ...form } : e))
-      );
-      toast("Event updated successfully!");
-    } else {
-      setEvents([...events, { id: Date.now(), ...form }]);
-      toast("Event added successfully!");
-    }
+  //   if (editingEvent) {
+  //     setEvents(
+  //       events.map((e) => (e.id === editingEvent.id ? { ...e, ...form } : e))
+  //     );
+  //     toast("Event updated successfully!");
+  //   } else {
+  //     setEvents([...events, { id: Date.now(), ...form }]);
+  //     toast("Event added successfully!");
+  //   }
 
-    setIsModalOpen(false);
-    setEditingEvent(null);
-    setForm({ name: "", location: "", date: "", persons: 0, status: "Upcoming" });
-  };
+  //   setIsModalOpen(false);
+  //   setEditingEvent(null);
+  //   setForm({ name: "", location: "", date: "", persons: 0, status: "Upcoming" });
+  // };
+const handleSave = () => {
+  if (!form.name || !form.location || !form.date || form.persons <= 0) {
+    toast("All fields are required.", { variant: "destructive" });
+    return;
+  }
+
+  if (editingEvent) {
+    setEvents(
+      events.map((e) => (e.id === editingEvent.id ? { ...e, ...form } : e))
+    );
+    toast("Event updated successfully!");
+  } else {
+    // ⭐ Unique ID instead of Date.now()
+    setEvents([...events, { id: crypto.randomUUID(), ...form }]);
+    toast("Event added successfully!");
+  }
+
+  setIsModalOpen(false);
+  setEditingEvent(null);
+  setForm({ name: "", location: "", date: "", persons: 0, status: "Upcoming" });
+};
 
   const handleDelete = (id) => {
     setEvents(events.filter((e) => e.id !== id));
