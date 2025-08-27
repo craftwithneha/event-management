@@ -467,7 +467,7 @@ export default function Locations({ locations, setLocations }) {
 
       {/* MODAL */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="sm:max-w-lg bg-white w-[95%] sm:w-auto">
+        <DialogContent className="sm:max-w-lg w-[95%] rounded-xl">
           <DialogHeader>
             <DialogTitle className="font-bold text-purple-600">
               {editingLocation ? "Edit Location" : "Add Location"}
