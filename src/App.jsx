@@ -107,13 +107,14 @@ export default function App() {
   ]);
 
   const [events, setEvents] = useState([
-    { id: 1, name: "Annual Meetup", location: "Royal Hall", date: "2025-09-10", persons: 180 },
-    { id: 2, name: "Sales Summit", location: "City Garden", date: "2025-10-02", persons: 120 },
+    { id: 1, name: "Annual Meetup", location: "Royal Hall", date: "2025-09-10", persons: 180 , status: "Upcoming"},
+    { id: 2, name: "Sales Summit", location: "City Garden", date: "2025-10-02", persons: 120 , status: "Live"},
+    { id: 2, name: "John", location: "Housing Colony ", date: "2025-8-02", persons: 120 , status: "Canceled"},
   ]);
 
   const [locations, setLocations] = useState([
-    { id: 1, name: "Royal Hall", capacity: 300, owner: "Mr. Ahmed", status: "active" },
-    { id: 2, name: "City Garden", capacity: 150, owner: "Ms. Fatima", status: "maintenance" },
+    { id: 1, name: "Royal Hall", capacity: 300, owner: "Mr. Ahmed", status: "active", location:"Faisalabad" },
+    { id: 2, name: "City Garden", capacity: 150, owner: "Ms. Fatima", status: "maintenance", location:"Karachi" },
   ]);
 
   return (
