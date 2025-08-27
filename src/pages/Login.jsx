@@ -1,3 +1,64 @@
+// import { useState } from "react";
+// import { account } from "../services/appwrite";
+// import { useNavigate, Link } from "react-router-dom";
+// import { Button } from "@/components/ui/button";
+// import { Input } from "@/components/ui/input";
+// import { Label } from "@/components/ui/label";
+// import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
+// export default function Login() {
+//   const [email, setEmail] = useState("");
+//   const [password, setPassword] = useState("");
+//   const [error, setError] = useState("");
+//   const navigate = useNavigate();
+
+ 
+// const handleLogin = async () => {
+//   try {
+//     setError("");
+//     await account.createEmailPasswordSession({
+//       email: email,
+//       password: password,
+//     });
+//     navigate("/"); // redirect to admin panel
+//   } catch (err) {
+//     console.error(err);
+//     setError(err.message || "Login failed");
+//   }
+// };
+
+
+//   return (
+//     <div className="flex justify-center items-center h-screen bg-gray-50">
+//       <Card className="w-96">
+//         <CardHeader>
+//           <CardTitle>Login</CardTitle>
+//         </CardHeader>
+//         <CardContent className="space-y-4">
+//           {error && <p className="text-red-600">{error}</p>}
+//           <div>
+//             <Label>Email</Label>
+//             <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+//           </div>
+//           <div>
+//             <Label>Password</Label>
+//             <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+//           </div>
+//           <Button onClick={handleLogin} className="w-full">Login</Button>
+//           <p className="text-sm text-center">
+//             Don’t have an account?{" "}
+//             <Link to="/signup" className="text-blue-600 hover:underline">
+//               Signup
+//             </Link>
+//           </p>
+//         </CardContent>
+//       </Card>
+//     </div>
+//   );
+// }
+
+
+
 import { useState } from "react";
 import { account } from "../services/appwrite";
 import { useNavigate, Link } from "react-router-dom";
@@ -12,43 +73,72 @@ export default function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
- 
-const handleLogin = async () => {
-  try {
-    setError("");
-    await account.createEmailPasswordSession({
-      email: email,
-      password: password,
-    });
-    navigate("/"); // redirect to admin panel
-  } catch (err) {
-    console.error(err);
-    setError(err.message || "Login failed");
-  }
-};
-
+  const handleLogin = async () => {
+    try {
+      setError("");
+      await account.createEmailPasswordSession({
+        email: email,
+        password: password,
+      });
+      navigate("/"); // redirect to admin panel
+    } catch (err) {
+      console.error(err);
+      setError(err.message || "Login failed");
+    }
+  };
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-50">
-      <Card className="w-96">
-        <CardHeader>
-          <CardTitle>Login</CardTitle>
+    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-purple-600 via-purple-500 to-purple-400 p-4">
+      <Card className="w-full max-w-md shadow-xl rounded-2xl bg-white">
+        <CardHeader className="text-center">
+          <CardTitle className="text-2xl font-bold text-purple-700">
+            Welcome Back 👋
+          </CardTitle>
+          <p className="text-gray-500 text-sm">Login to continue</p>
         </CardHeader>
-        <CardContent className="space-y-4">
-          {error && <p className="text-red-600">{error}</p>}
+        <CardContent className="space-y-5">
+          {error && <p className="text-red-600 text-center">{error}</p>}
+
+          {/* Email */}
           <div>
-            <Label>Email</Label>
-            <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+            <Label className="text-gray-700">Email</Label>
+            <Input
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="mt-1 border-gray-300 focus:border-purple-500 focus:ring-purple-500"
+            />
           </div>
+
+          {/* Password */}
           <div>
-            <Label>Password</Label>
-            <Input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+            <Label className="text-gray-700">Password</Label>
+            <Input
+              type="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="mt-1 border-gray-300 focus:border-purple-500 focus:ring-purple-500"
+            />
           </div>
-          <Button onClick={handleLogin} className="w-full">Login</Button>
-          <p className="text-sm text-center">
+
+          {/* Login Button */}
+          <Button
+            onClick={handleLogin}
+            className="w-full bg-purple-600 hover:bg-purple-700 text-white py-2 rounded-lg transition-all duration-300"
+          >
+            Login
+          </Button>
+
+          {/* Signup Redirect */}
+          <p className="text-sm text-center text-gray-600">
             Don’t have an account?{" "}
-            <Link to="/signup" className="text-blue-600 hover:underline">
-              Signup
+            <Link
+              to="/signup"
+              className="text-purple-600 font-medium hover:underline"
+            >
+              Sign up
             </Link>
           </p>
         </CardContent>
