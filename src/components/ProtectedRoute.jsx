@@ -1,11 +1,24 @@
-import { Navigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { useEffect, useState } from "react";
+import { account } from "../services/appwrite";
+import { useNavigate } from "react-router-dom";
 
 export default function ProtectedRoute({ children }) {
-  const { user, loading } = useAuth();
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
-  if (loading) return <p>Loading...</p>;
-  if (!user) return <Navigate to="/login" />;
+  useEffect(() => {
+    const checkUser = async () => {
+      try {
+        await account.get(); // check current session
+        setLoading(false);
+      } catch {
+        navigate("/login"); // redirect if not logged in
+      }
+    };
+    checkUser();
+  }, [navigate]);
+
+  if (loading) return <div className="flex justify-center items-center h-screen">Loading...</div>;
 
   return children;
 }
