@@ -2051,10 +2051,21 @@ export default function Events({ events, setEvents }) {
     setForm({ name: "", location: "", date: "", persons: 0, status: "Upcoming" });
   };
 
-  const handleDelete = (id) => {
-    setEvents(events.filter((e) => e.id !== id));
-    toast("Event deleted successfully.", { variant: "destructive" });
-  };
+  // const handleDelete = (id) => {
+  //   setEvents(events.filter((e) => e.id !== id));
+  //   toast("Event deleted successfully.", { variant: "destructive" });
+  // };
+const handleDelete = (id) => {
+  console.log("Deleting ID:", id);
+  console.log("Before:", events.map(e => e.id));
+  
+  const updated = events.filter((e) => e.id !== id);
+  
+  console.log("After:", updated.map(e => e.id));
+  setEvents(updated);
+  
+  toast("Event deleted successfully.", { variant: "destructive" });
+};
 
   const getStatusBadge = (status) => {
     let color = "bg-gray-200 text-gray-800";
