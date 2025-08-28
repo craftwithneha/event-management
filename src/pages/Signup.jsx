@@ -31,71 +31,139 @@ export default function Signup() {
     }
   };
 
-  return (
-    <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-purple-600 via-purple-700 to-purple-900 px-4">
-      <Card className="w-full max-w-md shadow-2xl rounded-2xl border-none bg-white/95 backdrop-blur-lg">
-        <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold text-purple-700">
-            Create Account
-          </CardTitle>
-          <p className="text-gray-500 text-sm mt-1">
-            Join us and get started today
+  // return (
+  //   <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-purple-600 via-purple-700 to-purple-900 px-4">
+  //     <Card className="w-full max-w-md shadow-2xl rounded-2xl border-none bg-white/95 backdrop-blur-lg">
+  //       <CardHeader className="text-center">
+  //         <CardTitle className="text-2xl font-bold text-purple-700">
+  //           Create Account
+  //         </CardTitle>
+  //         <p className="text-gray-500 text-sm mt-1">
+  //           Join us and get started today
+  //         </p>
+  //       </CardHeader>
+  //       <CardContent className="space-y-5">
+  //         {error && (
+  //           <p className="text-red-600 text-sm text-center font-medium">
+  //             {error}
+  //           </p>
+  //         )}
+
+  //         <div>
+  //           <Label className="text-gray-700">Name</Label>
+  //           <Input
+  //             className="mt-1 border-gray-300 focus:border-purple-500 focus:ring-purple-500"
+  //             value={name}
+  //             onChange={(e) => setName(e.target.value)}
+  //           />
+  //         </div>
+
+  //         <div>
+  //           <Label className="text-gray-700">Email</Label>
+  //           <Input
+  //             type="email"
+  //             className="mt-1 border-gray-300 focus:border-purple-500 focus:ring-purple-500"
+  //             value={email}
+  //             onChange={(e) => setEmail(e.target.value)}
+  //           />
+  //         </div>
+
+  //         <div>
+  //           <Label className="text-gray-700">Password</Label>
+  //           <Input
+  //             type="password"
+  //             className="mt-1 border-gray-300 focus:border-purple-500 focus:ring-purple-500"
+  //             value={password}
+  //             onChange={(e) => setPassword(e.target.value)}
+  //           />
+  //         </div>
+
+  //         <Button
+  //           onClick={handleSignup}
+  //           className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 rounded-lg shadow-lg transition-all"
+  //         >
+  //           Sign Up
+  //         </Button>
+
+  //         <p className="text-sm text-center text-gray-600">
+  //           Already have an account?{" "}
+  //           <Link
+  //             to="/login"
+  //             className="text-purple-600 font-semibold hover:underline"
+  //           >
+  //             Login
+  //           </Link>
+  //         </p>
+  //       </CardContent>
+  //     </Card>
+  //   </div>
+  // );
+
+return (
+  <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-[#E5E5E5] via-[#E5E5E5] to-[#14213D] px-4">
+    <Card className="w-full max-w-md shadow-2xl rounded-2xl border-none bg-white/95 backdrop-blur-lg">
+      <CardHeader className="text-center">
+        <CardTitle className="text-2xl font-bold text-[#14213D]">
+          Create Account
+        </CardTitle>
+        <p className="text-gray-500 text-sm mt-1">
+          Join us and get started today
+        </p>
+      </CardHeader>
+      <CardContent className="space-y-5">
+        {error && (
+          <p className="text-red-600 text-sm text-center font-medium">
+            {error}
           </p>
-        </CardHeader>
-        <CardContent className="space-y-5">
-          {error && (
-            <p className="text-red-600 text-sm text-center font-medium">
-              {error}
-            </p>
-          )}
+        )}
 
-          <div>
-            <Label className="text-gray-700">Name</Label>
-            <Input
-              className="mt-1 border-gray-300 focus:border-purple-500 focus:ring-purple-500"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-            />
-          </div>
+        <div>
+          <Label className="text-[#14213D]">Name</Label>
+          <Input
+            className="mt-1 border-gray-300 focus:border-[#14213D] focus:ring-[#14213D]"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+        </div>
 
-          <div>
-            <Label className="text-gray-700">Email</Label>
-            <Input
-              type="email"
-              className="mt-1 border-gray-300 focus:border-purple-500 focus:ring-purple-500"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
-          </div>
+        <div>
+          <Label className="text-[#14213D]">Email</Label>
+          <Input
+            type="email"
+            className="mt-1 border-gray-300 focus:border-[#14213D] focus:ring-[#14213D]"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+        </div>
 
-          <div>
-            <Label className="text-gray-700">Password</Label>
-            <Input
-              type="password"
-              className="mt-1 border-gray-300 focus:border-purple-500 focus:ring-purple-500"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-          </div>
+        <div>
+          <Label className="text-[#14213D]">Password</Label>
+          <Input
+            type="password"
+            className="mt-1 border-gray-300 focus:border-[#14213D] focus:ring-[#14213D]"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+        </div>
 
-          <Button
-            onClick={handleSignup}
-            className="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 rounded-lg shadow-lg transition-all"
+        <Button
+          onClick={handleSignup}
+          className="w-full bg-[#14213D] hover:bg-[#0f192f] text-white font-semibold py-2 rounded-lg shadow-lg transition-all"
+        >
+          Sign Up
+        </Button>
+
+        <p className="text-sm text-center text-gray-600">
+          Already have an account?{" "}
+          <Link
+            to="/login"
+            className="text-[#14213D] font-semibold hover:underline"
           >
-            Sign Up
-          </Button>
-
-          <p className="text-sm text-center text-gray-600">
-            Already have an account?{" "}
-            <Link
-              to="/login"
-              className="text-purple-600 font-semibold hover:underline"
-            >
-              Login
-            </Link>
-          </p>
-        </CardContent>
-      </Card>
-    </div>
-  );
+            Login
+          </Link>
+        </p>
+      </CardContent>
+    </Card>
+  </div>
+);
 }
