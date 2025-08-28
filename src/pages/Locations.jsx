@@ -1,5 +1,583 @@
+// import React, { useState } from "react";
+// import { Card, CardContent } from "@/components/ui/card";
+// import {
+//   Table,
+//   TableHeader,
+//   TableRow,
+//   TableHead,
+//   TableBody,
+//   TableCell,
+// } from "@/components/ui/table";
+// import { Input } from "@/components/ui/input";
+// import { Button } from "@/components/ui/button";
+// import { toast } from "sonner";
+// import {
+//   DropdownMenu,
+//   DropdownMenuTrigger,
+//   DropdownMenuContent,
+//   DropdownMenuItem,
+// } from "@/components/ui/dropdown-menu";
+// import { MoreHorizontal } from "lucide-react";
+// import {
+//   Dialog,
+//   DialogContent,
+//   DialogHeader,
+//   DialogTitle,
+//   DialogFooter,
+// } from "@/components/ui/dialog";
+
+// export default function Locations({ locations, setLocations }) {
+//   const [search, setSearch] = useState("");
+//   const [isModalOpen, setIsModalOpen] = useState(false);
+//   const [form, setForm] = useState({
+//     name: "",
+//     capacity: 0,
+//     owner: "",
+//     location: "",
+//     status: "active",
+//   });
+//   const [editingLocation, setEditingLocation] = useState(null);
+
+//   const filtered = locations.filter((l) =>
+//     l.name.toLowerCase().includes(search.toLowerCase())
+//   );
+
+//   const openModal = (location = null) => {
+//     if (location) {
+//       setEditingLocation(location);
+//       setForm({
+//         name: location.name,
+//         capacity: location.capacity,
+//         owner: location.owner,
+//         location: location.location,
+//         status: location.status,
+//       });
+//     } else {
+//       setEditingLocation(null);
+//       setForm({ name: "", capacity: 0, owner: "", location: "", status: "active" });
+//     }
+//     setIsModalOpen(true);
+//   };
+
+//   const handleSave = () => {
+//     if (!form.name || !form.capacity || !form.owner || !form.location || !form.status) {
+//       toast("All fields are required.", { variant: "destructive" });
+//       return;
+//     }
+
+//     if (editingLocation) {
+//       setLocations(
+//         locations.map((l) =>
+//           l.id === editingLocation.id ? { ...l, ...form } : l
+//         )
+//       );
+//       toast("Location updated successfully!");
+//     } else {
+//       setLocations([...locations, { id: Date.now(), ...form }]);
+//       toast("Location added successfully!");
+//     }
+
+//     setIsModalOpen(false);
+//     setEditingLocation(null);
+//     setForm({ name: "", capacity: 0, owner: "", location: "", status: "active" });
+//   };
+
+//   const handleDelete = (id) => {
+//     setLocations(locations.filter((l) => l.id !== id));
+//     toast("Location deleted successfully.", { variant: "destructive" });
+//   };
+
+//   return (
+//     <div className="space-y-6">
+//       {/* Heading */}
+//       <h2 className="text-3xl font-bold text-center">Event Locations</h2>
+
+//       {/* Search + Button */}
+//       <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+//         <Input
+//           placeholder="Search locations..."
+//           value={search}
+//           onChange={(e) => setSearch(e.target.value)}
+//           className="flex-1 min-w-[250px] border-gray-300 focus:border-purple-600 focus:ring-purple-600"
+//         />
+//         <Button
+//           onClick={() => openModal()}
+//           className="bg-purple-600 hover:bg-purple-700 text-white px-5"
+//         >
+//           Add Location
+//         </Button>
+//       </div>
+
+//       {/* Table */}
+//       <Card className="shadow-md rounded-xl">
+//         <CardContent>
+//           <div className="overflow-x-auto">
+//             {/* <Table>
+//               <TableHeader>
+//                 <TableRow className="bg-gray-100">
+//                   <TableHead className="font-bold text-gray-700">Name</TableHead>
+//                   <TableHead className="font-bold text-gray-700">Capacity</TableHead>
+//                   <TableHead className="font-bold text-gray-700">Owner</TableHead>
+//                   <TableHead className="font-bold text-gray-700">Location</TableHead>
+//                   <TableHead className="font-bold text-gray-700">Status</TableHead>
+//                   <TableHead className="font-bold text-gray-700 text-right">Actions</TableHead>
+//                 </TableRow>
+//               </TableHeader>
+//               <TableBody>
+//                 {filtered.map((l, idx) => (
+//                   <TableRow
+//                     key={l.id}
+//                     className={`${
+//                       idx % 2 === 0 ? "bg-white" : "bg-gray-50"
+//                     } hover:bg-gray-100 transition`}
+//                   >
+//                     <TableCell className="font-medium">{l.name}</TableCell>
+//                     <TableCell>{l.capacity}</TableCell>
+//                     <TableCell>{l.owner}</TableCell>
+//                     <TableCell>{l.location}</TableCell>
+//                     <TableCell>
+//                       <span
+//                         className={`px-2 py-1 rounded-full text-xs font-bold
+//                           ${
+//                             l.status === "active"
+//                               ? "bg-green-100 text-green-700"
+//                               : l.status === "maintenance"
+//                               ? "bg-yellow-100 text-yellow-700"
+//                               : "bg-red-100 text-red-700"
+//                           }`}
+//                       >
+//                         {l.status}
+//                       </span>
+//                     </TableCell>
+//                     <TableCell className="text-right">
+//                       <DropdownMenu>
+//                         <DropdownMenuTrigger asChild>
+//                           <Button variant="ghost" size="sm">
+//                             <MoreHorizontal />
+//                           </Button>
+//                         </DropdownMenuTrigger>
+//                         <DropdownMenuContent>
+//                           <DropdownMenuItem onClick={() => openModal(l)}>
+//                             Edit
+//                           </DropdownMenuItem>
+//                           <DropdownMenuItem onClick={() => handleDelete(l.id)}>
+//                             Delete
+//                           </DropdownMenuItem>
+//                         </DropdownMenuContent>
+//                       </DropdownMenu>
+//                     </TableCell>
+//                   </TableRow>
+//                 ))}
+//               </TableBody>
+//             </Table> */}
+//             <Table>
+//   <TableHeader>
+//     <TableRow className="bg-gray-100">
+//       <TableHead className="px-4 py-3 text-left font-semibold text-gray-700">
+//         Name
+//       </TableHead>
+//       <TableHead className="px-4 py-3 text-left font-semibold text-gray-700">
+//         Capacity
+//       </TableHead>
+//       <TableHead className="px-4 py-3 text-left font-semibold text-gray-700">
+//         Owner
+//       </TableHead>
+//       <TableHead className="px-4 py-3 text-left font-semibold text-gray-700">
+//         Location
+//       </TableHead>
+//       <TableHead className="px-4 py-3 text-left font-semibold text-gray-700">
+//         Status
+//       </TableHead>
+//       <TableHead className="px-4 py-3 text-right font-semibold text-gray-700">
+//         Actions
+//       </TableHead>
+//     </TableRow>
+//   </TableHeader>
+
+//   <TableBody>
+//     {filtered.map((l, idx) => (
+//       <TableRow
+//         key={l.id}
+//         className={`${
+//           idx % 2 === 0 ? "bg-white" : "bg-gray-50"
+//         } hover:bg-gray-100 transition`}
+//       >
+//         <TableCell className="px-4 py-3 font-medium text-gray-800">
+//           {l.name}
+//         </TableCell>
+//         <TableCell className="px-4 py-3 text-gray-600">
+//           {l.capacity}
+//         </TableCell>
+//         <TableCell className="px-4 py-3 text-gray-600">
+//           {l.owner}
+//         </TableCell>
+//         <TableCell className="px-4 py-3 text-gray-600">
+//           {l.location}
+//         </TableCell>
+//         <TableCell className="px-4 py-3">
+//           <span
+//             className={`px-2 py-1 rounded-full text-xs font-bold
+//               ${
+//                 l.status === "active"
+//                   ? "bg-green-100 text-green-700"
+//                   : l.status === "maintenance"
+//                   ? "bg-yellow-100 text-yellow-700"
+//                   : "bg-red-100 text-red-700"
+//               }`}
+//           >
+//             {l.status}
+//           </span>
+//         </TableCell>
+//         <TableCell className="px-4 py-3 text-right">
+//           <DropdownMenu>
+//             <DropdownMenuTrigger asChild>
+//               <Button variant="ghost" size="sm">
+//                 <MoreHorizontal />
+//               </Button>
+//             </DropdownMenuTrigger>
+//             <DropdownMenuContent>
+//               <DropdownMenuItem onClick={() => openModal(l)}>
+//                 Edit
+//               </DropdownMenuItem>
+//               <DropdownMenuItem onClick={() => handleDelete(l.id)}>
+//                 Delete
+//               </DropdownMenuItem>
+//             </DropdownMenuContent>
+//           </DropdownMenu>
+//         </TableCell>
+//       </TableRow>
+//     ))}
+//   </TableBody>
+// </Table>
+
+//           </div>
+//         </CardContent>
+//       </Card>
+
+//       {/* MODAL */}
+//       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+//         <DialogContent className="sm:max-w-lg w-[95%] rounded-xl">
+//           <DialogHeader>
+//             <DialogTitle className="font-bold text-purple-600">
+//               {editingLocation ? "Edit Location" : "Add Location"}
+//             </DialogTitle>
+//           </DialogHeader>
+
+//           <div className="flex flex-col gap-4 mt-2">
+//             <Input
+//               placeholder="Name"
+//               value={form.name}
+//               onChange={(e) => setForm({ ...form, name: e.target.value })}
+//             />
+//             <Input
+//               type="number"
+//               placeholder="Capacity"
+//               value={form.capacity}
+//               onChange={(e) =>
+//                 setForm({ ...form, capacity: parseInt(e.target.value) || 0 })
+//               }
+//             />
+//             <Input
+//               placeholder="Owner Name"
+//               value={form.owner}
+//               onChange={(e) => setForm({ ...form, owner: e.target.value })}
+//             />
+//             <Input
+//               placeholder="Location"
+//               value={form.location}
+//               onChange={(e) => setForm({ ...form, location: e.target.value })}
+//             />
+//             <select
+//               value={form.status}
+//               onChange={(e) => setForm({ ...form, status: e.target.value })}
+//               className="p-2 border rounded"
+//             >
+//               <option value="active">Active</option>
+//               <option value="maintenance">Maintenance</option>
+//               <option value="canceled">Canceled</option>
+//             </select>
+//           </div>
+
+//           <DialogFooter className="mt-4">
+//             <Button
+//               onClick={handleSave}
+//               className="bg-purple-600 text-white hover:bg-purple-700"
+//             >
+//               {editingLocation ? "Update" : "Save"}
+//             </Button>
+//           </DialogFooter>
+//         </DialogContent>
+//       </Dialog>
+//     </div>
+//   );
+// }
+
+
+
+
+
+
+// it's good for just table
+// import React, { useState } from "react";
+// import {
+//   Table,
+//   TableHeader,
+//   TableRow,
+//   TableHead,
+//   TableBody,
+//   TableCell,
+// } from "@/components/ui/table";
+// import { Input } from "@/components/ui/input";
+// import { Button } from "@/components/ui/button";
+// import { toast } from "sonner";
+// import {
+//   DropdownMenu,
+//   DropdownMenuTrigger,
+//   DropdownMenuContent,
+//   DropdownMenuItem,
+// } from "@/components/ui/dropdown-menu";
+// import { MoreHorizontal } from "lucide-react";
+// import {
+//   Dialog,
+//   DialogContent,
+//   DialogHeader,
+//   DialogTitle,
+//   DialogFooter,
+// } from "@/components/ui/dialog";
+
+// export default function Locations({ locations, setLocations }) {
+//   const [search, setSearch] = useState("");
+//   const [isModalOpen, setIsModalOpen] = useState(false);
+//   const [form, setForm] = useState({
+//     name: "",
+//     capacity: 0,
+//     owner: "",
+//     location: "",
+//     status: "active",
+//   });
+//   const [editingLocation, setEditingLocation] = useState(null);
+
+//   const filtered = locations.filter((l) =>
+//     l.name.toLowerCase().includes(search.toLowerCase())
+//   );
+
+//   const openModal = (location = null) => {
+//     if (location) {
+//       setEditingLocation(location);
+//       setForm({
+//         name: location.name,
+//         capacity: location.capacity,
+//         owner: location.owner,
+//         location: location.location,
+//         status: location.status,
+//       });
+//     } else {
+//       setEditingLocation(null);
+//       setForm({
+//         name: "",
+//         capacity: 0,
+//         owner: "",
+//         location: "",
+//         status: "active",
+//       });
+//     }
+//     setIsModalOpen(true);
+//   };
+
+//   const handleSave = () => {
+//     if (!form.name || !form.capacity || !form.owner || !form.location || !form.status) {
+//       toast("All fields are required.", { variant: "destructive" });
+//       return;
+//     }
+
+//     if (editingLocation) {
+//       setLocations(
+//         locations.map((l) =>
+//           l.id === editingLocation.id ? { ...l, ...form } : l
+//         )
+//       );
+//       toast("Location updated successfully!");
+//     } else {
+//       setLocations([...locations, { id: Date.now(), ...form }]);
+//       toast("Location added successfully!");
+//     }
+
+//     setIsModalOpen(false);
+//     setEditingLocation(null);
+//     setForm({ name: "", capacity: 0, owner: "", location: "", status: "active" });
+//   };
+
+//   const handleDelete = (id) => {
+//     setLocations(locations.filter((l) => l.id !== id));
+//     toast("Location deleted successfully.", { variant: "destructive" });
+//   };
+
+//   return (
+//     <div className="space-y-6 w-full px-2 sm:px-4 bg-[#E5E5E5] min-h-screen py-6">
+//       {/* Heading */}
+//       <h1 className="text-2xl md:text-3xl font-bold text-center text-[#14213D]">
+//         Event Locations
+//       </h1>
+
+//       {/* Search + Button */}
+//       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+//         <Input
+//           placeholder="Search locations..."
+//           value={search}
+//           onChange={(e) => setSearch(e.target.value)}
+//           className="flex-1 rounded-lg w-full bg-white"
+//         />
+//         <Button
+//           onClick={() => openModal()}
+//           className="rounded-lg px-6 w-full sm:w-auto bg-[#14213D] text-white hover:opacity-90 transition"
+//         >
+//           + Add Location
+//         </Button>
+//       </div>
+
+//       {/* Table */}
+//       <div className="rounded-xl border shadow-sm w-full overflow-hidden">
+//         <Table className="w-full bg-[#14213D] text-white">
+//           <TableHeader>
+//             <TableRow className="bg-[#0f192f]">
+//               <TableHead className="font-semibold px-4 py-3 text-white">Name</TableHead>
+//               <TableHead className="font-semibold px-4 py-3 text-white">Capacity</TableHead>
+//               <TableHead className="font-semibold px-4 py-3 text-white">Owner</TableHead>
+//               <TableHead className="font-semibold px-4 py-3 text-white">Location</TableHead>
+//               <TableHead className="font-semibold px-4 py-3 text-white">Status</TableHead>
+//               <TableHead className="font-semibold px-4 py-3 text-center text-white">Actions</TableHead>
+//             </TableRow>
+//           </TableHeader>
+
+//           <TableBody>
+//             {filtered.length > 0 ? (
+//               filtered.map((l) => (
+//                 <TableRow
+//                   key={l.id}
+//                   className="hover:bg-[#1f2b4d] text-sm md:text-base border-b border-gray-700"
+//                 >
+//                   <TableCell className="px-4 py-4 font-medium">{l.name}</TableCell>
+//                   <TableCell className="px-4 py-4">{l.capacity}</TableCell>
+//                   <TableCell className="px-4 py-4">{l.owner}</TableCell>
+//                   <TableCell className="px-4 py-4">{l.location}</TableCell>
+//                   <TableCell className="px-4 py-4">
+//                     <span
+//                       className={`px-2 py-1 text-xs md:text-sm rounded-full font-medium
+//                         ${
+//                           l.status === "active"
+//                             ? "bg-green-100 text-green-700"
+//                             : l.status === "maintenance"
+//                             ? "bg-yellow-100 text-yellow-700"
+//                             : "bg-red-100 text-red-700"
+//                         }`}
+//                     >
+//                       {l.status}
+//                     </span>
+//                   </TableCell>
+//                   <TableCell className="px-4 py-4 text-center">
+//                     <DropdownMenu>
+//                       <DropdownMenuTrigger asChild>
+//                         <Button
+//                           variant="ghost"
+//                           size="sm"
+//                           className="rounded-full text-white hover:bg-white/20"
+//                         >
+//                           <MoreHorizontal />
+//                         </Button>
+//                       </DropdownMenuTrigger>
+//                       <DropdownMenuContent className="bg-white text-[#14213D]">
+//                         <DropdownMenuItem onClick={() => openModal(l)}>
+//                           Edit
+//                         </DropdownMenuItem>
+//                         <DropdownMenuItem
+//                           onClick={() => handleDelete(l.id)}
+//                           className="text-red-600 cursor-pointer"
+//                         >
+//                           Delete
+//                         </DropdownMenuItem>
+//                       </DropdownMenuContent>
+//                     </DropdownMenu>
+//                   </TableCell>
+//                 </TableRow>
+//               ))
+//             ) : (
+//               <TableRow>
+//                 <TableCell colSpan={6} className="text-center py-6 text-gray-300">
+//                   No locations found.
+//                 </TableCell>
+//               </TableRow>
+//             )}
+//           </TableBody>
+//         </Table>
+//       </div>
+
+//       {/* MODAL */}
+//       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+//         <DialogContent className="sm:max-w-lg w-[95%] rounded-xl">
+//           <DialogHeader>
+//             <DialogTitle className="text-lg font-semibold text-[#14213D]">
+//               {editingLocation ? "Edit Location" : "Add Location"}
+//             </DialogTitle>
+//           </DialogHeader>
+
+//           <div className="flex flex-col gap-4 mt-3">
+//             <Input
+//               placeholder="Name"
+//               value={form.name}
+//               onChange={(e) => setForm({ ...form, name: e.target.value })}
+//               className="bg-gray-50"
+//             />
+//             <Input
+//               type="number"
+//               placeholder="Capacity"
+//               value={form.capacity}
+//               onChange={(e) =>
+//                 setForm({ ...form, capacity: parseInt(e.target.value) || 0 })
+//               }
+//               className="bg-gray-50"
+//             />
+//             <Input
+//               placeholder="Owner Name"
+//               value={form.owner}
+//               onChange={(e) => setForm({ ...form, owner: e.target.value })}
+//               className="bg-gray-50"
+//             />
+//             <Input
+//               placeholder="Location"
+//               value={form.location}
+//               onChange={(e) => setForm({ ...form, location: e.target.value })}
+//               className="bg-gray-50"
+//             />
+//             <select
+//               value={form.status}
+//               onChange={(e) => setForm({ ...form, status: e.target.value })}
+//               className="p-2 border rounded-lg bg-gray-50 w-full"
+//             >
+//               <option value="active">Active</option>
+//               <option value="maintenance">Maintenance</option>
+//               <option value="canceled">Canceled</option>
+//             </select>
+//           </div>
+
+//           <DialogFooter className="mt-4">
+//             <Button
+//               onClick={handleSave}
+//               className="rounded-lg px-6 bg-gradient-to-r from-[#14213D] to-[#6B7280] text-white w-full sm:w-auto"
+//             >
+//               {editingLocation ? "Update Location" : "Save Location"}
+//             </Button>
+//           </DialogFooter>
+//         </DialogContent>
+//       </Dialog>
+//     </div>
+//   );
+// }
+
+
+
+
+
 import React, { useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
 import {
   Table,
   TableHeader,
@@ -10,6 +588,7 @@ import {
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { toast } from "sonner";
 import {
   DropdownMenu,
@@ -17,7 +596,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from "@/components/ui/dropdown-menu";
-import { MoreHorizontal } from "lucide-react";
+import { MoreHorizontal, MapPin, Users, CalendarDays, DollarSign } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -54,7 +633,13 @@ export default function Locations({ locations, setLocations }) {
       });
     } else {
       setEditingLocation(null);
-      setForm({ name: "", capacity: 0, owner: "", location: "", status: "active" });
+      setForm({
+        name: "",
+        capacity: 0,
+        owner: "",
+        location: "",
+        status: "active",
+      });
     }
     setIsModalOpen(true);
   };
@@ -88,186 +673,228 @@ export default function Locations({ locations, setLocations }) {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 w-full px-2 sm:px-4 bg-[#E5E5E5] min-h-screen py-6">
+      
       {/* Heading */}
-      <h2 className="text-3xl font-bold text-center">Event Locations</h2>
+      <h1 className="text-2xl md:text-3xl font-bold text-center text-[#14213D]">
+        Event Locations
+      </h1>
+
+      
+      {/* DASHBOARD CARDS */}
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+  <Card className="rounded-2xl shadow-md hover:shadow-xl transition 
+                  bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white">
+    <CardHeader className="flex flex-row items-center justify-between pb-2">
+      <CardTitle className="text-sm font-medium">Organizer</CardTitle>
+      <Users className="h-5 w-5 text-blue-300" />
+    </CardHeader>
+    <CardContent>
+      <p className="text-2xl font-bold">Neha Fiaz</p>
+      <p className="text-sm text-gray-300">Main Event Organizer</p>
+    </CardContent>
+  </Card>
+
+  <Card className="rounded-2xl shadow-md hover:shadow-xl transition 
+                  bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white">
+    <CardHeader className="flex flex-row items-center justify-between pb-2">
+      <CardTitle className="text-sm font-medium">Bookings</CardTitle>
+      <CalendarDays className="h-5 w-5 text-green-300" />
+    </CardHeader>
+    <CardContent>
+      <p className="text-2xl font-bold">128</p>
+      <p className="text-sm text-gray-300">This Month</p>
+    </CardContent>
+  </Card>
+
+  <Card className="rounded-2xl shadow-md hover:shadow-xl transition 
+                  bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white">
+    <CardHeader className="flex flex-row items-center justify-between pb-2">
+      <CardTitle className="text-sm font-medium">Active Locations</CardTitle>
+      <MapPin className="h-5 w-5 text-yellow-300" />
+    </CardHeader>
+    <CardContent>
+      <p className="text-2xl font-bold">
+        {locations.filter((l) => l.status === "active").length}
+      </p>
+      <p className="text-sm text-gray-300">Currently Available</p>
+    </CardContent>
+  </Card>
+
+  <Card className="rounded-2xl shadow-md hover:shadow-xl transition 
+                  bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white">
+    <CardHeader className="flex flex-row items-center justify-between pb-2">
+      <CardTitle className="text-sm font-medium">Revenue</CardTitle>
+      <DollarSign className="h-5 w-5 text-orange-300" />
+    </CardHeader>
+    <CardContent>
+      <p className="text-2xl font-bold">$24,500</p>
+      <p className="text-sm text-gray-300">This Quarter</p>
+    </CardContent>
+  </Card>
+</div>
+
+      {/* Location Cards Grid (bigger cards, compact page) */}\
+      
+<div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+  {filtered.length === 0 && (
+    <p className="text-[#14213D] col-span-full text-center">
+      No locations found
+    </p>
+  )}
+  {filtered.map((l) => (
+    <Card
+      key={l.id}
+      className="border rounded-2xl shadow-lg hover:shadow-2xl 
+                 transition-transform transform hover:-translate-y-1 
+                 bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white 
+                 p-6 h-[230px] flex flex-col justify-between"
+    >
+      <CardHeader className="flex flex-row items-center justify-between p-0">
+        <CardTitle className="text-2xl font-semibold truncate">
+          {l.name}
+        </CardTitle>
+        {/* Status Badge */}
+        <span
+          className={`px-3 py-1 text-sm rounded-full font-medium
+            ${
+              l.status === "active"
+                ? "bg-green-100 text-green-700"
+                : l.status === "maintenance"
+                ? "bg-yellow-100 text-yellow-700"
+                : "bg-red-100 text-red-700"
+            }`}
+        >
+          {l.status}
+        </span>
+      </CardHeader>
+
+      <CardContent className="space-y-4 text-lg p-0">
+        <div className="flex items-center gap-2">
+          <Users className="h-6 w-6 text-blue-300" />
+          <span>{l.owner}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <MapPin className="h-6 w-6 text-green-300" />
+          <span>{l.location}</span>
+        </div>
+        <div className="flex items-center gap-2">
+          <Users className="h-6 w-6 text-orange-300" />
+          <span>{l.capacity} capacity</span>
+        </div>
+      </CardContent>
+    </Card>
+  ))}
+</div>
+
 
       {/* Search + Button */}
-      <div className="flex flex-col sm:flex-row gap-3 sm:items-center sm:justify-between">
+      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
         <Input
           placeholder="Search locations..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="flex-1 min-w-[250px] border-gray-300 focus:border-purple-600 focus:ring-purple-600"
+          className="flex-1 rounded-lg w-full bg-white"
         />
         <Button
           onClick={() => openModal()}
-          className="bg-purple-600 hover:bg-purple-700 text-white px-5"
+          className="rounded-lg px-6 w-full sm:w-auto bg-[#14213D] text-white hover:opacity-90 transition"
         >
-          Add Location
+          + Add Location
         </Button>
       </div>
 
-      {/* Table */}
-      <Card className="shadow-md rounded-xl">
-        <CardContent>
-          <div className="overflow-x-auto">
-            {/* <Table>
-              <TableHeader>
-                <TableRow className="bg-gray-100">
-                  <TableHead className="font-bold text-gray-700">Name</TableHead>
-                  <TableHead className="font-bold text-gray-700">Capacity</TableHead>
-                  <TableHead className="font-bold text-gray-700">Owner</TableHead>
-                  <TableHead className="font-bold text-gray-700">Location</TableHead>
-                  <TableHead className="font-bold text-gray-700">Status</TableHead>
-                  <TableHead className="font-bold text-gray-700 text-right">Actions</TableHead>
+      {/* TABLE */}
+      <div className="rounded-xl border shadow-sm w-full overflow-hidden">
+        <Table className="w-full bg-[#14213D] text-white">
+          <TableHeader>
+            <TableRow className="bg-[#0f192f]">
+              <TableHead className="font-semibold px-4 py-3 text-white">Name</TableHead>
+              <TableHead className="font-semibold px-4 py-3 text-white">Capacity</TableHead>
+              <TableHead className="font-semibold px-4 py-3 text-white">Owner</TableHead>
+              <TableHead className="font-semibold px-4 py-3 text-white">Location</TableHead>
+              <TableHead className="font-semibold px-4 py-3 text-white">Status</TableHead>
+              <TableHead className="font-semibold px-4 py-3 text-center text-white">Actions</TableHead>
+            </TableRow>
+          </TableHeader>
+
+          <TableBody>
+            {filtered.length > 0 ? (
+              filtered.map((l) => (
+                <TableRow
+                  key={l.id}
+                  className="hover:bg-[#1f2b4d] text-sm md:text-base border-b border-gray-700"
+                >
+                  <TableCell className="px-4 py-4 font-medium">{l.name}</TableCell>
+                  <TableCell className="px-4 py-4">{l.capacity}</TableCell>
+                  <TableCell className="px-4 py-4">{l.owner}</TableCell>
+                  <TableCell className="px-4 py-4">{l.location}</TableCell>
+                  <TableCell className="px-4 py-4">
+                    <span
+                      className={`px-2 py-1 text-xs md:text-sm rounded-full font-medium
+                        ${
+                          l.status === "active"
+                            ? "bg-green-100 text-green-700"
+                            : l.status === "maintenance"
+                            ? "bg-yellow-100 text-yellow-700"
+                            : "bg-red-100 text-red-700"
+                        }`}
+                    >
+                      {l.status}
+                    </span>
+                  </TableCell>
+                  <TableCell className="px-4 py-4 text-center">
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="rounded-full text-white hover:bg-white/20"
+                        >
+                          <MoreHorizontal />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent className="bg-white text-[#14213D]">
+                        <DropdownMenuItem onClick={() => openModal(l)}>
+                          Edit
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={() => handleDelete(l.id)}
+                          className="text-red-600 cursor-pointer"
+                        >
+                          Delete
+                        </DropdownMenuItem>
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </TableCell>
                 </TableRow>
-              </TableHeader>
-              <TableBody>
-                {filtered.map((l, idx) => (
-                  <TableRow
-                    key={l.id}
-                    className={`${
-                      idx % 2 === 0 ? "bg-white" : "bg-gray-50"
-                    } hover:bg-gray-100 transition`}
-                  >
-                    <TableCell className="font-medium">{l.name}</TableCell>
-                    <TableCell>{l.capacity}</TableCell>
-                    <TableCell>{l.owner}</TableCell>
-                    <TableCell>{l.location}</TableCell>
-                    <TableCell>
-                      <span
-                        className={`px-2 py-1 rounded-full text-xs font-bold
-                          ${
-                            l.status === "active"
-                              ? "bg-green-100 text-green-700"
-                              : l.status === "maintenance"
-                              ? "bg-yellow-100 text-yellow-700"
-                              : "bg-red-100 text-red-700"
-                          }`}
-                      >
-                        {l.status}
-                      </span>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <DropdownMenu>
-                        <DropdownMenuTrigger asChild>
-                          <Button variant="ghost" size="sm">
-                            <MoreHorizontal />
-                          </Button>
-                        </DropdownMenuTrigger>
-                        <DropdownMenuContent>
-                          <DropdownMenuItem onClick={() => openModal(l)}>
-                            Edit
-                          </DropdownMenuItem>
-                          <DropdownMenuItem onClick={() => handleDelete(l.id)}>
-                            Delete
-                          </DropdownMenuItem>
-                        </DropdownMenuContent>
-                      </DropdownMenu>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table> */}
-            <Table>
-  <TableHeader>
-    <TableRow className="bg-gray-100">
-      <TableHead className="px-4 py-3 text-left font-semibold text-gray-700">
-        Name
-      </TableHead>
-      <TableHead className="px-4 py-3 text-left font-semibold text-gray-700">
-        Capacity
-      </TableHead>
-      <TableHead className="px-4 py-3 text-left font-semibold text-gray-700">
-        Owner
-      </TableHead>
-      <TableHead className="px-4 py-3 text-left font-semibold text-gray-700">
-        Location
-      </TableHead>
-      <TableHead className="px-4 py-3 text-left font-semibold text-gray-700">
-        Status
-      </TableHead>
-      <TableHead className="px-4 py-3 text-right font-semibold text-gray-700">
-        Actions
-      </TableHead>
-    </TableRow>
-  </TableHeader>
-
-  <TableBody>
-    {filtered.map((l, idx) => (
-      <TableRow
-        key={l.id}
-        className={`${
-          idx % 2 === 0 ? "bg-white" : "bg-gray-50"
-        } hover:bg-gray-100 transition`}
-      >
-        <TableCell className="px-4 py-3 font-medium text-gray-800">
-          {l.name}
-        </TableCell>
-        <TableCell className="px-4 py-3 text-gray-600">
-          {l.capacity}
-        </TableCell>
-        <TableCell className="px-4 py-3 text-gray-600">
-          {l.owner}
-        </TableCell>
-        <TableCell className="px-4 py-3 text-gray-600">
-          {l.location}
-        </TableCell>
-        <TableCell className="px-4 py-3">
-          <span
-            className={`px-2 py-1 rounded-full text-xs font-bold
-              ${
-                l.status === "active"
-                  ? "bg-green-100 text-green-700"
-                  : l.status === "maintenance"
-                  ? "bg-yellow-100 text-yellow-700"
-                  : "bg-red-100 text-red-700"
-              }`}
-          >
-            {l.status}
-          </span>
-        </TableCell>
-        <TableCell className="px-4 py-3 text-right">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm">
-                <MoreHorizontal />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent>
-              <DropdownMenuItem onClick={() => openModal(l)}>
-                Edit
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleDelete(l.id)}>
-                Delete
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </TableCell>
-      </TableRow>
-    ))}
-  </TableBody>
-</Table>
-
-          </div>
-        </CardContent>
-      </Card>
+              ))
+            ) : (
+              <TableRow>
+                <TableCell colSpan={6} className="text-center py-6 text-gray-300">
+                  No locations found.
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
 
       {/* MODAL */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent className="sm:max-w-lg w-[95%] rounded-xl">
           <DialogHeader>
-            <DialogTitle className="font-bold text-purple-600">
+            <DialogTitle className="text-lg font-semibold text-[#14213D]">
               {editingLocation ? "Edit Location" : "Add Location"}
             </DialogTitle>
           </DialogHeader>
 
-          <div className="flex flex-col gap-4 mt-2">
+          <div className="flex flex-col gap-4 mt-3">
             <Input
               placeholder="Name"
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
+              className="bg-gray-50"
             />
             <Input
               type="number"
@@ -276,21 +903,24 @@ export default function Locations({ locations, setLocations }) {
               onChange={(e) =>
                 setForm({ ...form, capacity: parseInt(e.target.value) || 0 })
               }
+              className="bg-gray-50"
             />
             <Input
               placeholder="Owner Name"
               value={form.owner}
               onChange={(e) => setForm({ ...form, owner: e.target.value })}
+              className="bg-gray-50"
             />
             <Input
               placeholder="Location"
               value={form.location}
               onChange={(e) => setForm({ ...form, location: e.target.value })}
+              className="bg-gray-50"
             />
             <select
               value={form.status}
               onChange={(e) => setForm({ ...form, status: e.target.value })}
-              className="p-2 border rounded"
+              className="p-2 border rounded-lg bg-gray-50 w-full"
             >
               <option value="active">Active</option>
               <option value="maintenance">Maintenance</option>
@@ -301,9 +931,9 @@ export default function Locations({ locations, setLocations }) {
           <DialogFooter className="mt-4">
             <Button
               onClick={handleSave}
-              className="bg-purple-600 text-white hover:bg-purple-700"
+              className="rounded-lg px-6 bg-gradient-to-r from-[#14213D] to-[#6B7280] text-white w-full sm:w-auto"
             >
-              {editingLocation ? "Update" : "Save"}
+              {editingLocation ? "Update Location" : "Save Location"}
             </Button>
           </DialogFooter>
         </DialogContent>

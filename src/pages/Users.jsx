@@ -152,61 +152,7 @@ export default function Users({ users, setUsers }) {
           </TableHead>
         </TableRow>
       </TableHeader>
-      {/* <TableBody>
-        {filtered.length > 0 ? (
-          filtered.map((u) => (
-            <TableRow
-              key={u.id}
-              className="hover:bg-[#1f2b4d] text-sm md:text-base border-b border-gray-700"
-            >
-              <TableCell className="px-4 py-4">{u.name}</TableCell>
-              <TableCell className="px-4 py-4">{u.email}</TableCell>
-              <TableCell className="px-4 py-4">{u.address}</TableCell>
-              <TableCell className="px-4 py-4">{u.phone}</TableCell>
-              <TableCell className="px-4 py-4">
-                <span
-                  className={`px-2 py-1 text-xs md:text-sm rounded-full font-medium bg-white/20 text-white`}
-                >
-                  {u.role}
-                </span>
-              </TableCell>
-              <TableCell className="px-4 py-4 text-center">
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      className="rounded-full text-white hover:bg-white/20"
-                    >
-                      <MoreHorizontal />
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent className="bg-white text-[#14213D]">
-                    <DropdownMenuItem onClick={() => openModal(u)}>
-                      Edit
-                    </DropdownMenuItem>
-                    <DropdownMenuItem
-                      onClick={() => handleDelete(u.id)}
-                      className="text-red-600 cursor-pointer"
-                    >
-                      Delete
-                    </DropdownMenuItem>
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              </TableCell>
-            </TableRow>
-          ))
-        ) : (
-          <TableRow>
-            <TableCell
-              colSpan={6}
-              className="text-center py-6 text-gray-300"
-            >
-              No users found.
-            </TableCell>
-          </TableRow>
-        )}
-      </TableBody> */}
+    
       <TableBody>
   {filtered.length > 0 ? (
     filtered.map((u) => (
@@ -214,20 +160,7 @@ export default function Users({ users, setUsers }) {
         key={u.id}
         className="hover:bg-[#1f2b4d] text-sm md:text-base border-b border-gray-700"
       >
-        {/* Avatar (Initials Only) + Name */}
-        {/* <TableCell className="px-4 py-4 flex items-center gap-3">
-          <Avatar className="h-9 w-9 bg-[#2d3b61] text-white font-semibold">
-            <AvatarFallback>
-              {u.name
-                .split(" ")
-                .map((n) => n[0])
-                .join("")
-                .toUpperCase()}
-            </AvatarFallback>
-          </Avatar>
-          <span className="font-medium">{u.name}</span>
-        </TableCell> */}
-        {/* Avatar (Initials Only) + Name */}
+     
 <TableCell className="px-4 py-4 flex items-center gap-3">
   <Avatar
     className={`h-9 w-9 font-semibold flex items-center justify-center
