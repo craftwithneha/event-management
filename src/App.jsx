@@ -31,6 +31,7 @@ export default function App() {
   const [locations, setLocations] = useState([
     { id: 1, name: "Royal Hall", capacity: 300, owner: "Mr. Ahmed", status: "active", location:"Faisalabad" },
     { id: 2, name: "City Garden", capacity: 150, owner: "Ms. Fatima", status: "maintenance", location:"Karachi" },
+    { id: 3, name: "Housing Colony", capacity: 2000, owner: "Ms. Emily", status: "cancelled", location:"Lahore" },
   ]);
 
   return (
