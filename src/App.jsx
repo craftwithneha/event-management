@@ -14,7 +14,7 @@ import ProtectedRoute from "./components/ProtectedRoute"; // create this compone
 
 
 export default function App() {
-  // Existing stateful data
+//  For users satedata
   const [users, setUsers] = useState([
     { id: 1, name: "Ali Raza", email: "ali@example.com", address: "123 Street, Lahore", phone: "+92 300 1234567", role: "admin" },
     { id: 2, name: "Sara Khan", email: "sara@example.com", address: "456 Avenue, Karachi", phone: "+92 312 9876543", role: "sales" },
@@ -22,12 +22,14 @@ export default function App() {
     { id: 4, name: "John", email: "john@example.com", address: " Avenue, Qatar", phone: "+92 312 9876543", role: "waiter" },
   ]);
 
+  // For Events
   const [events, setEvents] = useState([
     { id: 1, name: "Annual Meetup", location: "Royal Hall", date: "2025-09-10", persons: 180 , status: "Upcoming"},
     { id: 2, name: "Sales Summit", location: "City Garden", date: "2025-10-02", persons: 120 , status: "Live"},
     { id: 3, name: "John", location: "Housing Colony ", date: "2025-8-02", persons: 120 , status: "Canceled"},
   ]);
 
+  // For Locations
   const [locations, setLocations] = useState([
     { id: 1, name: "Royal Hall", capacity: 300, owner: "Mr. Ahmed", status: "active", location:"Faisalabad" },
     { id: 2, name: "City Garden", capacity: 150, owner: "Ms. Fatima", status: "maintenance", location:"Karachi" },
