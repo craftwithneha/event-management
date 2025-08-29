@@ -16,10 +16,10 @@ import ProtectedRoute from "./components/ProtectedRoute"; // create this compone
 export default function App() {
 //  For users satedata
   const [users, setUsers] = useState([
-    { id: 1, name: "Ali Raza", email: "ali@example.com", address: "123 Street, Lahore", phone: "+92 300 1234567", role: "admin" },
-    { id: 2, name: "Sara Khan", email: "sara@example.com", address: "456 Avenue, Karachi", phone: "+92 312 9876543", role: "sales" },
-    { id: 3, name: "Diya", email: "diya@example.com", address: "Avenue, UAE", phone: "+92 312 7457843", role: "owner" },
-    { id: 4, name: "John", email: "john@example.com", address: " Avenue, Qatar", phone: "+92 312 9876543", role: "waiter" },
+    { id: 1, name: "Ali Raza", email: "ali@example.com", address: "123 Street, Lahore", phone: "+92 3001234567", role: "admin" },
+    { id: 2, name: "Sara Khan", email: "sara@example.com", address: "456 Avenue, Karachi", phone: "+92 3129876543", role: "sales" },
+    { id: 3, name: "Diya", email: "diya@example.com", address: "Avenue, UAE", phone: "+92 3127457843", role: "owner" },
+    { id: 4, name: "John", email: "john@example.com", address: " Avenue, Qatar", phone: "+92 3129876543", role: "waiter" },
   ]);
 
   // For Events
