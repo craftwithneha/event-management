@@ -105,7 +105,7 @@ export default function Locations({ locations, setLocations }) {
             <Users className="h-5 w-5 text-blue-300" />
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">Neha Fiaz</p>
+            <p className="text-2xl font-bold">Neha & Zoha </p>
             <p className="text-sm text-gray-300">Main Event Organizer</p>
           </CardContent>
         </Card>

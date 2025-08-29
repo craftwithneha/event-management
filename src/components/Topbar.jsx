@@ -21,7 +21,6 @@ export default function Topbar() {
    <div className="flex items-center justify-between bg-[#14213D] p-4 border-b border-[#0f192f] shadow-sm">
   <div className="text-xl font-bold text-white">EventHub</div>
   <div className="flex items-center gap-4">
-    <User className="h-6 w-6 text-white" />
     <Button
       variant="outline"
       size="sm"
