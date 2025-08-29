@@ -174,9 +174,12 @@ export default function Events({ events, setEvents }) {
     <div className="space-y-6 w-full px-2 sm:px-4 bg-[#E5E5E5] min-h-screen py-6">
       {/* Heading */}
       <div>
-        <h1 className="text-2xl md:text-3xl font-bold text-center text-[#14213D]">
+        <h1 className="text-3xl md:text-3xl  font-extrabold text-center text-[#14213D]">
           Events
         </h1>
+        <p className="text-sm mt-2 text-center text-[#14213D]">
+    Discover upcoming and past events with key details on dates, venues, and highlights.<br/> Stay informed and connected with everything that matters.
+  </p>
       </div>
 
       {/* Search + Add Event */}
@@ -185,7 +188,7 @@ export default function Events({ events, setEvents }) {
           placeholder="Search events..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="flex-1 rounded-lg w-full bg-white"
+          className="flex-1 rounded-lg w-full bg-white border-blue-950"
         />
         <Button
           onClick={() => openModal()}
@@ -278,7 +281,7 @@ export default function Events({ events, setEvents }) {
                         </DropdownMenuItem>
                         <DropdownMenuItem
                           onClick={() => handleDelete(e.id)}
-                          className="text-red-600 cursor-pointer"
+                          className=" cursor-pointer"
                         >
                           Delete
                         </DropdownMenuItem>
