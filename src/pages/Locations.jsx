@@ -135,8 +135,11 @@ export default function Locations ({ locations, setLocations }) {
         <h1 className='ext-3xl md:text-3xl  font-extrabold text-center text-[#14213D]'>
           Event Locations
         </h1>
-        <p className='text-sm mt-3  text-center text-[#14213D]'>Manage and track all event venues with capacity, status, and details. <br/>
-Easily add, edit, or remove locations for smooth event planning.</p>
+        <p className='text-sm mt-3  text-center text-[#14213D]'>
+          Manage and track all event venues with capacity, status, and details.{' '}
+          <br />
+          Easily add, edit, or remove locations for smooth event planning.
+        </p>
       </div>
 
       {/* DASHBOARD CARDS */}

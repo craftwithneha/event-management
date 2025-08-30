@@ -1,3 +1,4 @@
+// Without Appwrite
 // import React, { useState } from 'react'
 // import {
 //   Table,
@@ -210,7 +211,7 @@
 //   return (
 //     <div className='space-y-6 w-full px-2 sm:px-4 bg-[#E5E5E5] min-h-screen py-6'>
 //       <div>
-      
+
 //         <h1 className='text-3xl md:text-3xl  font-extrabold text-center text-[#14213D]'>
 //           Users
 //         </h1>
@@ -385,39 +386,58 @@
 //   )
 // }
 
-
-
-
-"use client"
+// With appwrite
+'use client'
 import React, { useState, useEffect } from 'react'
 import {
-  Table, TableHeader, TableRow, TableHead, TableBody, TableCell
+  Table,
+  TableHeader,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell
 } from '@/components/ui/table'
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 import {
-  DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem
 } from '@/components/ui/dropdown-menu'
 import { MoreHorizontal } from 'lucide-react'
 import {
-  Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter, DialogDescription
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogFooter,
+  DialogDescription
 } from '@/components/ui/dialog'
 import {
-  Select, SelectTrigger, SelectContent, SelectItem, SelectValue
+  Select,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectValue
 } from '@/components/ui/select'
 import { Badge } from '@/components/ui/badge'
 
 // 🔹 Appwrite client
 import { databases, ID } from '../services/appwrite'
 
-export default function Users() {
+export default function Users () {
   const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [form, setForm] = useState({
-    name: '', email: '', address: '', phone: '', role: 'admin'
+    name: '',
+    email: '',
+    address: '',
+    phone: '',
+    role: 'admin'
   })
   const [editingUser, setEditingUser] = useState(null)
 
@@ -431,7 +451,7 @@ export default function Users() {
         )
         setUsers(res.documents)
       } catch (err) {
-        console.error("Error fetching users:", err)
+        console.error('Error fetching users:', err)
         toast('Failed to fetch users.')
       } finally {
         setLoading(false)
@@ -472,7 +492,7 @@ export default function Users() {
   // 🔹 SAVE USER (Appwrite + local state)
   const handleSave = async () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-    const phoneRegex = /^\+92\s3[0-9]{9}$/   
+    const phoneRegex = /^\+92\s3[0-9]{9}$/
 
     if (!form.name || !form.email || !form.address || !form.phone) {
       toast.error('All fields are required.')
@@ -495,10 +515,12 @@ export default function Users() {
           editingUser.$id,
           {
             ...form,
-            role: form.role.trim().toLowerCase(),
+            role: form.role.trim().toLowerCase()
           }
         )
-        setUsers(users.map(u => (u.$id === editingUser.$id ? { ...u, ...form } : u)))
+        setUsers(
+          users.map(u => (u.$id === editingUser.$id ? { ...u, ...form } : u))
+        )
         toast.success('User updated successfully!')
       } else {
         const newUser = await databases.createDocument(
@@ -507,14 +529,14 @@ export default function Users() {
           ID.unique(),
           {
             ...form,
-            role: form.role.trim().toLowerCase(),
+            role: form.role.trim().toLowerCase()
           }
         )
         setUsers([...users, newUser])
         toast.success('User added successfully!')
       }
     } catch (err) {
-      console.error("Appwrite error:", err)
+      console.error('Appwrite error:', err)
       toast.error('Something went wrong.')
     }
 
@@ -524,7 +546,7 @@ export default function Users() {
   }
 
   // 🔹 DELETE USER
-  const handleDelete = async (id) => {
+  const handleDelete = async id => {
     try {
       await databases.deleteDocument(
         import.meta.env.VITE_APPWRITE_DATABASE_ID,
@@ -534,7 +556,7 @@ export default function Users() {
       setUsers(users.filter(u => u.$id !== id))
       toast.success('User deleted successfully.')
     } catch (err) {
-      console.error("Delete error:", err)
+      console.error('Delete error:', err)
       toast.error('Error deleting user.')
     }
   }
@@ -571,19 +593,34 @@ export default function Users() {
         <Table className='w-full bg-[#14213D] text-white'>
           <TableHeader>
             <TableRow className='bg-[#0f192f]'>
-              <TableHead className='font-semibold px-4 py-3 text-white'>Name</TableHead>
-              <TableHead className='font-semibold px-4 py-3 text-white'>Email</TableHead>
-              <TableHead className='font-semibold px-4 py-3 text-white'>Address</TableHead>
-              <TableHead className='font-semibold px-4 py-3 text-white'>Phone</TableHead>
-              <TableHead className='font-semibold px-4 py-3 text-white'>Role</TableHead>
-              <TableHead className='font-semibold px-4 py-3 text-center text-white'>Actions</TableHead>
+              <TableHead className='font-semibold px-4 py-3 text-white'>
+                Name
+              </TableHead>
+              <TableHead className='font-semibold px-4 py-3 text-white'>
+                Email
+              </TableHead>
+              <TableHead className='font-semibold px-4 py-3 text-white'>
+                Address
+              </TableHead>
+              <TableHead className='font-semibold px-4 py-3 text-white'>
+                Phone
+              </TableHead>
+              <TableHead className='font-semibold px-4 py-3 text-white'>
+                Role
+              </TableHead>
+              <TableHead className='font-semibold px-4 py-3 text-center text-white'>
+                Actions
+              </TableHead>
             </TableRow>
           </TableHeader>
 
           {loading ? (
             <TableBody>
               <TableRow>
-                <TableCell colSpan={6} className='text-center py-6 text-gray-300'>
+                <TableCell
+                  colSpan={6}
+                  className='text-center py-6 text-gray-300'
+                >
                   Loading users...
                 </TableCell>
               </TableRow>
@@ -596,12 +633,16 @@ export default function Users() {
                     key={u.$id}
                     className='hover:bg-[#1f2b4d] text-sm md:text-base border-b border-gray-700'
                   >
-                    <TableCell className='px-4 py-4 font-medium text-white'>{u.name}</TableCell>
+                    <TableCell className='px-4 py-4 font-medium text-white'>
+                      {u.name}
+                    </TableCell>
                     <TableCell className='px-4 py-4'>{u.email}</TableCell>
                     <TableCell className='px-4 py-4'>{u.address}</TableCell>
                     <TableCell className='px-4 py-4'>{u.phone}</TableCell>
                     <TableCell className='px-4 py-4'>
-                      <Badge className={roleColors[u.role] || roleColors.default}>
+                      <Badge
+                        className={roleColors[u.role] || roleColors.default}
+                      >
                         {u.role}
                       </Badge>
                     </TableCell>
@@ -617,7 +658,10 @@ export default function Users() {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className='bg-white text-[#14213D]'>
-                          <DropdownMenuItem onClick={() => openModal(u)} className="cursor-pointer">
+                          <DropdownMenuItem
+                            onClick={() => openModal(u)}
+                            className='cursor-pointer'
+                          >
                             Edit
                           </DropdownMenuItem>
                           <DropdownMenuItem
@@ -633,7 +677,10 @@ export default function Users() {
                 ))
               ) : (
                 <TableRow>
-                  <TableCell colSpan={6} className='text-center py-6 text-gray-300'>
+                  <TableCell
+                    colSpan={6}
+                    className='text-center py-6 text-gray-300'
+                  >
                     No users found.
                   </TableCell>
                 </TableRow>
@@ -682,13 +729,13 @@ export default function Users() {
               onChange={e => setForm({ ...form, phone: e.target.value })}
               className='bg-gray-50'
             /> */}
-             <Input
-        type='text'
-        placeholder='+92 3XXXXXXXXX'
-        value={form.phone}
-        onChange={e => setForm({ ...form, phone: e.target.value })}
-        className='bg-gray-50'
-      />
+            <Input
+              type='text'
+              placeholder='+92 3XXXXXXXXX'
+              value={form.phone}
+              onChange={e => setForm({ ...form, phone: e.target.value })}
+              className='bg-gray-50'
+            />
             <Select
               value={form.role}
               onValueChange={value => setForm({ ...form, role: value })}

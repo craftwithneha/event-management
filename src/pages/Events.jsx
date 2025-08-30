@@ -1,3 +1,5 @@
+// Without Appwrite
+
 // import React, { useState } from "react";
 // import {
 //   Table,
@@ -206,8 +208,8 @@
 //   {filtered.map((e) => (
 //     <Card
 //       key={e.id}
-//       className="border rounded-2xl shadow-md hover:shadow-2xl 
-//            transition-transform transform hover:-translate-y-1 
+//       className="border rounded-2xl shadow-md hover:shadow-2xl
+//            transition-transform transform hover:-translate-y-1
 //            bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white"
 //     >
 //       <CardHeader className="flex flex-row items-center justify-between">
@@ -234,7 +236,6 @@
 //     </Card>
 //   ))}
 // </div>
-
 
 //       {/* Events Table */}
 //       <div className="rounded-xl border shadow-sm w-full overflow-hidden">
@@ -417,939 +418,259 @@
 //   );
 // }
 
+// With Appwrite
 
-
-
-
-
-
-
-
-// import React, { useState, useEffect } from "react";
-// import {
-//   Table, TableHeader, TableRow, TableHead, TableBody, TableCell
-// } from "@/components/ui/table";
-// import { Input } from "@/components/ui/input";
-// import { Button } from "@/components/ui/button";
-// import { toast } from "sonner";
-// import {
-//   MoreHorizontal,
-//   MapPin,
-//   Calendar as CalendarIcon,
-//   Users as UsersIcon,
-//   Minus,
-//   Plus,
-// } from "lucide-react";
-// import {
-//   DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem
-// } from "@/components/ui/dropdown-menu";
-// import {
-//   Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter
-// } from "@/components/ui/dialog";
-// import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-// import {
-//   Select, SelectTrigger, SelectValue, SelectContent, SelectItem
-// } from "@/components/ui/select";
-// import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
-// import { Calendar } from "@/components/ui/calendar";
-// import { format } from "date-fns";
-// import { cn } from "@/lib/utils";
-// import { Badge } from "@/components/ui/badge";
-// import { Client, Databases, ID } from "appwrite";
-
-// // --- Appwrite Client & Collections from .env ---
-// const client = new Client()
-//   .setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT)
-//   .setProject(import.meta.env.VITE_APPWRITE_PROJECT);
-
-// const databases = new Databases(client);
-// const DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
-// const EVENTS_COLLECTION_ID = import.meta.env.VITE_APPWRITE_EVENTS_COLLECTION_ID;
-
-// export default function Events() {
-//   const [events, setEvents] = useState([]);
-//   const [search, setSearch] = useState("");
-//   const [isModalOpen, setIsModalOpen] = useState(false);
-//   const [editingEvent, setEditingEvent] = useState(null);
-//   const [form, setForm] = useState({
-//     name: "",
-//     location: "",
-//     date: "",
-//     persons: 0,
-//     status: "Upcoming",
-//   });
-//   const [isDateOpen, setIsDateOpen] = useState(false);
-
-//   // --- Fetch events from Appwrite ---
-//   const fetchEvents = async () => {
-//     try {
-//       const res = await databases.listDocuments(DATABASE_ID, EVENTS_COLLECTION_ID);
-//       setEvents(res.documents);
-//     } catch (error) {
-//       console.error(error);
-//       toast.error("Failed to fetch events from Appwrite");
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchEvents();
-//   }, []);
-
-//   const filtered = events.filter((e) =>
-//     e.name.toLowerCase().includes(search.toLowerCase())
-//   );
-
-//   // --- Open modal ---
-//   const openModal = (event = null) => {
-//     if (event) {
-//       setEditingEvent(event);
-//       setForm({
-//         name: event.name,
-//         location: event.location,
-//         date: event.date,
-//         persons: event.persons,
-//         status: event.status,
-//       });
-//     } else {
-//       setEditingEvent(null);
-//       setForm({ name: "", location: "", date: "", persons: 0, status: "Upcoming" });
-//     }
-//     setIsModalOpen(true);
-//   };
-
-//   // --- Save / Add Event ---
-//   const handleSave = async () => {
-//     if (!form.name || !form.location || !form.date || form.persons <= 0) {
-//       toast.error("All fields are required.");
-//       return;
-//     }
-
-//     try {
-//       if (editingEvent) {
-//         // Update document
-//         await databases.updateDocument(
-//           DATABASE_ID,
-//           EVENTS_COLLECTION_ID,
-//           editingEvent.$id,
-//           form
-//         );
-//         toast.success("Event updated successfully!");
-//       } else {
-//         // Create document
-//         await databases.createDocument(
-//           DATABASE_ID,
-//           EVENTS_COLLECTION_ID,
-//           ID.unique(),
-//           form
-//         );
-//         toast.success("Event added successfully!");
-//       }
-//       fetchEvents();
-//       setIsModalOpen(false);
-//       setEditingEvent(null);
-//       setForm({ name: "", location: "", date: "", persons: 0, status: "Upcoming" });
-//     } catch (error) {
-//       console.error(error);
-//       toast.error("Failed to save event.");
-//     }
-//   };
-
-//   // --- Delete Event ---
-//   const handleDelete = async (id) => {
-//     try {
-//       await databases.deleteDocument(DATABASE_ID, EVENTS_COLLECTION_ID, id);
-//       toast.success("Event deleted successfully!");
-//       fetchEvents();
-//     } catch (error) {
-//       console.error(error);
-//       toast.error("Failed to delete event.");
-//     }
-//   };
-
-//   // --- Status Badge ---
-//   const getStatusBadge = (status) => {
-//     let color = "bg-gray-100 text-gray-700";
-//     if (status === "Upcoming") color = "bg-blue-100 text-blue-700";
-//     if (status === "Live") color = "bg-green-100 text-green-700";
-//     if (status === "Canceled") color = "bg-red-100 text-red-700";
-
-//     return (
-//       <Badge className={cn("px-2 py-1 text-xs md:text-sm font-medium", color)}>
-//         {status}
-//       </Badge>
-//     );
-//   };
-
-//   return (
-//     <div className="space-y-6 w-full px-2 sm:px-4 bg-[#E5E5E5] min-h-screen py-6">
-//       {/* Heading */}
-//       <div>
-//         <h1 className="text-3xl md:text-3xl font-extrabold text-center text-[#14213D]">
-//           Events
-//         </h1>
-//         <p className="text-sm mt-2 text-center text-[#14213D]">
-//           Discover upcoming and past events with key details on dates, venues, and highlights.<br />
-//           Stay informed and connected with everything that matters.
-//         </p>
-//       </div>
-
-//       {/* Search + Add Event */}
-//       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-//         <Input
-//           placeholder="Search events..."
-//           value={search}
-//           onChange={(e) => setSearch(e.target.value)}
-//           className="flex-1 rounded-lg w-full bg-white border-blue-950"
-//         />
-//         <Button
-//           onClick={() => openModal()}
-//           className="rounded-lg px-6 w-full sm:w-auto bg-[#14213D] text-white hover:opacity-90 transition"
-//         >
-//           + Add Event
-//         </Button>
-//       </div>
-
-//       {/* Event Cards */}
-//       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-//         {filtered.length === 0 && (
-//           <p className="text-[#14213D] col-span-full text-center">No events found</p>
-//         )}
-//         {filtered.map((e) => (
-//           <Card
-//             key={e.$id}
-//             className="border rounded-2xl shadow-md hover:shadow-2xl transition-transform transform hover:-translate-y-1 bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white"
-//           >
-//             <CardHeader className="flex flex-row items-center justify-between">
-//               <CardTitle className="text-xl font-semibold truncate">{e.name}</CardTitle>
-//               <div>{getStatusBadge(e.status)}</div>
-//             </CardHeader>
-
-//             <CardContent className="space-y-4 text-sm">
-//               <div className="flex items-center gap-2">
-//                 <MapPin className="h-5 w-5 text-blue-300" />
-//                 <span>{e.location}</span>
-//               </div>
-//               <div className="flex items-center gap-2">
-//                 <CalendarIcon className="h-5 w-5 text-green-300" />
-//                 <span>{e.date}</span>
-//               </div>
-//               <div className="flex items-center gap-2">
-//                 <UsersIcon className="h-5 w-5 text-orange-300" />
-//                 <span>{e.persons} persons</span>
-//               </div>
-//             </CardContent>
-//           </Card>
-//         ))}
-//       </div>
-
-//       {/* Events Table */}
-//       <div className="rounded-xl border shadow-sm w-full overflow-hidden">
-//         <Table className="w-full bg-[#14213D] text-white">
-//           <TableHeader>
-//             <TableRow className="bg-[#0f192f]">
-//               <TableHead>Name</TableHead>
-//               <TableHead>Location</TableHead>
-//               <TableHead>Date</TableHead>
-//               <TableHead>Persons</TableHead>
-//               <TableHead>Status</TableHead>
-//               <TableHead className="text-center">Actions</TableHead>
-//             </TableRow>
-//           </TableHeader>
-//           <TableBody>
-//             {filtered.length > 0 ? filtered.map((e) => (
-//               <TableRow key={e.$id} className="hover:bg-[#1f2b4d] text-sm md:text-base border-b border-gray-700">
-//                 <TableCell>{e.name}</TableCell>
-//                 <TableCell>{e.location}</TableCell>
-//                 <TableCell>{e.date}</TableCell>
-//                 <TableCell>{e.persons}</TableCell>
-//                 <TableCell>{getStatusBadge(e.status)}</TableCell>
-//                 <TableCell className="text-center">
-//                   <DropdownMenu>
-//                     <DropdownMenuTrigger asChild>
-//                       <Button variant="ghost" size="sm" className="rounded-full text-white hover:bg-white/20">
-//                         <MoreHorizontal />
-//                       </Button>
-//                     </DropdownMenuTrigger>
-//                     <DropdownMenuContent className="bg-white text-[#14213D]">
-//                       <DropdownMenuItem onClick={() => openModal(e)}>Edit</DropdownMenuItem>
-//                       <DropdownMenuItem onClick={() => handleDelete(e.$id)}>Delete</DropdownMenuItem>
-//                     </DropdownMenuContent>
-//                   </DropdownMenu>
-//                 </TableCell>
-//               </TableRow>
-//             )) : (
-//               <TableRow>
-//                 <TableCell colSpan={6} className="text-center py-6 text-gray-300">
-//                   No events found.
-//                 </TableCell>
-//               </TableRow>
-//             )}
-//           </TableBody>
-//         </Table>
-//       </div>
-
-//       {/* Modal */}
-//       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-//         <DialogContent className="sm:max-w-lg w-[95%] rounded-xl">
-//           <DialogHeader>
-//             <DialogTitle className="text-lg font-semibold text-[#14213D]">
-//               {editingEvent ? "Edit Event" : "Add Event"}
-//             </DialogTitle>
-//           </DialogHeader>
-
-//           <div className="flex flex-col gap-4 mt-3">
-//             <Input
-//               placeholder="Event Name"
-//               value={form.name}
-//               onChange={(e) => setForm({ ...form, name: e.target.value })}
-//               className="bg-gray-50"
-//             />
-//             <Input
-//               placeholder="Location"
-//               value={form.location}
-//               onChange={(e) => setForm({ ...form, location: e.target.value })}
-//               className="bg-gray-50"
-//             />
-
-//             {/* Date Picker */}
-//             <Popover open={isDateOpen} onOpenChange={setIsDateOpen}>
-//               <PopoverTrigger asChild>
-//                 <Button
-//                   variant="outline"
-//                   className={cn(
-//                     "w-full justify-between bg-gray-50 text-left font-normal",
-//                     !form.date && "text-muted-foreground"
-//                   )}
-//                 >
-//                   {form.date ? format(new Date(form.date), "PPP") : "Pick a date"}
-//                   <CalendarIcon className="ml-2 h-5 w-5 opacity-70" />
-//                 </Button>
-//               </PopoverTrigger>
-//               <PopoverContent className="w-auto p-0 bg-white rounded-xl shadow-lg">
-//                 <Calendar
-//                   mode="single"
-//                   selected={form.date ? new Date(form.date) : undefined}
-//                   onSelect={(day) => {
-//                     if (day) {
-//                       setForm({ ...form, date: format(day, "yyyy-MM-dd") });
-//                       setIsDateOpen(false);
-//                     }
-//                   }}
-//                   initialFocus
-//                 />
-//               </PopoverContent>
-//             </Popover>
-
-//             {/* Persons Field */}
-//             <div className="flex items-center gap-2">
-//               <Button
-//                 type="button"
-//                 variant="outline"
-//                 size="icon"
-//                 onClick={() => setForm({ ...form, persons: Math.max(0, form.persons - 1) })}
-//               >
-//                 <Minus className="h-4 w-4" />
-//               </Button>
-//               <Input
-//                 type="number"
-//                 value={form.persons}
-//                 onChange={(e) => setForm({ ...form, persons: parseInt(e.target.value) || 0 })}
-//                 className="w-20 text-center bg-gray-50"
-//               />
-//               <Button
-//                 type="button"
-//                 variant="outline"
-//                 size="icon"
-//                 onClick={() => setForm({ ...form, persons: form.persons + 1 })}
-//               >
-//                 <Plus className="h-4 w-4" />
-//               </Button>
-//             </div>
-
-//             <Select
-//               value={form.status}
-//               onValueChange={(val) => setForm({ ...form, status: val })}
-//             >
-//               <SelectTrigger className="w-full bg-gray-50">
-//                 <SelectValue placeholder="Select status" />
-//               </SelectTrigger>
-//               <SelectContent>
-//                 <SelectItem value="Upcoming">Upcoming</SelectItem>
-//                 <SelectItem value="Live">Live</SelectItem>
-//                 <SelectItem value="Canceled">Canceled</SelectItem>
-//               </SelectContent>
-//             </Select>
-//           </div>
-
-//           <DialogFooter className="mt-4">
-//             <Button
-//               onClick={handleSave}
-//               className="rounded-lg px-6 bg-gradient-to-r from-[#14213D] to-[#6B7280] text-white w-full sm:w-auto"
-//             >
-//               {editingEvent ? "Update Event" : "Save Event"}
-//             </Button>
-//           </DialogFooter>
-//         </DialogContent>
-//       </Dialog>
-//     </div>
-//   );
-// }
-
-
-
-
-// date format nh shi bki sb ok hai
-
-// import React, { useState, useEffect } from "react";
-// import {
-//   Table, TableHeader, TableRow, TableHead, TableBody, TableCell
-// } from "@/components/ui/table";
-// import { Input } from "@/components/ui/input";
-// import { Button } from "@/components/ui/button";
-// import { toast } from "sonner";
-// import {
-//   MoreHorizontal, MapPin, Calendar as CalendarIcon, Users as UsersIcon, Minus, Plus
-// } from "lucide-react";
-// import {
-//   DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem
-// } from "@/components/ui/dropdown-menu";
-// import {
-//   Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter
-// } from "@/components/ui/dialog";
-// import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
-// import {
-//   Select, SelectTrigger, SelectValue, SelectContent, SelectItem
-// } from "@/components/ui/select";
-// import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
-// import { Calendar } from "@/components/ui/calendar";
-// import { format } from "date-fns";
-// import { cn } from "@/lib/utils";
-// import { Badge } from "@/components/ui/badge";
-// import { Client, Databases, ID } from "appwrite";
-
-// const client = new Client()
-//   .setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT)
-//   .setProject(import.meta.env.VITE_APPWRITE_PROJECT);
-
-// const databases = new Databases(client);
-// const EVENTS_COLLECTION = import.meta.env.VITE_APPWRITE_EVENTS_COLLECTION_ID;
-// const DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID;
-
-// export default function Events() {
-//   const [events, setEvents] = useState([]);
-//   const [search, setSearch] = useState("");
-//   const [isModalOpen, setIsModalOpen] = useState(false);
-//   const [form, setForm] = useState({ name: "", location: "", date: "", persons: 0, status: "Upcoming" });
-//   const [editingEvent, setEditingEvent] = useState(null);
-//   const [isDateOpen, setIsDateOpen] = useState(false);
-
-//   // Fetch events from Appwrite
-//   const fetchEvents = async () => {
-//     try {
-//       const response = await databases.listDocuments(DATABASE_ID, EVENTS_COLLECTION);
-//       const formattedEvents = response.documents.map(doc => ({
-//         id: doc.$id,
-//         name: doc.name,
-//         location: doc.location,
-//         date: doc.date,
-//         persons: doc.persons,
-//         status: doc.status
-//       }));
-//       setEvents(formattedEvents);
-//     } catch (err) {
-//       console.error(err);
-//       toast.error("Failed to fetch events.");
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchEvents();
-//   }, []);
-
-//   const filtered = events.filter((e) =>
-//     e.name.toLowerCase().includes(search.toLowerCase())
-//   );
-
-//   const openModal = (event = null) => {
-//     if (event) {
-//       setEditingEvent(event);
-//       setForm({ ...event });
-//     } else {
-//       setEditingEvent(null);
-//       setForm({ name: "", location: "", date: "", persons: 0, status: "Upcoming" });
-//     }
-//     setIsModalOpen(true);
-//   };
-
-//   const handleSave = async () => {
-//     if (!form.name || !form.location || !form.date || form.persons <= 0) {
-//       toast.error("All fields are required.");
-//       return;
-//     }
-
-//     try {
-//       if (editingEvent) {
-//         await databases.updateDocument(DATABASE_ID, EVENTS_COLLECTION, editingEvent.id, { ...form });
-//         toast.success("Event updated successfully!");
-//       } else {
-//         await databases.createDocument(DATABASE_ID, EVENTS_COLLECTION, ID.unique(), { ...form });
-//         toast.success("Event added successfully!");
-//       }
-//       fetchEvents();
-//       setIsModalOpen(false);
-//       setEditingEvent(null);
-//       setForm({ name: "", location: "", date: "", persons: 0, status: "Upcoming" });
-//     } catch (err) {
-//       console.error(err);
-//       toast.error("Failed to save event.");
-//     }
-//   };
-
-//   const handleDelete = async (id) => {
-//     try {
-//       await databases.deleteDocument(DATABASE_ID, EVENTS_COLLECTION, id);
-//       toast.success("Event deleted successfully.");
-//       fetchEvents();
-//     } catch (err) {
-//       console.error(err);
-//       toast.error("Failed to delete event.");
-//     }
-//   };
-
-//   const getStatusBadge = (status) => {
-//     let color = "bg-gray-100 text-gray-700";
-//     if (status === "Upcoming") color = "bg-blue-100 text-blue-700";
-//     if (status === "Live") color = "bg-green-100 text-green-700";
-//     if (status === "Canceled") color = "bg-red-100 text-red-700";
-//     return (
-//       <Badge className={cn("px-2 py-1 text-xs md:text-sm font-medium", color)}>
-//         {status}
-//       </Badge>
-//     );
-//   };
-
-//   return (
-//     <div className="space-y-6 w-full px-2 sm:px-4 bg-[#E5E5E5] min-h-screen py-6">
-//       {/* Heading */}
-//       <div>
-//         <h1 className="text-3xl md:text-3xl font-extrabold text-center text-[#14213D]">Events</h1>
-//         <p className="text-sm mt-2 text-center text-[#14213D]">
-//           Discover upcoming and past events with key details on dates, venues, and highlights.<br/> Stay informed and connected with everything that matters.
-//         </p>
-//       </div>
-
-//       {/* Search + Add Event */}
-//       <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
-//         <Input
-//           placeholder="Search events..."
-//           value={search}
-//           onChange={(e) => setSearch(e.target.value)}
-//           className="flex-1 rounded-lg w-full bg-white border-blue-950"
-//         />
-//         <Button
-//           onClick={() => openModal()}
-//           className="rounded-lg px-6 w-full sm:w-auto bg-[#14213D] text-white hover:opacity-90 transition"
-//         >
-//           + Add Event
-//         </Button>
-//       </div>
-
-//       {/* Event Cards */}
-//       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-//         {filtered.length === 0 && <p className="text-[#14213D] col-span-full text-center">No events found</p>}
-//         {filtered.map((e) => (
-//           <Card key={e.id} className="border rounded-2xl shadow-md hover:shadow-2xl transition-transform transform hover:-translate-y-1 bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white">
-//             <CardHeader className="flex flex-row items-center justify-between">
-//               <CardTitle className="text-xl font-semibold truncate">{e.name}</CardTitle>
-//               <div>{getStatusBadge(e.status)}</div>
-//             </CardHeader>
-//             <CardContent className="space-y-4 text-sm">
-//               <div className="flex items-center gap-2"><MapPin className="h-5 w-5 text-blue-300" /><span>{e.location}</span></div>
-//               <div className="flex items-center gap-2"><CalendarIcon className="h-5 w-5 text-green-300" /><span>{e.date}</span></div>
-//               <div className="flex items-center gap-2"><UsersIcon className="h-5 w-5 text-orange-300" /><span>{e.persons} persons</span></div>
-//             </CardContent>
-//           </Card>
-//         ))}
-//       </div>
-
-//       {/* Events Table */}
-//       <div className="rounded-xl border shadow-sm w-full overflow-hidden">
-//         <Table className="w-full bg-[#14213D] text-white">
-//           <TableHeader>
-//             <TableRow className="bg-[#0f192f]">
-//               <TableHead className="font-semibold px-4 py-3 text-white">Name</TableHead>
-//               <TableHead className="font-semibold px-4 py-3 text-white">Location</TableHead>
-//               <TableHead className="font-semibold px-4 py-3 text-white">Date</TableHead>
-//               <TableHead className="font-semibold px-4 py-3 text-white">Persons</TableHead>
-//               <TableHead className="font-semibold px-4 py-3 text-white">Status</TableHead>
-//               <TableHead className="font-semibold px-4 py-3 text-center text-white">Actions</TableHead>
-//             </TableRow>
-//           </TableHeader>
-//           <TableBody>
-//             {filtered.length > 0 ? (
-//               filtered.map((e) => (
-//                 <TableRow key={e.id} className="hover:bg-[#1f2b4d] text-sm md:text-base border-b border-gray-700">
-//                   <TableCell className="px-4 py-4">{e.name}</TableCell>
-//                   <TableCell className="px-4 py-4">{e.location}</TableCell>
-//                   <TableCell className="px-4 py-4">{e.date}</TableCell>
-//                   <TableCell className="px-4 py-4">{e.persons}</TableCell>
-//                   <TableCell className="px-4 py-4">{getStatusBadge(e.status)}</TableCell>
-//                   <TableCell className="px-4 py-4 text-center">
-//                     <DropdownMenu>
-//                       <DropdownMenuTrigger asChild>
-//                         <Button variant="ghost" size="sm" className="rounded-full text-white hover:bg-white/20">
-//                           <MoreHorizontal />
-//                         </Button>
-//                       </DropdownMenuTrigger>
-//                       <DropdownMenuContent className="bg-white text-[#14213D]">
-//                         <DropdownMenuItem onClick={() => openModal(e)}>Edit</DropdownMenuItem>
-//                         <DropdownMenuItem onClick={() => handleDelete(e.id)} className="cursor-pointer">Delete</DropdownMenuItem>
-//                       </DropdownMenuContent>
-//                     </DropdownMenu>
-//                   </TableCell>
-//                 </TableRow>
-//               ))
-//             ) : (
-//               <TableRow>
-//                 <TableCell colSpan={6} className="text-center py-6 text-gray-300">No events found.</TableCell>
-//               </TableRow>
-//             )}
-//           </TableBody>
-//         </Table>
-//       </div>
-
-//       {/* Modal */}
-//       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-//         <DialogContent className="sm:max-w-lg w-[95%] rounded-xl">
-//           <DialogHeader>
-//             <DialogTitle className="text-lg font-semibold text-[#14213D]">{editingEvent ? "Edit Event" : "Add Event"}</DialogTitle>
-//           </DialogHeader>
-
-//           <div className="flex flex-col gap-4 mt-3">
-//             <Input placeholder="Event Name" value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} className="bg-gray-50" />
-//             <Input placeholder="Location" value={form.location} onChange={(e) => setForm({ ...form, location: e.target.value })} className="bg-gray-50" />
-
-//             <Popover open={isDateOpen} onOpenChange={setIsDateOpen}>
-//               <PopoverTrigger asChild>
-//                 <Button variant="outline" className={cn("w-full justify-between bg-gray-50 text-left font-normal", !form.date && "text-muted-foreground")}>
-//                   {form.date ? format(new Date(form.date), "PPP") : <span>Pick a date</span>}
-//                   <CalendarIcon className="ml-2 h-5 w-5 opacity-70" />
-//                 </Button>
-//               </PopoverTrigger>
-//               <PopoverContent className="w-auto p-0 bg-white rounded-xl shadow-lg">
-//                 <Calendar mode="single" selected={form.date ? new Date(form.date) : undefined} onSelect={(day) => {
-//                   if (day) {
-//                     setForm({ ...form, date: format(day, "yyyy-MM-dd") });
-//                     setIsDateOpen(false);
-//                   }
-//                 }} initialFocus />
-//               </PopoverContent>
-//             </Popover>
-
-//             <div className="flex items-center gap-2">
-//               <Button type="button" variant="outline" size="icon" onClick={() => setForm({ ...form, persons: Math.max(0, form.persons - 1) })}><Minus className="h-4 w-4" /></Button>
-//               <Input type="number" value={form.persons} onChange={(e) => setForm({ ...form, persons: parseInt(e.target.value) || 0 })} className="w-20 text-center bg-gray-50" />
-//               <Button type="button" variant="outline" size="icon" onClick={() => setForm({ ...form, persons: form.persons + 1 })}><Plus className="h-4 w-4" /></Button>
-//             </div>
-
-//             <Select value={form.status} onValueChange={(val) => setForm({ ...form, status: val })}>
-//               <SelectTrigger className="w-full bg-gray-50">
-//                 <SelectValue placeholder="Select status" />
-//               </SelectTrigger>
-//               <SelectContent>
-//                 <SelectItem value="Upcoming">Upcoming</SelectItem>
-//                 <SelectItem value="Live">Live</SelectItem>
-//                 <SelectItem value="Canceled">Canceled</SelectItem>
-//               </SelectContent>
-//             </Select>
-//           </div>
-
-//           <DialogFooter className="mt-4">
-//             <Button onClick={handleSave} className="rounded-lg px-6 bg-gradient-to-r from-[#14213D] to-[#6B7280] text-white w-full sm:w-auto">
-//               {editingEvent ? "Update Event" : "Save Event"}
-//             </Button>
-//           </DialogFooter>
-//         </DialogContent>
-//       </Dialog>
-//     </div>
-//   );
-// }
-
-
-
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect } from 'react'
 import {
   Table,
   TableHeader,
   TableRow,
   TableHead,
   TableBody,
-  TableCell,
-} from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
+  TableCell
+} from '@/components/ui/table'
+import { Input } from '@/components/ui/input'
+import { Button } from '@/components/ui/button'
+import { toast } from 'sonner'
 import {
   MoreHorizontal,
   MapPin,
   Calendar as CalendarIcon,
   Users as UsersIcon,
   Minus,
-  Plus,
-} from "lucide-react";
+  Plus
+} from 'lucide-react'
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
-  DropdownMenuItem,
-} from "@/components/ui/dropdown-menu";
+  DropdownMenuItem
+} from '@/components/ui/dropdown-menu'
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+  DialogFooter
+} from '@/components/ui/dialog'
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import {
   Select,
   SelectTrigger,
   SelectValue,
   SelectContent,
-  SelectItem,
-} from "@/components/ui/select";
-import { Popover, PopoverTrigger, PopoverContent } from "@/components/ui/popover";
-import { Calendar } from "@/components/ui/calendar";
-import { format } from "date-fns";
-import { cn } from "@/lib/utils";
-import { Badge } from "@/components/ui/badge";
-
-import { Client, Databases } from "appwrite";
+  SelectItem
+} from '@/components/ui/select'
+import {
+  Popover,
+  PopoverTrigger,
+  PopoverContent
+} from '@/components/ui/popover'
+import { Calendar } from '@/components/ui/calendar'
+import { format, formatISO } from 'date-fns' // ✅ formatISO added
+import { cn } from '@/lib/utils'
+import { Badge } from '@/components/ui/badge'
+import { Client, Databases, ID } from 'appwrite'
 
 const client = new Client()
   .setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT)
-  .setProject(import.meta.env.VITE_APPWRITE_PROJECT);
+  .setProject(import.meta.env.VITE_APPWRITE_PROJECT)
 
-const databases = new Databases(client);
+const databases = new Databases(client)
+const EVENTS_COLLECTION = import.meta.env.VITE_APPWRITE_EVENTS_COLLECTION_ID
+const DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID
 
-export default function Events() {
-  const [events, setEvents] = useState([]);
-  const [search, setSearch] = useState("");
-  const [isModalOpen, setIsModalOpen] = useState(false);
+export default function Events () {
+  const [events, setEvents] = useState([])
+  const [search, setSearch] = useState('')
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const [form, setForm] = useState({
-    name: "",
-    location: "",
-    date: "",
+    name: '',
+    location: '',
+    date: '',
     persons: 0,
-    status: "Upcoming",
-  });
-  const [editingEvent, setEditingEvent] = useState(null);
-  const [isDateOpen, setIsDateOpen] = useState(false);
+    status: 'Upcoming'
+  })
+  const [editingEvent, setEditingEvent] = useState(null)
+  const [isDateOpen, setIsDateOpen] = useState(false)
 
   // Fetch events from Appwrite
   const fetchEvents = async () => {
     try {
-      const res = await databases.listDocuments(
-        import.meta.env.VITE_APPWRITE_DATABASE_ID,
-        import.meta.env.VITE_APPWRITE_EVENTS_COLLECTION_ID
-      );
-      setEvents(res.documents.map((doc) => ({ id: doc.$id, ...doc })));
+      const response = await databases.listDocuments(
+        DATABASE_ID,
+        EVENTS_COLLECTION
+      )
+      const formattedEvents = response.documents.map(doc => ({
+        id: doc.$id,
+        name: doc.name,
+        location: doc.location,
+        // Convert Appwrite datetime to readable date
+        date: doc.date ? format(new Date(doc.date), 'yyyy-MM-dd') : '',
+        persons: doc.persons,
+        status: doc.status
+      }))
+      setEvents(formattedEvents)
     } catch (err) {
-      console.error("Appwrite fetch error:", err);
-      toast.error("Failed to fetch events. Check Appwrite permissions.");
+      console.error(err)
+      toast.error('Failed to fetch events.')
     }
-  };
+  }
 
   useEffect(() => {
-    fetchEvents();
-  }, []);
+    fetchEvents()
+  }, [])
 
-  const filtered = events.filter((e) =>
+  const filtered = events.filter(e =>
     e.name.toLowerCase().includes(search.toLowerCase())
-  );
+  )
 
   const openModal = (event = null) => {
     if (event) {
-      setEditingEvent(event);
-      setForm({
-        name: event.name,
-        location: event.location,
-        date: event.date,
-        persons: event.persons,
-        status: event.status,
-      });
+      setEditingEvent(event)
+      setForm({ ...event })
     } else {
-      setEditingEvent(null);
-      setForm({ name: "", location: "", date: "", persons: 0, status: "Upcoming" });
+      setEditingEvent(null)
+      setForm({
+        name: '',
+        location: '',
+        date: '',
+        persons: 0,
+        status: 'Upcoming'
+      })
     }
-    setIsModalOpen(true);
-  };
+    setIsModalOpen(true)
+  }
 
   const handleSave = async () => {
     if (!form.name || !form.location || !form.date || form.persons <= 0) {
-      toast.error("All fields are required.", {
-        style: {
-          background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))",
-          color: "#FFFFFF",
-          backdropFilter: "blur(12px)",
-          border: "1px solid rgba(255,255,255,0.2)",
-          borderRadius: "1rem",
-          padding: "14px 22px",
-          fontWeight: "600",
-          boxShadow: "0 8px 20px rgba(0,0,0,0.25)",
-          transition: "all 0.3s ease",
-        },
-      });
-      return;
+      toast.error('All fields are required.')
+      return
     }
 
     try {
+      // Convert to full ISO string for Appwrite datetime
+      const payload = {
+        ...form,
+        date: new Date(form.date).toISOString() // ✅ ISO format
+      }
+
       if (editingEvent) {
         await databases.updateDocument(
-          import.meta.env.VITE_APPWRITE_DATABASE_ID,
-          import.meta.env.VITE_APPWRITE_EVENTS_COLLECTION_ID,
+          DATABASE_ID,
+          EVENTS_COLLECTION,
           editingEvent.id,
-          form
-        );
-        toast.success("Event updated successfully!", {
-          style: {
-            background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))",
-            color: "#FFFFFF",
-            backdropFilter: "blur(12px)",
-            border: "1px solid rgba(255,255,255,0.2)",
-            borderRadius: "1rem",
-            padding: "14px 22px",
-            fontWeight: "600",
-            boxShadow: "0 8px 20px rgba(0,0,0,0.25)",
-            transition: "all 0.3s ease",
-          },
-        });
+          payload
+        )
+        toast.success('Event updated successfully!')
       } else {
-        const res = await databases.createDocument(
-          import.meta.env.VITE_APPWRITE_DATABASE_ID,
-          import.meta.env.VITE_APPWRITE_EVENTS_COLLECTION_ID,
-          crypto.randomUUID(),
-          form
-        );
-        toast.success("Event added successfully!", {
-          style: {
-            background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))",
-            color: "#FFFFFF",
-            backdropFilter: "blur(12px)",
-            border: "1px solid rgba(255,255,255,0.2)",
-            borderRadius: "1rem",
-            padding: "14px 22px",
-            fontWeight: "600",
-            boxShadow: "0 8px 20px rgba(0,0,0,0.25)",
-            transition: "all 0.3s ease",
-          },
-        });
+        await databases.createDocument(
+          DATABASE_ID,
+          EVENTS_COLLECTION,
+          ID.unique(),
+          payload
+        )
+        toast.success('Event added successfully!')
       }
-      fetchEvents();
-      setIsModalOpen(false);
-      setEditingEvent(null);
-      setForm({ name: "", location: "", date: "", persons: 0, status: "Upcoming" });
-    } catch (err) {
-      console.error("Appwrite save error:", err);
-      toast.error("Failed to save event. Check Appwrite permissions.");
-    }
-  };
 
-  const handleDelete = async (id) => {
+      fetchEvents()
+      setIsModalOpen(false)
+      setEditingEvent(null)
+      setForm({
+        name: '',
+        location: '',
+        date: '',
+        persons: 0,
+        status: 'Upcoming'
+      })
+    } catch (err) {
+      console.error(err)
+      toast.error('Failed to save event.')
+    }
+  }
+
+  const handleDelete = async id => {
     try {
-      await databases.deleteDocument(
-        import.meta.env.VITE_APPWRITE_DATABASE_ID,
-        import.meta.env.VITE_APPWRITE_EVENTS_COLLECTION_ID,
-        id
-      );
-      toast.error("Event deleted successfully.", {
-        style: {
-          background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))",
-          color: "#FFFFFF",
-          backdropFilter: "blur(12px)",
-          border: "1px solid rgba(255,255,255,0.2)",
-          borderRadius: "1rem",
-          padding: "14px 22px",
-          fontWeight: "600",
-          boxShadow: "0 8px 20px rgba(0,0,0,0.25)",
-          transition: "all 0.3s ease",
-        },
-      });
-      fetchEvents();
+      await databases.deleteDocument(DATABASE_ID, EVENTS_COLLECTION, id)
+      toast.success('Event deleted successfully.')
+      fetchEvents()
     } catch (err) {
-      console.error("Appwrite delete error:", err);
-      toast.error("Failed to delete event.");
+      console.error(err)
+      toast.error('Failed to delete event.')
     }
-  };
+  }
 
-  const getStatusBadge = (status) => {
-    let color = "bg-gray-100 text-gray-700";
-    if (status === "Upcoming") color = "bg-blue-100 text-blue-700";
-    if (status === "Live") color = "bg-green-100 text-green-700";
-    if (status === "Canceled") color = "bg-red-100 text-red-700";
-
+  const getStatusBadge = status => {
+    let color = 'bg-gray-100 text-gray-700'
+    if (status === 'Upcoming') color = 'bg-blue-100 text-blue-700'
+    if (status === 'Live') color = 'bg-green-100 text-green-700'
+    if (status === 'Canceled') color = 'bg-red-100 text-red-700'
     return (
-      <Badge className={cn("px-2 py-1 text-xs md:text-sm font-medium", color)}>
+      <Badge className={cn('px-2 py-1 text-xs md:text-sm font-medium', color)}>
         {status}
       </Badge>
-    );
-  };
+    )
+  }
 
   return (
-    <div className="space-y-6 w-full px-2 sm:px-4 bg-[#E5E5E5] min-h-screen py-6">
+    <div className='space-y-6 w-full px-2 sm:px-4 bg-[#E5E5E5] min-h-screen py-6'>
       {/* Heading */}
       <div>
-        <h1 className="text-3xl md:text-3xl  font-extrabold text-center text-[#14213D]">
+        <h1 className='text-3xl md:text-3xl font-extrabold text-center text-[#14213D]'>
           Events
         </h1>
-        <p className="text-sm mt-2 text-center text-[#14213D]">
-          Discover upcoming and past events with key details on dates, venues, and highlights.<br />
-          Stay informed and connected with everything that matters.
+        <p className='text-sm mt-2 text-center text-[#14213D]'>
+          Discover upcoming and past events with key details on dates, venues,
+          and highlights.
+          <br /> Stay informed and connected with everything that matters.
         </p>
       </div>
 
       {/* Search + Add Event */}
-      <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+      <div className='flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3'>
         <Input
-          placeholder="Search events..."
+          placeholder='Search events...'
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="flex-1 rounded-lg w-full bg-white border-blue-950"
+          onChange={e => setSearch(e.target.value)}
+          className='flex-1 rounded-lg w-full bg-white border-blue-950'
         />
         <Button
           onClick={() => openModal()}
-          className="rounded-lg px-6 w-full sm:w-auto bg-[#14213D] text-white hover:opacity-90 transition"
+          className='rounded-lg px-6 w-full sm:w-auto bg-[#14213D] text-white hover:opacity-90 transition'
         >
           + Add Event
         </Button>
       </div>
 
       {/* Event Cards */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
         {filtered.length === 0 && (
-          <p className="text-[#14213D] col-span-full text-center">No events found</p>
+          <p className='text-[#14213D] col-span-full text-center'>
+            No events found
+          </p>
         )}
-        {filtered.map((e) => (
+        {filtered.map(e => (
           <Card
             key={e.id}
-            className="border rounded-2xl shadow-md hover:shadow-2xl transition-transform transform hover:-translate-y-1 bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white"
+            className='border rounded-2xl shadow-md hover:shadow-2xl transition-transform transform hover:-translate-y-1 bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white'
           >
-            <CardHeader className="flex flex-row items-center justify-between">
-              <CardTitle className="text-xl font-semibold truncate">{e.name}</CardTitle>
+            <CardHeader className='flex flex-row items-center justify-between'>
+              <CardTitle className='text-xl font-semibold truncate'>
+                {e.name}
+              </CardTitle>
               <div>{getStatusBadge(e.status)}</div>
             </CardHeader>
-
-            <CardContent className="space-y-4 text-sm">
-              <div className="flex items-center gap-2">
-                <MapPin className="h-5 w-5 text-blue-300" />
+            <CardContent className='space-y-4 text-sm'>
+              <div className='flex items-center gap-2'>
+                <MapPin className='h-5 w-5 text-blue-300' />
                 <span>{e.location}</span>
               </div>
-              <div className="flex items-center gap-2">
-                <CalendarIcon className="h-5 w-5 text-green-300" />
+              <div className='flex items-center gap-2'>
+                <CalendarIcon className='h-5 w-5 text-green-300' />
                 <span>{e.date}</span>
               </div>
-              <div className="flex items-center gap-2">
-                <UsersIcon className="h-5 w-5 text-orange-300" />
+              <div className='flex items-center gap-2'>
+                <UsersIcon className='h-5 w-5 text-orange-300' />
                 <span>{e.persons} persons</span>
               </div>
             </CardContent>
@@ -1358,45 +679,63 @@ export default function Events() {
       </div>
 
       {/* Events Table */}
-      <div className="rounded-xl border shadow-sm w-full overflow-hidden">
-        <Table className="w-full bg-[#14213D] text-white">
+      <div className='rounded-xl border shadow-sm w-full overflow-hidden'>
+        <Table className='w-full bg-[#14213D] text-white'>
           <TableHeader>
-            <TableRow className="bg-[#0f192f]">
-              <TableHead className="font-semibold px-4 py-3 text-white">Name</TableHead>
-              <TableHead className="font-semibold px-4 py-3 text-white">Location</TableHead>
-              <TableHead className="font-semibold px-4 py-3 text-white">Date</TableHead>
-              <TableHead className="font-semibold px-4 py-3 text-white">Persons</TableHead>
-              <TableHead className="font-semibold px-4 py-3 text-white">Status</TableHead>
-              <TableHead className="font-semibold px-4 py-3 text-center text-white">Actions</TableHead>
+            <TableRow className='bg-[#0f192f]'>
+              <TableHead className='font-semibold px-4 py-3 text-white'>
+                Name
+              </TableHead>
+              <TableHead className='font-semibold px-4 py-3 text-white'>
+                Location
+              </TableHead>
+              <TableHead className='font-semibold px-4 py-3 text-white'>
+                Date
+              </TableHead>
+              <TableHead className='font-semibold px-4 py-3 text-white'>
+                Persons
+              </TableHead>
+              <TableHead className='font-semibold px-4 py-3 text-white'>
+                Status
+              </TableHead>
+              <TableHead className='font-semibold px-4 py-3 text-center text-white'>
+                Actions
+              </TableHead>
             </TableRow>
           </TableHeader>
-
           <TableBody>
             {filtered.length > 0 ? (
-              filtered.map((e) => (
+              filtered.map(e => (
                 <TableRow
                   key={e.id}
-                  className="hover:bg-[#1f2b4d] text-sm md:text-base border-b border-gray-700"
+                  className='hover:bg-[#1f2b4d] text-sm md:text-base border-b border-gray-700'
                 >
-                  <TableCell className="px-4 py-4">{e.name}</TableCell>
-                  <TableCell className="px-4 py-4">{e.location}</TableCell>
-                  <TableCell className="px-4 py-4">{e.date}</TableCell>
-                  <TableCell className="px-4 py-4">{e.persons}</TableCell>
-                  <TableCell className="px-4 py-4">{getStatusBadge(e.status)}</TableCell>
-                  <TableCell className="px-4 py-4 text-center">
+                  <TableCell className='px-4 py-4'>{e.name}</TableCell>
+                  <TableCell className='px-4 py-4'>{e.location}</TableCell>
+                  <TableCell className='px-4 py-4'>{e.date}</TableCell>
+                  <TableCell className='px-4 py-4'>{e.persons}</TableCell>
+                  <TableCell className='px-4 py-4'>
+                    {getStatusBadge(e.status)}
+                  </TableCell>
+                  <TableCell className='px-4 py-4 text-center'>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
                         <Button
-                          variant="ghost"
-                          size="sm"
-                          className="rounded-full text-white hover:bg-white/20"
+                          variant='ghost'
+                          size='sm'
+                          className='rounded-full text-white hover:bg-white/20'
                         >
                           <MoreHorizontal />
                         </Button>
                       </DropdownMenuTrigger>
-                      <DropdownMenuContent className="bg-white text-[#14213D]">
-                        <DropdownMenuItem onClick={() => openModal(e)}>Edit</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleDelete(e.id)} className="cursor-pointer">
+                      <DropdownMenuContent className='bg-white text-[#14213D]'>
+                        <DropdownMenuItem onClick={() => openModal(e)}>
+                          Edit
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={() => handleDelete(e.id)}
+                          className='cursor-pointer'
+                        >
                           Delete
                         </DropdownMenuItem>
                       </DropdownMenuContent>
@@ -1406,7 +745,10 @@ export default function Events() {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={6} className="text-center py-6 text-gray-300">
+                <TableCell
+                  colSpan={6}
+                  className='text-center py-6 text-gray-300'
+                >
                   No events found.
                 </TableCell>
               </TableRow>
@@ -1417,50 +759,53 @@ export default function Events() {
 
       {/* Modal */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="sm:max-w-lg w-[95%] rounded-xl">
+        <DialogContent className='sm:max-w-lg w-[95%] rounded-xl'>
           <DialogHeader>
-            <DialogTitle className="text-lg font-semibold text-[#14213D]">
-              {editingEvent ? "Edit Event" : "Add Event"}
+            <DialogTitle className='text-lg font-semibold text-[#14213D]'>
+              {editingEvent ? 'Edit Event' : 'Add Event'}
             </DialogTitle>
           </DialogHeader>
 
-          <div className="flex flex-col gap-4 mt-3">
+          <div className='flex flex-col gap-4 mt-3'>
             <Input
-              placeholder="Event Name"
+              placeholder='Event Name'
               value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
-              className="bg-gray-50"
+              onChange={e => setForm({ ...form, name: e.target.value })}
+              className='bg-gray-50'
             />
             <Input
-              placeholder="Location"
+              placeholder='Location'
               value={form.location}
-              onChange={(e) => setForm({ ...form, location: e.target.value })}
-              className="bg-gray-50"
+              onChange={e => setForm({ ...form, location: e.target.value })}
+              className='bg-gray-50'
             />
 
-            {/* Shadcn Date Picker */}
             <Popover open={isDateOpen} onOpenChange={setIsDateOpen}>
               <PopoverTrigger asChild>
                 <Button
-                  variant="outline"
+                  variant='outline'
                   className={cn(
-                    "w-full justify-between bg-gray-50 text-left font-normal",
-                    !form.date && "text-muted-foreground"
+                    'w-full justify-between bg-gray-50 text-left font-normal',
+                    !form.date && 'text-muted-foreground'
                   )}
                 >
-                  {form.date || <span>Pick a date (YYYY-MM-DD)</span>}
-                  <CalendarIcon className="ml-2 h-5 w-5 opacity-70" />
+                  {form.date ? (
+                    format(new Date(form.date), 'PPP')
+                  ) : (
+                    <span>Pick a date</span>
+                  )}
+                  <CalendarIcon className='ml-2 h-5 w-5 opacity-70' />
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className="w-auto p-0 bg-white rounded-xl shadow-lg">
+              <PopoverContent className='w-auto p-0 bg-white rounded-xl shadow-lg'>
                 <Calendar
-                  mode="single"
+                  mode='single'
                   selected={form.date ? new Date(form.date) : undefined}
-                  onSelect={(day) => {
+                  onSelect={day => {
                     if (day) {
-                      const formattedDate = format(day, "yyyy-MM-dd");
-                      setForm({ ...form, date: formattedDate });
-                      setIsDateOpen(false);
+                      // setForm({ ...form, date: format(day, "yyyy-MM-dd") });
+                      setForm({ ...form, date: formatISO(day) }) // ✅ ISO for Appwrite
+                      setIsDateOpen(false)
                     }
                   }}
                   initialFocus
@@ -1468,59 +813,60 @@ export default function Events() {
               </PopoverContent>
             </Popover>
 
-            {/* Persons Field */}
-            <div className="flex items-center gap-2">
+            <div className='flex items-center gap-2'>
               <Button
-                type="button"
-                variant="outline"
-                size="icon"
-                onClick={() => setForm({ ...form, persons: Math.max(0, form.persons - 1) })}
+                type='button'
+                variant='outline'
+                size='icon'
+                onClick={() =>
+                  setForm({ ...form, persons: Math.max(0, form.persons - 1) })
+                }
               >
-                <Minus className="h-4 w-4" />
+                <Minus className='h-4 w-4' />
               </Button>
-
               <Input
-                type="number"
+                type='number'
                 value={form.persons}
-                onChange={(e) => setForm({ ...form, persons: parseInt(e.target.value) || 0 })}
-                className="w-20 text-center bg-gray-50"
+                onChange={e =>
+                  setForm({ ...form, persons: parseInt(e.target.value) || 0 })
+                }
+                className='w-20 text-center bg-gray-50'
               />
-
               <Button
-                type="button"
-                variant="outline"
-                size="icon"
+                type='button'
+                variant='outline'
+                size='icon'
                 onClick={() => setForm({ ...form, persons: form.persons + 1 })}
               >
-                <Plus className="h-4 w-4" />
+                <Plus className='h-4 w-4' />
               </Button>
             </div>
 
             <Select
               value={form.status}
-              onValueChange={(val) => setForm({ ...form, status: val })}
+              onValueChange={val => setForm({ ...form, status: val })}
             >
-              <SelectTrigger className="w-full bg-gray-50">
-                <SelectValue placeholder="Select status" />
+              <SelectTrigger className='w-full bg-gray-50'>
+                <SelectValue placeholder='Select status' />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="Upcoming">Upcoming</SelectItem>
-                <SelectItem value="Live">Live</SelectItem>
-                <SelectItem value="Canceled">Canceled</SelectItem>
+                <SelectItem value='Upcoming'>Upcoming</SelectItem>
+                <SelectItem value='Live'>Live</SelectItem>
+                <SelectItem value='Canceled'>Canceled</SelectItem>
               </SelectContent>
             </Select>
           </div>
 
-          <DialogFooter className="mt-4">
+          <DialogFooter className='mt-4'>
             <Button
               onClick={handleSave}
-              className="rounded-lg px-6 bg-gradient-to-r from-[#14213D] to-[#6B7280] text-white w-full sm:w-auto"
+              className='rounded-lg px-6 bg-gradient-to-r from-[#14213D] to-[#6B7280] text-white w-full sm:w-auto'
             >
-              {editingEvent ? "Update Event" : "Save Event"}
+              {editingEvent ? 'Update Event' : 'Save Event'}
             </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>
     </div>
-  );
+  )
 }
