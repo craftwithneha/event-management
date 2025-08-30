@@ -542,52 +542,7 @@ export default function Events () {
     setIsModalOpen(true)
   }
 
-  // const handleSave = async () => {
-  //   if (!form.name || !form.location || !form.date || form.persons <= 0) {
-  //     toast.error('All fields are required.')
-  //     return
-  //   }
-
-  //   try {
-  //     // Convert to full ISO string for Appwrite datetime
-  //     const payload = {
-  //       ...form,
-  //       date: new Date(form.date).toISOString() // ✅ ISO format
-  //     }
-
-  //     if (editingEvent) {
-  //       await databases.updateDocument(
-  //         DATABASE_ID,
-  //         EVENTS_COLLECTION,
-  //         editingEvent.id,
-  //         payload
-  //       )
-  //       toast.success('Event updated successfully!')
-  //     } else {
-  //       await databases.createDocument(
-  //         DATABASE_ID,
-  //         EVENTS_COLLECTION,
-  //         ID.unique(),
-  //         payload
-  //       )
-  //       toast.success('Event added successfully!')
-  //     }
-
-  //     fetchEvents()
-  //     setIsModalOpen(false)
-  //     setEditingEvent(null)
-  //     setForm({
-  //       name: '',
-  //       location: '',
-  //       date: '',
-  //       persons: 0,
-  //       status: 'Upcoming'
-  //     })
-  //   } catch (err) {
-  //     console.error(err)
-  //     toast.error('Failed to save event.')
-  //   }
-  // }
+ 
   const handleSave = async () => {
   if (!form.name || !form.location || !form.date || form.persons <= 0) {
     toast.error('All fields are required.')
