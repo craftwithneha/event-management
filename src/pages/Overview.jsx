@@ -164,262 +164,6 @@
 // }
 
 
-
-// ok wla km bs events k cards ki styling
-
-// import React, { useEffect, useState } from "react";
-// import {
-//   Card,
-//   CardHeader,
-//   CardTitle,
-//   CardContent,
-// } from "@/components/ui/card";
-// import {
-//   LineChart,
-//   Line,
-//   XAxis,
-//   YAxis,
-//   CartesianGrid,
-//   Tooltip,
-//   BarChart,
-//   Bar,
-//   ResponsiveContainer,
-// } from "recharts";
-// import { Client, Databases, Query } from "appwrite";
-
-// // ✅ Appwrite setup
-// const client = new Client()
-//   .setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT)
-//   .setProject(import.meta.env.VITE_APPWRITE_PROJECT);
-
-// const databases = new Databases(client);
-
-// export default function Overview() {
-//   const [users, setUsers] = useState([]);
-//   const [events, setEvents] = useState([]);
-//   const [locations, setLocations] = useState([]);
-
-//   useEffect(() => {
-//     const fetchData = async () => {
-//       try {
-//         // Users
-//         const usersRes = await databases.listDocuments(
-//           import.meta.env.VITE_APPWRITE_DATABASE_ID,
-//           import.meta.env.VITE_APPWRITE_USERS_COLLECTION_ID
-//         );
-//         setUsers(usersRes.documents);
-
-//         // Events
-//         const eventsRes = await databases.listDocuments(
-//           import.meta.env.VITE_APPWRITE_DATABASE_ID,
-//           import.meta.env.VITE_APPWRITE_EVENTS_COLLECTION_ID
-//         );
-//         setEvents(eventsRes.documents);
-
-//         // Locations
-//         const locationsRes = await databases.listDocuments(
-//           import.meta.env.VITE_APPWRITE_DATABASE_ID,
-//           import.meta.env.VITE_APPWRITE_LOCATIONS_COLLECTION_ID
-//         );
-//         setLocations(locationsRes.documents);
-//       } catch (err) {
-//         console.error("Appwrite fetch error:", err);
-//       }
-//     };
-
-//     fetchData();
-//   }, []);
-
-//   // 🔹 Prepare Jan–Dec data
-//   const year = new Date().getFullYear();
-//   const months = Array.from({ length: 12 }, (_, i) => ({
-//     month: new Date(year, i).toLocaleString("default", { month: "short" }),
-//     num: i,
-//   }));
-
-//   // Users per month (cumulative)
-//   const userGrowth = months.map((m) => {
-//     const count = users.filter((u) => {
-//       const created = new Date(u.$createdAt);
-//       return created.getMonth() === m.num && created.getFullYear() === year;
-//     }).length;
-//     return { month: m.month, users: count };
-//   });
-
-//   // Events per month
-//   const eventsCreated = months.map((m) => {
-//     const count = events.filter((e) => {
-//       if (!e.date) return false;
-//       const d = new Date(e.date);
-//       return d.getMonth() === m.num && d.getFullYear() === year;
-//     }).length;
-//     return { month: m.month, events: count };
-//   });
-
-//   // 🔹 Filter Events by Status
-//   const upcomingEvents = events.filter((e) => e.status === "Upcoming");
-//   const liveEvents = events.filter((e) => e.status === "Live");
-//   const canceledEvents = events.filter((e) => e.status === "Canceled");
-
-//   return (
-//     <div className="space-y-6 min-h-screen w-full bg-[#E5E5E5] p-6">
-//       {/* Top Stats */}
-//       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-//         <Card className="p-4 bg-[#14213D] text-white">
-//           <CardHeader>
-//             <CardTitle>Total Users</CardTitle>
-//           </CardHeader>
-//           <CardContent>
-//             <p className="text-2xl font-bold">{users.length}</p>
-//           </CardContent>
-//         </Card>
-//         <Card className="p-4 bg-[#14213D] text-white">
-//           <CardHeader>
-//             <CardTitle>Total Events</CardTitle>
-//           </CardHeader>
-//           <CardContent>
-//             <p className="text-2xl font-bold">{events.length}</p>
-//           </CardContent>
-//         </Card>
-//         <Card className="p-4 bg-[#14213D] text-white">
-//           <CardHeader>
-//             <CardTitle>Total Locations</CardTitle>
-//           </CardHeader>
-//           <CardContent>
-//             <p className="text-2xl font-bold">{locations.length}</p>
-//           </CardContent>
-//         </Card>
-//         <Card className="p-4 bg-[#14213D] text-white">
-//           <CardHeader>
-//             <CardTitle>Avg Rating</CardTitle>
-//           </CardHeader>
-//           <CardContent>
-//             <p className="text-2xl font-bold">4.6</p>
-//           </CardContent>
-//         </Card>
-//       </div>
-
-//       {/* Charts */}
-//       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-//         {/* Users Growth */}
-//         <Card>
-//           <CardHeader>
-//             <CardTitle>User Growth (Jan–Dec)</CardTitle>
-//           </CardHeader>
-//           <CardContent className="h-64">
-//             <ResponsiveContainer width="100%" height="100%">
-//               <LineChart data={userGrowth}>
-//                 <CartesianGrid strokeDasharray="3 3" />
-//                 <XAxis dataKey="month" />
-//                 <YAxis />
-//                 <Tooltip />
-//                 <Line type="monotone" dataKey="users" stroke="#14213D" />
-//               </LineChart>
-//             </ResponsiveContainer>
-//           </CardContent>
-//         </Card>
-
-//         {/* Events Created */}
-//         <Card>
-//           <CardHeader>
-//             <CardTitle>Events Created (Jan–Dec)</CardTitle>
-//           </CardHeader>
-//           <CardContent className="h-64">
-//             <ResponsiveContainer width="100%" height="100%">
-//               <BarChart data={eventsCreated}>
-//                 <CartesianGrid strokeDasharray="3 3" />
-//                 <XAxis dataKey="month" />
-//                 <YAxis />
-//                 <Tooltip />
-//                 <Bar dataKey="events" fill="#14213D" radius={[4, 4, 0, 0]} />
-//               </BarChart>
-//             </ResponsiveContainer>
-//           </CardContent>
-//         </Card>
-//       </div>
-
-//       {/* Event Status Cards */}
-//       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-//         {/* Upcoming */}
-//         <Card>
-//           <CardHeader>
-//             <CardTitle className="text-blue-600">Upcoming Events</CardTitle>
-//           </CardHeader>
-//           <CardContent>
-//             {upcomingEvents.length === 0 ? (
-//               <p className="text-sm text-gray-500">No upcoming events</p>
-//             ) : (
-//               <ul className="space-y-2">
-//                 {upcomingEvents.map((e) => (
-//                   <li key={e.$id} className="border-b pb-1">
-//                     <p className="font-medium">{e.name}</p>
-//                     <p className="text-xs text-gray-500">
-//                       {new Date(e.date).toLocaleDateString("en-US")}
-//                     </p>
-//                     <p className="text-xs">{e.persons || 0} persons</p>
-//                   </li>
-//                 ))}
-//               </ul>
-//             )}
-//           </CardContent>
-//         </Card>
-
-//         {/* Live */}
-//         <Card>
-//           <CardHeader>
-//             <CardTitle className="text-green-600">Live Events</CardTitle>
-//           </CardHeader>
-//           <CardContent>
-//             {liveEvents.length === 0 ? (
-//               <p className="text-sm text-gray-500">No live events</p>
-//             ) : (
-//               <ul className="space-y-2">
-//                 {liveEvents.map((e) => (
-//                   <li key={e.$id} className="border-b pb-1">
-//                     <p className="font-medium">{e.name}</p>
-//                     <p className="text-xs text-gray-500">
-//                       {new Date(e.date).toLocaleDateString("en-US")}
-//                     </p>
-//                     <p className="text-xs">{e.persons || 0} persons</p>
-//                   </li>
-//                 ))}
-//               </ul>
-//             )}
-//           </CardContent>
-//         </Card>
-
-//         {/* Canceled */}
-//         <Card>
-//           <CardHeader>
-//             <CardTitle className="text-red-600">Canceled Events</CardTitle>
-//           </CardHeader>
-//           <CardContent>
-//             {canceledEvents.length === 0 ? (
-//               <p className="text-sm text-gray-500">No canceled events</p>
-//             ) : (
-//               <ul className="space-y-2">
-//                 {canceledEvents.map((e) => (
-//                   <li key={e.$id} className="border-b pb-1">
-//                     <p className="font-medium">{e.name}</p>
-//                     <p className="text-xs text-gray-500">
-//                       {new Date(e.date).toLocaleDateString("en-US")}
-//                     </p>
-//                     <p className="text-xs">{e.persons || 0} persons</p>
-//                   </li>
-//                 ))}
-//               </ul>
-//             )}
-//           </CardContent>
-//         </Card>
-//       </div>
-//     </div>
-//   );
-// }
-
-
-
-
-
 import React, { useEffect, useState } from "react";
 import {
   Card,
@@ -439,7 +183,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { Client, Databases } from "appwrite";
-import { Users } from "lucide-react";
+import { Users, CalendarDays, MapPin } from "lucide-react"; 
 
 // ✅ Appwrite setup
 const client = new Client()
@@ -534,7 +278,7 @@ export default function Overview() {
               </p>
             </div>
             <div className="flex items-center text-xs text-gray-600">
-              <Users className="w-4 h-4 mr-1" />
+              <Users className="w-4 h-4 mr-1 text-blue-400" />
               {e.persons || 0}
             </div>
           </li>
@@ -546,37 +290,40 @@ export default function Overview() {
   return (
     <div className="space-y-6 min-h-screen w-full bg-[#E5E5E5] p-6">
       {/* Top Stats */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card className="p-4 bg-[#14213D] text-white">
-          <CardHeader>
-            <CardTitle>Total Users</CardTitle>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Users Card */}
+        <Card className="p-4 bg-[#14213D] text-white shadow-md rounded-2xl transition-transform transform hover:scale-105 hover:shadow-lg">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-lg font-semibold">Total Users</CardTitle>
+            <Users className="h-6 w-6 text-blue-400" />
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">{users.length}</p>
+            <p className="text-3xl font-bold">{users.length}</p>
+            <p className="text-sm text-gray-400 mt-1">Registered on the platform</p>
           </CardContent>
         </Card>
-        <Card className="p-4 bg-[#14213D] text-white">
-          <CardHeader>
-            <CardTitle>Total Events</CardTitle>
+
+        {/* Events Card */}
+        <Card className="p-4 bg-[#14213D] text-white shadow-md rounded-2xl transition-transform transform hover:scale-105 hover:shadow-lg">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-lg font-semibold">Total Events</CardTitle>
+            <CalendarDays className="h-6 w-6 text-green-400" />
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">{events.length}</p>
+            <p className="text-3xl font-bold">{events.length}</p>
+            <p className="text-sm text-gray-400 mt-1">Scheduled & Completed</p>
           </CardContent>
         </Card>
-        <Card className="p-4 bg-[#14213D] text-white">
-          <CardHeader>
-            <CardTitle>Total Locations</CardTitle>
+
+        {/* Locations Card */}
+        <Card className="p-4 bg-[#14213D] text-white shadow-md rounded-2xl transition-transform transform hover:scale-105 hover:shadow-lg">
+          <CardHeader className="flex flex-row items-center justify-between pb-2">
+            <CardTitle className="text-lg font-semibold">Total Locations</CardTitle>
+            <MapPin className="h-6 w-6 text-red-400" />
           </CardHeader>
           <CardContent>
-            <p className="text-2xl font-bold">{locations.length}</p>
-          </CardContent>
-        </Card>
-        <Card className="p-4 bg-[#14213D] text-white">
-          <CardHeader>
-            <CardTitle>Avg Rating</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-2xl font-bold">4.6</p>
+            <p className="text-3xl font-bold">{locations.length}</p>
+            <p className="text-sm text-gray-400 mt-1">Available for events</p>
           </CardContent>
         </Card>
       </div>
@@ -586,7 +333,7 @@ export default function Overview() {
         {/* Users Growth */}
         <Card>
           <CardHeader>
-            <CardTitle>User Growth (Jan–Dec)</CardTitle>
+            <CardTitle>User Growth</CardTitle>
           </CardHeader>
           <CardContent className="h-64">
             <ResponsiveContainer width="100%" height="100%">
@@ -604,7 +351,7 @@ export default function Overview() {
         {/* Events Created */}
         <Card>
           <CardHeader>
-            <CardTitle>Events Created (Jan–Dec)</CardTitle>
+            <CardTitle>Events Created</CardTitle>
           </CardHeader>
           <CardContent className="h-64">
             <ResponsiveContainer width="100%" height="100%">
@@ -621,26 +368,32 @@ export default function Overview() {
       </div>
 
       {/* Event Status Cards */}
-      <div className="grid grid-cols-1  ">
+      <div className="grid grid-cols-1">
         <Card className="mt-6">
           <CardHeader>
-            <CardTitle className="text-[#14213D] ">Upcoming Events</CardTitle>
+            <CardTitle className="text-[#14213D] text-2xl font-extrabold">
+              Upcoming Events
+            </CardTitle>
           </CardHeader>
-          <CardContent>{renderEvents(upcomingEvents)}</CardContent>
+          <CardContent className="text-gray-600">{renderEvents(upcomingEvents)}</CardContent>
         </Card>
 
         <Card className="mt-6">
           <CardHeader>
-            <CardTitle className="text-[#14213D]">Live Events</CardTitle>
+            <CardTitle className="text-[#14213D] text-2xl font-extrabold">
+              Live Events
+            </CardTitle>
           </CardHeader>
-          <CardContent>{renderEvents(liveEvents)}</CardContent>
+          <CardContent className="text-gray-600">{renderEvents(liveEvents)}</CardContent>
         </Card>
 
         <Card className="mt-6">
           <CardHeader>
-            <CardTitle className="text-[#14213D]">Canceled Events</CardTitle>
+            <CardTitle className="text-[#14213D] text-2xl font-extrabold">
+              Canceled Events
+            </CardTitle>
           </CardHeader>
-          <CardContent>{renderEvents(canceledEvents)}</CardContent>
+          <CardContent className="text-gray-600">{renderEvents(canceledEvents)}</CardContent>
         </Card>
       </div>
     </div>
