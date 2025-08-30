@@ -20,7 +20,14 @@ export default function Overview ({ users = [], events = [], locations = [] }) {
     { month: 'Feb', users: 120 },
     { month: 'Mar', users: 180 },
     { month: 'Apr', users: 220 },
-    { month: 'May', users: 300 }
+    { month: 'May', users: 300 },
+    { month: 'June', users: 350 },
+    { month: 'July', users: 400 },
+    { month: 'Aug', users: 450 },
+    { month: 'Sep', users: 500 },
+    { month: 'Oct', users: 700 },
+    { month: 'Nov', users:  650},
+    { month: 'Dec', users: 700 }
   ]
 
   const eventsCreated = [
@@ -28,7 +35,14 @@ export default function Overview ({ users = [], events = [], locations = [] }) {
     { month: 'Feb', events: 35 },
     { month: 'Mar', events: 25 },
     { month: 'Apr', events: 40 },
-    { month: 'May', events: 30 }
+    { month: 'May', events: 50 },
+    { month: 'June', events: 60 },
+    { month: 'July', events: 70 },
+    { month: 'Aug', events: 80 },
+    { month: 'Sep', events: 90 },
+    { month: 'Oct', events: 100 },
+    { month: 'Nov', events: 110 },
+    { month: 'Dec', events: 120 },
   ]
 
   const upcomingEvents = [
@@ -81,9 +95,9 @@ export default function Overview ({ users = [], events = [], locations = [] }) {
       </div>
 
       {/* Charts Section */}
-      <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+      <div className='grid grid-cols-1 lg:grid-cols-2 gap-4'>
         {/* User Growth Chart */}
-        <Card className='p-4 bg-white shadow rounded-xl border border-gray-200'>
+        <Card className=' bg-white shadow rounded-xl border border-gray-200'>
           <CardHeader>
             <CardTitle className='text-[#14213D]'>User Growth</CardTitle>
           </CardHeader>
@@ -106,7 +120,7 @@ export default function Overview ({ users = [], events = [], locations = [] }) {
         </Card>
 
         {/* Events Created Chart */}
-        <Card className='p-4 bg-white shadow rounded-xl border border-gray-200'>
+        <Card className=' bg-white shadow rounded-xl border border-gray-200'>
           <CardHeader>
             <CardTitle className='text-[#14213D]'>Events Created</CardTitle>
           </CardHeader>
@@ -117,7 +131,7 @@ export default function Overview ({ users = [], events = [], locations = [] }) {
                 <XAxis dataKey='month' stroke='#374151' />
                 <YAxis stroke='#374151' />
                 <Tooltip />
-                <Bar dataKey='events' fill='#14213D' radius={[8, 8, 0, 0]} />
+                <Bar dataKey='events' fill='#14213D' radius={[4, 4, 3, 2]} />
               </BarChart>
             </ResponsiveContainer>
           </CardContent>
