@@ -621,7 +621,13 @@ export default function Users () {
                   colSpan={6}
                   className='text-center py-6 text-gray-300'
                 >
-                  Loading users...
+                  {/* Animated */}
+                  {/*  */}
+                  {/*  */}
+                  {/*  */}
+                  {/*  */}
+                  {/*  */}
+                  Loading users...  
                 </TableCell>
               </TableRow>
             </TableBody>
@@ -722,13 +728,7 @@ export default function Users () {
               onChange={e => setForm({ ...form, address: e.target.value })}
               className='bg-gray-50'
             />
-            {/* <Input
-              type='text'
-              placeholder='+92 3XXXXXXXXX'
-              value={form.phone}
-              onChange={e => setForm({ ...form, phone: e.target.value })}
-              className='bg-gray-50'
-            /> */}
+           
             <Input
               type='text'
               placeholder='+92 3XXXXXXXXX'
@@ -755,7 +755,7 @@ export default function Users () {
           <DialogFooter className='mt-6'>
             <Button
               onClick={handleSave}
-              className='rounded-lg px-6 bg-gradient-to-r from-[#14213D] to-[#6B7280] text-white w-full sm:w-auto'
+              className='rounded-lg px-6 bg-gradient-to-r from-[#14213D] to-[#6B7280] text-white w-full sm:w-auto className="cursor-pointer"'
             >
               {editingUser ? 'Update User' : 'Save User'}
             </Button>

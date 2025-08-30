@@ -419,7 +419,7 @@
 // }
 
 // With Appwrite
-
+// All ok just badges color not good
 import React, { useState, useEffect } from 'react'
 import {
   Table,
@@ -542,52 +542,87 @@ export default function Events () {
     setIsModalOpen(true)
   }
 
+  // const handleSave = async () => {
+  //   if (!form.name || !form.location || !form.date || form.persons <= 0) {
+  //     toast.error('All fields are required.')
+  //     return
+  //   }
+
+  //   try {
+  //     // Convert to full ISO string for Appwrite datetime
+  //     const payload = {
+  //       ...form,
+  //       date: new Date(form.date).toISOString() // ✅ ISO format
+  //     }
+
+  //     if (editingEvent) {
+  //       await databases.updateDocument(
+  //         DATABASE_ID,
+  //         EVENTS_COLLECTION,
+  //         editingEvent.id,
+  //         payload
+  //       )
+  //       toast.success('Event updated successfully!')
+  //     } else {
+  //       await databases.createDocument(
+  //         DATABASE_ID,
+  //         EVENTS_COLLECTION,
+  //         ID.unique(),
+  //         payload
+  //       )
+  //       toast.success('Event added successfully!')
+  //     }
+
+  //     fetchEvents()
+  //     setIsModalOpen(false)
+  //     setEditingEvent(null)
+  //     setForm({
+  //       name: '',
+  //       location: '',
+  //       date: '',
+  //       persons: 0,
+  //       status: 'Upcoming'
+  //     })
+  //   } catch (err) {
+  //     console.error(err)
+  //     toast.error('Failed to save event.')
+  //   }
+  // }
   const handleSave = async () => {
-    if (!form.name || !form.location || !form.date || form.persons <= 0) {
-      toast.error('All fields are required.')
-      return
-    }
-
-    try {
-      // Convert to full ISO string for Appwrite datetime
-      const payload = {
-        ...form,
-        date: new Date(form.date).toISOString() // ✅ ISO format
-      }
-
-      if (editingEvent) {
-        await databases.updateDocument(
-          DATABASE_ID,
-          EVENTS_COLLECTION,
-          editingEvent.id,
-          payload
-        )
-        toast.success('Event updated successfully!')
-      } else {
-        await databases.createDocument(
-          DATABASE_ID,
-          EVENTS_COLLECTION,
-          ID.unique(),
-          payload
-        )
-        toast.success('Event added successfully!')
-      }
-
-      fetchEvents()
-      setIsModalOpen(false)
-      setEditingEvent(null)
-      setForm({
-        name: '',
-        location: '',
-        date: '',
-        persons: 0,
-        status: 'Upcoming'
-      })
-    } catch (err) {
-      console.error(err)
-      toast.error('Failed to save event.')
-    }
+  if (!form.name || !form.location || !form.date || form.persons <= 0) {
+    toast.error('All fields are required.')
+    return
   }
+
+  try {
+    // Remove 'id' before sending to Appwrite
+    const { id, ...payload } = form
+    payload.date = new Date(payload.date).toISOString() // ISO format for Appwrite
+
+    if (editingEvent) {
+      await databases.updateDocument(DATABASE_ID, EVENTS_COLLECTION, editingEvent.id, payload)
+      toast.success('Event updated successfully!')
+    } else {
+      await databases.createDocument(DATABASE_ID, EVENTS_COLLECTION, ID.unique(), payload)
+      toast.success('Event added successfully!')
+    }
+
+    fetchEvents()
+    setIsModalOpen(false)
+    setEditingEvent(null)
+    setForm({
+      name: '',
+      location: '',
+      date: '',
+      persons: 0,
+      status: 'Upcoming'
+    })
+  } catch (err) {
+    console.error(err)
+    toast.error('Failed to save event.')
+  }
+}
+
 
   const handleDelete = async id => {
     try {
@@ -606,7 +641,7 @@ export default function Events () {
     if (status === 'Live') color = 'bg-green-100 text-green-700'
     if (status === 'Canceled') color = 'bg-red-100 text-red-700'
     return (
-      <Badge className={cn('px-2 py-1 text-xs md:text-sm font-medium', color)}>
+      <Badge className={cn('text-xs', color)}>
         {status}
       </Badge>
     )
@@ -729,7 +764,7 @@ export default function Events () {
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent className='bg-white text-[#14213D]'>
-                        <DropdownMenuItem onClick={() => openModal(e)}>
+                        <DropdownMenuItem onClick={() => openModal(e)} className="cursor-pointer">
                           Edit
                         </DropdownMenuItem>
                         <DropdownMenuItem
@@ -761,7 +796,7 @@ export default function Events () {
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent className='sm:max-w-lg w-[95%] rounded-xl'>
           <DialogHeader>
-            <DialogTitle className='text-lg font-semibold text-[#14213D]'>
+            <DialogTitle className='text-lg font-semibold text-[#14213D] cursor-pointer'>
               {editingEvent ? 'Edit Event' : 'Add Event'}
             </DialogTitle>
           </DialogHeader>
@@ -860,7 +895,7 @@ export default function Events () {
           <DialogFooter className='mt-4'>
             <Button
               onClick={handleSave}
-              className='rounded-lg px-6 bg-gradient-to-r from-[#14213D] to-[#6B7280] text-white w-full sm:w-auto'
+              className='rounded-lg px-6 bg-gradient-to-r from-[#14213D] to-[#6B7280] text-white w-full sm:w-auto cursor-pointer'
             >
               {editingEvent ? 'Update Event' : 'Save Event'}
             </Button>
