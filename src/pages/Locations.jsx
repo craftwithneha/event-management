@@ -481,7 +481,17 @@ export default function Locations () {
     } catch (error) {
       console.error(error)
       toast('Failed to fetch locations', {
-        style: { background: '#111', color: '#E5E5E5' }
+         style: {
+    background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+    color: "#FFFFFF",
+    backdropFilter: "blur(12px)", // glass effect
+    border: "1px solid rgba(255,255,255,0.2)",
+    borderRadius: "1rem",
+    padding: "14px 22px",
+    fontWeight: "600",
+    boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+    transition: "all 0.3s ease",
+  },
       })
     }
   }
@@ -521,7 +531,17 @@ export default function Locations () {
       !form.status
     ) {
       toast('All fields are required.', {
-        style: { background: '#111', color: '#E5E5E5' }
+         style: {
+    background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+    color: "#FFFFFF",
+    backdropFilter: "blur(12px)", // glass effect
+    border: "1px solid rgba(255,255,255,0.2)",
+    borderRadius: "1rem",
+    padding: "14px 22px",
+    fontWeight: "600",
+    boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+    transition: "all 0.3s ease",
+  },
       })
       return
     }
@@ -535,7 +555,17 @@ export default function Locations () {
           { ...form }
         )
         toast('Location updated successfully!', {
-          style: { background: '#111', color: '#E5E5E5' }
+           style: {
+    background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+    color: "#FFFFFF",
+    backdropFilter: "blur(12px)", // glass effect
+    border: "1px solid rgba(255,255,255,0.2)",
+    borderRadius: "1rem",
+    padding: "14px 22px",
+    fontWeight: "600",
+    boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+    transition: "all 0.3s ease",
+  },
         })
       } else {
         await databases.createDocument(
@@ -545,7 +575,17 @@ export default function Locations () {
           { ...form }
         )
         toast('Location added successfully!', {
-          style: { background: '#111', color: '#E5E5E5' }
+           style: {
+    background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+    color: "#FFFFFF",
+    backdropFilter: "blur(12px)", // glass effect
+    border: "1px solid rgba(255,255,255,0.2)",
+    borderRadius: "1rem",
+    padding: "14px 22px",
+    fontWeight: "600",
+    boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+    transition: "all 0.3s ease",
+  },
         })
       }
       setIsModalOpen(false)
@@ -561,7 +601,17 @@ export default function Locations () {
     } catch (error) {
       console.error(error)
       toast('Failed to save location', {
-        style: { background: '#111', color: '#E5E5E5' }
+         style: {
+    background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+    color: "#FFFFFF",
+    backdropFilter: "blur(12px)", // glass effect
+    border: "1px solid rgba(255,255,255,0.2)",
+    borderRadius: "1rem",
+    padding: "14px 22px",
+    fontWeight: "600",
+    boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+    transition: "all 0.3s ease",
+  },
       })
     }
   }
@@ -571,13 +621,33 @@ export default function Locations () {
     try {
       await databases.deleteDocument(databaseId, locationsCollectionId, id)
       toast('Location deleted successfully.', {
-        style: { background: '#111', color: '#E5E5E5' }
+        style: {
+    background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+    color: "#FFFFFF",
+    backdropFilter: "blur(12px)", // glass effect
+    border: "1px solid rgba(255,255,255,0.2)",
+    borderRadius: "1rem",
+    padding: "14px 22px",
+    fontWeight: "600",
+    boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+    transition: "all 0.3s ease",
+  },
       })
       fetchLocations()
     } catch (error) {
       console.error(error)
       toast('Failed to delete location', {
-        style: { background: '#111', color: '#E5E5E5' }
+         style: {
+    background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+    color: "#FFFFFF",
+    backdropFilter: "blur(12px)", // glass effect
+    border: "1px solid rgba(255,255,255,0.2)",
+    borderRadius: "1rem",
+    padding: "14px 22px",
+    fontWeight: "600",
+    boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+    transition: "all 0.3s ease",
+  },
       })
     }
   }

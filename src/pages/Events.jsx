@@ -85,17 +85,17 @@
 //     if (!form.name || !form.location || !form.date || form.persons <= 0) {
 //       toast.error("All fields are required.", {
 //         // style: { background: "#b91c1c", color: "white" },
-//         style: {
-//     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
-//     color: "#FFFFFF",
-//     backdropFilter: "blur(12px)", // glass effect
-//     border: "1px solid rgba(255,255,255,0.2)",
-//     borderRadius: "1rem",
-//     padding: "14px 22px",
-//     fontWeight: "600",
-//     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
-//     transition: "all 0.3s ease",
-//   },
+  //       style: {
+  //   background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+  //   color: "#FFFFFF",
+  //   backdropFilter: "blur(12px)", // glass effect
+  //   border: "1px solid rgba(255,255,255,0.2)",
+  //   borderRadius: "1rem",
+  //   padding: "14px 22px",
+  //   fontWeight: "600",
+  //   boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+  //   transition: "all 0.3s ease",
+  // },
 //       });
 //       return;
 //     }
@@ -122,17 +122,17 @@
 //       setEvents([...events, { id: crypto.randomUUID(), ...form }]);
 //       toast.success("Event added successfully!", {
 //         // style: { background: "#14213D", color: "white" },
-//         style: {
-//     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
-//     color: "#FFFFFF",
-//     backdropFilter: "blur(12px)", // glass effect
-//     border: "1px solid rgba(255,255,255,0.2)",
-//     borderRadius: "1rem",
-//     padding: "14px 22px",
-//     fontWeight: "600",
-//     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
-//     transition: "all 0.3s ease",
-//   },
+  //       style: {
+  //   background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+  //   color: "#FFFFFF",
+  //   backdropFilter: "blur(12px)", // glass effect
+  //   border: "1px solid rgba(255,255,255,0.2)",
+  //   borderRadius: "1rem",
+  //   padding: "14px 22px",
+  //   fontWeight: "600",
+  //   boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+  //   transition: "all 0.3s ease",
+  // },
 //       });
 //     }
 
@@ -545,7 +545,19 @@ export default function Events () {
  
   const handleSave = async () => {
   if (!form.name || !form.location || !form.date || form.persons <= 0) {
-    toast.error('All fields are required.')
+    toast.error('All fields are required.'),{
+       style: {
+    background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+    color: "#FFFFFF",
+    backdropFilter: "blur(12px)", // glass effect
+    border: "1px solid rgba(255,255,255,0.2)",
+    borderRadius: "1rem",
+    padding: "14px 22px",
+    fontWeight: "600",
+    boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+    transition: "all 0.3s ease",
+  }
+    }
     return
   }
 
@@ -556,10 +568,34 @@ export default function Events () {
 
     if (editingEvent) {
       await databases.updateDocument(DATABASE_ID, EVENTS_COLLECTION, editingEvent.id, payload)
-      toast.success('Event updated successfully!')
+      toast.success('Event updated successfully!'),{
+         style: {
+    background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+    color: "#FFFFFF",
+    backdropFilter: "blur(12px)", // glass effect
+    border: "1px solid rgba(255,255,255,0.2)",
+    borderRadius: "1rem",
+    padding: "14px 22px",
+    fontWeight: "600",
+    boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+    transition: "all 0.3s ease",
+  },
+      }
     } else {
       await databases.createDocument(DATABASE_ID, EVENTS_COLLECTION, ID.unique(), payload)
-      toast.success('Event added successfully!')
+      toast.success('Event added successfully!'),{
+         style: {
+    background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+    color: "#FFFFFF",
+    backdropFilter: "blur(12px)", // glass effect
+    border: "1px solid rgba(255,255,255,0.2)",
+    borderRadius: "1rem",
+    padding: "14px 22px",
+    fontWeight: "600",
+    boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+    transition: "all 0.3s ease",
+  },
+      }
     }
 
     fetchEvents()
@@ -574,7 +610,19 @@ export default function Events () {
     })
   } catch (err) {
     console.error(err)
-    toast.error('Failed to save event.')
+    toast.error('Failed to save event.'),{
+       style: {
+    background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+    color: "#FFFFFF",
+    backdropFilter: "blur(12px)", // glass effect
+    border: "1px solid rgba(255,255,255,0.2)",
+    borderRadius: "1rem",
+    padding: "14px 22px",
+    fontWeight: "600",
+    boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+    transition: "all 0.3s ease",
+  },
+    }
   }
 }
 
@@ -582,11 +630,35 @@ export default function Events () {
   const handleDelete = async id => {
     try {
       await databases.deleteDocument(DATABASE_ID, EVENTS_COLLECTION, id)
-      toast.success('Event deleted successfully.')
+      toast.success('Event deleted successfully.'),{
+         style: {
+    background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+    color: "#FFFFFF",
+    backdropFilter: "blur(12px)", // glass effect
+    border: "1px solid rgba(255,255,255,0.2)",
+    borderRadius: "1rem",
+    padding: "14px 22px",
+    fontWeight: "600",
+    boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+    transition: "all 0.3s ease",
+  },
+      }
       fetchEvents()
     } catch (err) {
       console.error(err)
-      toast.error('Failed to delete event.')
+      toast.error('Failed to delete event.'),{
+         style: {
+    background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+    color: "#FFFFFF",
+    backdropFilter: "blur(12px)", // glass effect
+    border: "1px solid rgba(255,255,255,0.2)",
+    borderRadius: "1rem",
+    padding: "14px 22px",
+    fontWeight: "600",
+    boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+    transition: "all 0.3s ease",
+  },
+      }
     }
   }
 

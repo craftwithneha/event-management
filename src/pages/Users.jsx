@@ -452,7 +452,19 @@ export default function Users () {
         setUsers(res.documents)
       } catch (err) {
         console.error('Error fetching users:', err)
-        toast('Failed to fetch users.')
+        toast('Failed to fetch users.'),{
+           style: {
+    background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+    color: "#FFFFFF",
+    backdropFilter: "blur(12px)", // glass effect
+    border: "1px solid rgba(255,255,255,0.2)",
+    borderRadius: "1rem",
+    padding: "14px 22px",
+    fontWeight: "600",
+    boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+    transition: "all 0.3s ease",
+  },
+        }
       } finally {
         setLoading(false)
       }
@@ -495,15 +507,51 @@ export default function Users () {
     const phoneRegex = /^\+92\s3[0-9]{9}$/
 
     if (!form.name || !form.email || !form.address || !form.phone) {
-      toast.error('All fields are required.')
+      toast.error('All fields are required.'),{
+         style: {
+    background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+    color: "#FFFFFF",
+    backdropFilter: "blur(12px)", // glass effect
+    border: "1px solid rgba(255,255,255,0.2)",
+    borderRadius: "1rem",
+    padding: "14px 22px",
+    fontWeight: "600",
+    boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+    transition: "all 0.3s ease",
+  },
+      }
       return
     }
     if (!emailRegex.test(form.email)) {
-      toast.error('Please enter a valid email address.')
+      toast.error('Please enter a valid email address.'),{
+         style: {
+    background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+    color: "#FFFFFF",
+    backdropFilter: "blur(12px)", // glass effect
+    border: "1px solid rgba(255,255,255,0.2)",
+    borderRadius: "1rem",
+    padding: "14px 22px",
+    fontWeight: "600",
+    boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+    transition: "all 0.3s ease",
+  },
+      }
       return
     }
     if (!phoneRegex.test(form.phone)) {
-      toast.error('Invalid phone number! Format: +92 3XXXXXXXXX')
+      toast.error('Invalid phone number! Format: +92 3XXXXXXXXX'),{
+         style: {
+    background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+    color: "#FFFFFF",
+    backdropFilter: "blur(12px)", // glass effect
+    border: "1px solid rgba(255,255,255,0.2)",
+    borderRadius: "1rem",
+    padding: "14px 22px",
+    fontWeight: "600",
+    boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+    transition: "all 0.3s ease",
+  },
+      }
       return
     }
 
@@ -521,7 +569,19 @@ export default function Users () {
         setUsers(
           users.map(u => (u.$id === editingUser.$id ? { ...u, ...form } : u))
         )
-        toast.success('User updated successfully!')
+        toast.success('User updated successfully!'),{
+           style: {
+    background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+    color: "#FFFFFF",
+    backdropFilter: "blur(12px)", // glass effect
+    border: "1px solid rgba(255,255,255,0.2)",
+    borderRadius: "1rem",
+    padding: "14px 22px",
+    fontWeight: "600",
+    boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+    transition: "all 0.3s ease",
+  },
+        }
       } else {
         const newUser = await databases.createDocument(
           import.meta.env.VITE_APPWRITE_DATABASE_ID,
@@ -533,11 +593,35 @@ export default function Users () {
           }
         )
         setUsers([...users, newUser])
-        toast.success('User added successfully!')
+        toast.success('User added successfully!'),{
+           style: {
+    background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+    color: "#FFFFFF",
+    backdropFilter: "blur(12px)", // glass effect
+    border: "1px solid rgba(255,255,255,0.2)",
+    borderRadius: "1rem",
+    padding: "14px 22px",
+    fontWeight: "600",
+    boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+    transition: "all 0.3s ease",
+  },
+        }
       }
     } catch (err) {
       console.error('Appwrite error:', err)
-      toast.error('Something went wrong.')
+      toast.error('Something went wrong.'),{
+         style: {
+    background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+    color: "#FFFFFF",
+    backdropFilter: "blur(12px)", // glass effect
+    border: "1px solid rgba(255,255,255,0.2)",
+    borderRadius: "1rem",
+    padding: "14px 22px",
+    fontWeight: "600",
+    boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+    transition: "all 0.3s ease",
+  },
+      }
     }
 
     setIsModalOpen(false)
@@ -554,10 +638,34 @@ export default function Users () {
         id
       )
       setUsers(users.filter(u => u.$id !== id))
-      toast.success('User deleted successfully.')
+      toast.success('User deleted successfully.'),{
+         style: {
+    background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+    color: "#FFFFFF",
+    backdropFilter: "blur(12px)", // glass effect
+    border: "1px solid rgba(255,255,255,0.2)",
+    borderRadius: "1rem",
+    padding: "14px 22px",
+    fontWeight: "600",
+    boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+    transition: "all 0.3s ease",
+  },
+      }
     } catch (err) {
       console.error('Delete error:', err)
-      toast.error('Error deleting user.')
+      toast.error('Error deleting user.'),{
+         style: {
+    background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+    color: "#FFFFFF",
+    backdropFilter: "blur(12px)", // glass effect
+    border: "1px solid rgba(255,255,255,0.2)",
+    borderRadius: "1rem",
+    padding: "14px 22px",
+    fontWeight: "600",
+    boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+    transition: "all 0.3s ease",
+  },
+      }
     }
   }
 
