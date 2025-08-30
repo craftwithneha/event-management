@@ -292,7 +292,7 @@ export default function Overview() {
       {/* Top Stats */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* Users Card */}
-        <Card className="p-4 bg-[#14213D] text-white shadow-md rounded-2xl transition-transform transform hover:scale-105 hover:shadow-lg">
+        <Card className="p-4 bg-[#14213D] text-white shadow-md rounded-2xl transition-transform transform hover:scale-105 hover:shadow-lg cursor-pointer">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-lg font-semibold">Total Users</CardTitle>
             <Users className="h-6 w-6 text-blue-400" />
@@ -304,7 +304,7 @@ export default function Overview() {
         </Card>
 
         {/* Events Card */}
-        <Card className="p-4 bg-[#14213D] text-white shadow-md rounded-2xl transition-transform transform hover:scale-105 hover:shadow-lg">
+        <Card className="p-4 bg-[#14213D] text-white shadow-md rounded-2xl transition-transform transform hover:scale-105 hover:shadow-lg cursor-pointer">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-lg font-semibold">Total Events</CardTitle>
             <CalendarDays className="h-6 w-6 text-green-400" />
@@ -316,7 +316,7 @@ export default function Overview() {
         </Card>
 
         {/* Locations Card */}
-        <Card className="p-4 bg-[#14213D] text-white shadow-md rounded-2xl transition-transform transform hover:scale-105 hover:shadow-lg">
+        <Card className="p-4 bg-[#14213D] text-white shadow-md rounded-2xl transition-transform transform hover:scale-105 hover:shadow-lg cursor-pointer">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-lg font-semibold">Total Locations</CardTitle>
             <MapPin className="h-6 w-6 text-red-400" />
