@@ -614,7 +614,7 @@ export default function Locations () {
   <Card className='rounded-2xl shadow-lg transition-all transform hover:shadow-2xl hover:-translate-y-1 hover:scale-105 
                    bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white cursor-pointer'>
     <CardHeader className='flex items-center justify-between'>
-      <CardTitle className='text-xl md:text-base font-semibold'>Active<br/> Locations</CardTitle>
+      <CardTitle className='text-xl md:text-base font-semibold'>Active <br/> Locations</CardTitle>
       <MapPin className='h-6 w-6 text-yellow-300' />
     </CardHeader>
     <CardContent>
@@ -629,7 +629,7 @@ export default function Locations () {
   <Card className='rounded-2xl shadow-lg transition-all transform hover:shadow-2xl hover:-translate-y-1 hover:scale-105 
                    bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white cursor-pointer'>
     <CardHeader className='flex items-center justify-between'>
-      <CardTitle className='text-xl md:text-base font-semibold'>Maintenance Locations</CardTitle>
+      <CardTitle className='text-xl md:text-base font-semibold'>Maintenance <br/>Locations</CardTitle>
       <MapPin className='h-7 w-7 text-green-500' />
     </CardHeader>
     <CardContent>
@@ -644,7 +644,7 @@ export default function Locations () {
   <Card className='rounded-2xl shadow-lg transition-all transform hover:shadow-2xl hover:-translate-y-1 hover:scale-105 
                    bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white cursor-pointer'>
     <CardHeader className='flex items-center justify-between'>
-      <CardTitle className='text-sm md:text-base font-semibold'>Canceled Locations</CardTitle>
+      <CardTitle className='text-sm md:text-base font-semibold'>Canceled <br/>Locations</CardTitle>
       <MapPin className='h-6 w-6 text-red-400' />
     </CardHeader>
     <CardContent>
