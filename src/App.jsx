@@ -15,12 +15,12 @@ import ProtectedRoute from "./components/ProtectedRoute"; // create this compone
 
 export default function App() {
 //  For users satedata
-  const [users, setUsers] = useState([
-    { id: 1, name: "Ali Raza", email: "ali@example.com", address: "123 Street, Lahore", phone: "+92 3001234567", role: "admin" },
-    { id: 2, name: "Sara Khan", email: "sara@example.com", address: "456 Avenue, Karachi", phone: "+92 3129876543", role: "sales" },
-    { id: 3, name: "Diya", email: "diya@example.com", address: "Avenue, UAE", phone: "+92 3127457843", role: "owner" },
-    { id: 4, name: "John", email: "john@example.com", address: " Avenue, Qatar", phone: "+92 3129876543", role: "waiter" },
-  ]);
+  // const [users, setUsers] = useState([
+  //   { id: 1, name: "Ali Raza", email: "ali@example.com", address: "123 Street, Lahore", phone: "+92 3001234567", role: "admin" },
+  //   { id: 2, name: "Sara Khan", email: "sara@example.com", address: "456 Avenue, Karachi", phone: "+92 3129876543", role: "sales" },
+  //   { id: 3, name: "Diya", email: "diya@example.com", address: "Avenue, UAE", phone: "+92 3127457843", role: "owner" },
+  //   { id: 4, name: "John", email: "john@example.com", address: " Avenue, Qatar", phone: "+92 3129876543", role: "waiter" },
+  // ]);
 
   // For Events
   const [events, setEvents] = useState([
@@ -55,8 +55,8 @@ export default function App() {
                   <main className="flex-1 p-6 overflow-auto">
                     <Routes>
                       <Route path="/" element={<Navigate to="/overview" replace />} />
-                      <Route path="/overview" element={<Overview users={users} events={events} locations={locations} />} />
-                      <Route path="/users" element={<Users users={users} setUsers={setUsers} />} />
+                      <Route path="/overview" element={<Overview  events={events} locations={locations} />} />
+                      <Route path="/users" element={<Users  />} />
                       <Route path="/events" element={<Events events={events} setEvents={setEvents} />} />
                       <Route path="/locations" element={<Locations locations={locations} setLocations={setLocations} />} />
                       <Route path="*" element={<Navigate to="/overview" replace />} />
