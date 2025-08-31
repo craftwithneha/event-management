@@ -1055,7 +1055,20 @@ export default function Locations () {
       setLocations(response.documents)
     } catch (error) {
       console.error(error)
-      toast('Failed to fetch locations')
+      toast('Failed to fetch locations'),{
+        
+  style: {
+     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+     color: "#FFFFFF",
+     backdropFilter: "blur(12px)", // glass effect
+     border: "1px solid rgba(255,255,255,0.2)",
+     borderRadius: "1rem",
+     padding: "14px 22px",
+     fontWeight: "600",
+     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+     transition: "all 0.3s ease",
+   },
+      }
     }
   }
 
@@ -1098,7 +1111,20 @@ export default function Locations () {
       !form.location ||
       !form.status
     ) {
-      toast('All fields are required.')
+      toast('All fields are required.'),{
+        
+  style: {
+     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+     color: "#FFFFFF",
+     backdropFilter: "blur(12px)", // glass effect
+     border: "1px solid rgba(255,255,255,0.2)",
+     borderRadius: "1rem",
+     padding: "14px 22px",
+     fontWeight: "600",
+     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+     transition: "all 0.3s ease",
+   },
+      }
       return
     }
 
@@ -1110,7 +1136,20 @@ export default function Locations () {
           editingLocation.$id,
           { ...form }
         )
-        toast('Location updated successfully!')
+        toast('Location updated successfully!'),{
+          
+  style: {
+     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+     color: "#FFFFFF",
+     backdropFilter: "blur(12px)", // glass effect
+     border: "1px solid rgba(255,255,255,0.2)",
+     borderRadius: "1rem",
+     padding: "14px 22px",
+     fontWeight: "600",
+     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+     transition: "all 0.3s ease",
+   },
+        }
       } else {
         await databases.createDocument(
           databaseId,
@@ -1118,7 +1157,20 @@ export default function Locations () {
           ID.unique(),
           { ...form }
         )
-        toast('Location added successfully!')
+        toast('Location added successfully!'),{
+          
+  style: {
+     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+     color: "#FFFFFF",
+     backdropFilter: "blur(12px)", // glass effect
+     border: "1px solid rgba(255,255,255,0.2)",
+     borderRadius: "1rem",
+     padding: "14px 22px",
+     fontWeight: "600",
+     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+     transition: "all 0.3s ease",
+   },
+        }
       }
       setIsModalOpen(false)
       setEditingLocation(null)
@@ -1132,7 +1184,20 @@ export default function Locations () {
       fetchLocations() // Refresh after save
     } catch (error) {
       console.error(error)
-      toast('Failed to save location')
+      toast('Failed to save location'),{
+        
+  style: {
+     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+     color: "#FFFFFF",
+     backdropFilter: "blur(12px)", // glass effect
+     border: "1px solid rgba(255,255,255,0.2)",
+     borderRadius: "1rem",
+     padding: "14px 22px",
+     fontWeight: "600",
+     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+     transition: "all 0.3s ease",
+   },
+      }
     }
   }
 
@@ -1140,11 +1205,37 @@ export default function Locations () {
   const handleDelete = async id => {
     try {
       await databases.deleteDocument(databaseId, locationsCollectionId, id)
-      toast('Location deleted successfully.')
+      toast('Location deleted successfully.'),{
+        
+  style: {
+     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+     color: "#FFFFFF",
+     backdropFilter: "blur(12px)", // glass effect
+     border: "1px solid rgba(255,255,255,0.2)",
+     borderRadius: "1rem",
+     padding: "14px 22px",
+     fontWeight: "600",
+     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+     transition: "all 0.3s ease",
+   },
+      }
       fetchLocations()
     } catch (error) {
       console.error(error)
-      toast('Failed to delete location')
+      toast('Failed to delete location'),{
+        
+  style: {
+     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+     color: "#FFFFFF",
+     backdropFilter: "blur(12px)", // glass effect
+     border: "1px solid rgba(255,255,255,0.2)",
+     borderRadius: "1rem",
+     padding: "14px 22px",
+     fontWeight: "600",
+     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+     transition: "all 0.3s ease",
+   },
+      }
     }
   }
 
@@ -1389,54 +1480,25 @@ export default function Locations () {
         </Table>
       </div>
 
-      {/* ✅ Pagination below table */}
-      {/* {totalPages > 1 && (
-        <div className='flex justify-center mt-4'>
-          <Pagination>
-            <PaginationContent>
-              <PaginationItem>
-                <PaginationPrevious
-                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
-                  className={currentPage === 1 ? 'opacity-50 pointer-events-none' : ''}
-                />
-              </PaginationItem>
-
-              {Array.from({ length: totalPages }).map((_, index) => (
-                <PaginationItem key={index}>
-                  <PaginationLink
-                    isActive={currentPage === index + 1}
-                    onClick={() => setCurrentPage(index + 1)}
-                  >
-                    {index + 1}
-                  </PaginationLink>
-                </PaginationItem>
-              ))}
-
-              <PaginationItem>
-                <PaginationNext
-                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
-                  className={currentPage === totalPages ? 'opacity-50 pointer-events-none' : ''}
-                />
-              </PaginationItem>
-            </PaginationContent>
-          </Pagination>
-        </div>
-      )} */}
+    
 {/* 🔹 Pagination UI */}
+
 {totalPages > 1 && (
   <Pagination className="flex justify-center mt-6">
     <PaginationContent className="flex gap-2">
+      {/* Previous Button */}
       <PaginationItem>
         <PaginationPrevious
           onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
           className={`px-4 py-2 rounded-lg border transition ${
             currentPage === 1
               ? "opacity-50 pointer-events-none bg-gray-200 text-gray-500"
-              : "bg-white text-[#14213D] hover:bg-[#e5e5e5]"
+              : "bg-white text-[#14213D] hover:bg-[#e5e5e5] cursor-pointer"
           }`}
         />
       </PaginationItem>
 
+      {/* Page Numbers */}
       {[...Array(totalPages)].map((_, i) => (
         <PaginationItem key={i}>
           <PaginationLink
@@ -1445,7 +1507,7 @@ export default function Locations () {
             className={`px-4 py-2 rounded-lg border transition ${
               currentPage === i + 1
                 ? "bg-[#14213D] text-white border-[#14213D]"
-                : "bg-white text-[#14213D] hover:bg-[#e5e5e5]"
+                : "bg-white text-[#14213D] hover:bg-[#e5e5e5] cursor-pointer"
             }`}
           >
             {i + 1}
@@ -1453,13 +1515,14 @@ export default function Locations () {
         </PaginationItem>
       ))}
 
+      {/* Next Button */}
       <PaginationItem>
         <PaginationNext
           onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
           className={`px-4 py-2 rounded-lg border transition ${
             currentPage === totalPages
               ? "opacity-50 pointer-events-none bg-gray-200 text-gray-500"
-              : "bg-white text-[#14213D] hover:bg-[#e5e5e5]"
+              : "bg-white text-[#14213D] hover:bg-[#e5e5e5] cursor-pointer"
           }`}
         />
       </PaginationItem>
@@ -1533,3 +1596,12 @@ export default function Locations () {
     </div>
   )
 }
+
+
+
+
+
+
+
+
+

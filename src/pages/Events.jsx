@@ -1042,7 +1042,20 @@ export default function Events () {
       setEvents(formattedEvents)
     } catch (err) {
       console.error(err)
-      toast.error('Failed to fetch events.')
+      toast.error('Failed to fetch events.'),{
+        
+  style: {
+     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+     color: "#FFFFFF",
+     backdropFilter: "blur(12px)", // glass effect
+     border: "1px solid rgba(255,255,255,0.2)",
+     borderRadius: "1rem",
+     padding: "14px 22px",
+     fontWeight: "600",
+     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+     transition: "all 0.3s ease",
+   },
+      }
     }
   }
 
@@ -1078,7 +1091,20 @@ export default function Events () {
   const handleSave = async () => {
     try {
       if (!form.name || !form.location || !form.date) {
-        toast.error('Please fill all fields.')
+        toast.error('Please fill all fields.'),{
+          
+  style: {
+     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+     color: "#FFFFFF",
+     backdropFilter: "blur(12px)", // glass effect
+     border: "1px solid rgba(255,255,255,0.2)",
+     borderRadius: "1rem",
+     padding: "14px 22px",
+     fontWeight: "600",
+     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+     transition: "all 0.3s ease",
+   },
+        }
         return
       }
 
@@ -1090,7 +1116,20 @@ export default function Events () {
           persons: form.persons,
           status: form.status
         })
-        toast.success('Event updated successfully!')
+        toast.success('Event updated successfully!'),{
+          
+  style: {
+     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+     color: "#FFFFFF",
+     backdropFilter: "blur(12px)", // glass effect
+     border: "1px solid rgba(255,255,255,0.2)",
+     borderRadius: "1rem",
+     padding: "14px 22px",
+     fontWeight: "600",
+     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+     transition: "all 0.3s ease",
+   },
+        }
       } else {
         await databases.createDocument(DATABASE_ID, EVENTS_COLLECTION, ID.unique(), {
           name: form.name,
@@ -1099,7 +1138,20 @@ export default function Events () {
           persons: form.persons,
           status: form.status
         })
-        toast.success('Event added successfully!')
+        toast.success('Event added successfully!'),{
+          
+  style: {
+     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+     color: "#FFFFFF",
+     backdropFilter: "blur(12px)", // glass effect
+     border: "1px solid rgba(255,255,255,0.2)",
+     borderRadius: "1rem",
+     padding: "14px 22px",
+     fontWeight: "600",
+     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+     transition: "all 0.3s ease",
+   },
+        }
       }
 
       setIsModalOpen(false)
@@ -1108,7 +1160,20 @@ export default function Events () {
       fetchEvents()
     } catch (err) {
       console.error(err)
-      toast.error('Failed to save event.')
+      toast.error('Failed to save event.'),{
+        
+  style: {
+     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+     color: "#FFFFFF",
+     backdropFilter: "blur(12px)", // glass effect
+     border: "1px solid rgba(255,255,255,0.2)",
+     borderRadius: "1rem",
+     padding: "14px 22px",
+     fontWeight: "600",
+     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+     transition: "all 0.3s ease",
+   },
+      }
     }
   }
 
@@ -1118,6 +1183,11 @@ export default function Events () {
         <h1 className='text-3xl md:text-3xl font-extrabold text-center text-[#14213D]'>
           Events
         </h1>
+        <p className='text-sm mt-2 text-center text-[#14213D]'>
+          Discover upcoming and past events with key details on dates, venues,
+          and highlights.
+          <br /> Stay informed and connected with everything that matters.
+        </p>
       </div>
 
       {/* Search + Add Event */}

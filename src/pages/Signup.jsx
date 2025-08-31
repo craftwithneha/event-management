@@ -29,7 +29,7 @@ export default function Signup () {
       await account.create('unique()', email, password, name)
 
       // ✅ dark toast instead of alert
-      toast.success('Signup successful! Please login to continue.', {
+      toast.success('Signup successful! ', {
         style: {
           background: '#14213D',
           color: '#fff',
