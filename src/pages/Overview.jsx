@@ -295,7 +295,7 @@ export default function Overview() {
         <Card className="p-4 bg-[#14213D] text-white shadow-md rounded-2xl transition-transform transform hover:scale-105 hover:shadow-lg cursor-pointer">
           <CardHeader className="flex flex-row items-center justify-between pb-2">
             <CardTitle className="text-lg font-semibold">Total Users</CardTitle>
-            <Users className="h-6 w-6 text-blue-400" />
+            <Users className="h-6 w-6 text-blue-400 cursor-pointer" />
           </CardHeader>
           <CardContent>
             <p className="text-3xl font-bold">{users.length}</p>

@@ -419,7 +419,6 @@
 // }
 
 // With Appwrite
-// All ok just badges color not good
 import React, { useState, useEffect } from 'react'
 import {
   Table,
