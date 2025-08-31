@@ -880,7 +880,8 @@
 
 
 
-// All done toast color not ok
+
+// with paggination
 'use client'
 import React, { useState, useEffect } from 'react'
 import {
@@ -919,10 +920,20 @@ import {
 import { Badge } from '@/components/ui/badge'
 import { Skeleton } from '@/components/ui/skeleton'
 
+// ✅ Shadcn Pagination
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationLink,
+  PaginationPrevious,
+  PaginationNext,
+} from '@/components/ui/pagination'
+
 // 🔹 Appwrite client
 import { databases, ID } from '../services/appwrite'
 
-export default function Users () {
+export default function Users() {
   const [users, setUsers] = useState([])
   const [loading, setLoading] = useState(true)
   const [search, setSearch] = useState('')
@@ -936,7 +947,11 @@ export default function Users () {
   })
   const [editingUser, setEditingUser] = useState(null)
 
-  //  Fetch users from Appwrite when page loads
+  // 🔹 Pagination states
+  const [currentPage, setCurrentPage] = useState(1)
+  const rowsPerPage = 5
+
+  // Fetch users from Appwrite
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -967,6 +982,13 @@ export default function Users () {
     u.name.toLowerCase().includes(search.toLowerCase())
   )
 
+  // 🔹 Pagination logic
+  const totalPages = Math.ceil(filtered.length / rowsPerPage)
+  const paginatedUsers = filtered.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage
+  )
+
   const openModal = (user = null) => {
     if (user) {
       setEditingUser(user)
@@ -984,7 +1006,7 @@ export default function Users () {
     setIsModalOpen(true)
   }
 
-  // 🔹 SAVE USER (Appwrite + local state)
+  // 🔹 SAVE USER
   const handleSave = async () => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     const phoneRegex = /^\+92\s3[0-9]{9}$/
@@ -1059,9 +1081,7 @@ export default function Users () {
   return (
     <div className='space-y-6 w-full px-2 sm:px-4 bg-[#E5E5E5] min-h-screen py-6'>
       <div>
-        <h1 className='text-3xl md:text-3xl font-extrabold text-center text-[#14213D]'>
-          Users
-        </h1>
+        <h1 className='text-3xl font-extrabold text-center text-[#14213D]'>Users</h1>
         <p className='text-sm mt-3 text-center text-[#14213D]'>
           View and manage all registered users with essential details.
         </p>
@@ -1072,7 +1092,10 @@ export default function Users () {
         <Input
           placeholder='Search users...'
           value={search}
-          onChange={e => setSearch(e.target.value)}
+          onChange={e => {
+            setSearch(e.target.value)
+            setCurrentPage(1) // reset to first page on search
+          }}
           className='flex-1 rounded-lg w-full bg-white border-blue-950'
         />
         <Button
@@ -1124,15 +1147,13 @@ export default function Users () {
             </TableBody>
           ) : (
             <TableBody>
-              {filtered.length > 0 ? (
-                filtered.map(u => (
+              {paginatedUsers.length > 0 ? (
+                paginatedUsers.map(u => (
                   <TableRow
                     key={u.$id}
                     className='hover:bg-[#1f2b4d] text-sm md:text-base border-b border-gray-700'
                   >
-                    <TableCell className='px-4 py-4 font-medium text-white'>
-                      {u.name}
-                    </TableCell>
+                    <TableCell className='px-4 py-4 font-medium text-white'>{u.name}</TableCell>
                     <TableCell className='px-4 py-4'>{u.email}</TableCell>
                     <TableCell className='px-4 py-4'>{u.address}</TableCell>
                     <TableCell className='px-4 py-4'>{u.phone}</TableCell>
@@ -1153,18 +1174,8 @@ export default function Users () {
                           </Button>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className='bg-white text-[#14213D]'>
-                          <DropdownMenuItem
-                            onClick={() => openModal(u)}
-                            className='cursor-pointer'
-                          >
-                            Edit
-                          </DropdownMenuItem>
-                          <DropdownMenuItem
-                            onClick={() => handleDelete(u.$id)}
-                            className='cursor-pointer'
-                          >
-                            Delete
-                          </DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => openModal(u)}>Edit</DropdownMenuItem>
+                          <DropdownMenuItem onClick={() => handleDelete(u.$id)}>Delete</DropdownMenuItem>
                         </DropdownMenuContent>
                       </DropdownMenu>
                     </TableCell>
@@ -1182,7 +1193,52 @@ export default function Users () {
         </Table>
       </div>
 
-      {/* Modal */}
+{/* 🔹 Pagination UI */}
+{totalPages > 1 && (
+  <Pagination className="flex justify-center mt-6">
+    <PaginationContent className="flex gap-2">
+      <PaginationItem>
+        <PaginationPrevious
+          onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
+          className={`px-4 py-2 rounded-lg border transition ${
+            currentPage === 1
+              ? "opacity-50 pointer-events-none bg-gray-200 text-gray-500"
+              : "bg-white text-[#14213D] hover:bg-[#e5e5e5]"
+          }`}
+        />
+      </PaginationItem>
+
+      {[...Array(totalPages)].map((_, i) => (
+        <PaginationItem key={i}>
+          <PaginationLink
+            isActive={currentPage === i + 1}
+            onClick={() => setCurrentPage(i + 1)}
+            className={`px-4 py-2 rounded-lg border transition ${
+              currentPage === i + 1
+                ? "bg-[#14213D] text-white border-[#14213D]"
+                : "bg-white text-[#14213D] hover:bg-[#e5e5e5]"
+            }`}
+          >
+            {i + 1}
+          </PaginationLink>
+        </PaginationItem>
+      ))}
+
+      <PaginationItem>
+        <PaginationNext
+          onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
+          className={`px-4 py-2 rounded-lg border transition  ${
+            currentPage === totalPages
+              ? "opacity-50 pointer-events-none bg-gray-200 text-gray-500"
+              : "bg-white text-[#14213D] hover:bg-[#e5e5e5]  "
+          }`}
+        />
+      </PaginationItem>
+    </PaginationContent>
+  </Pagination>
+)}
+
+      {/* Modal (Add/Edit User) */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent className='sm:max-w-lg w-[95%] rounded-xl p-6 bg-white shadow-xl border'>
           <DialogHeader>
@@ -1240,7 +1296,7 @@ export default function Users () {
           <DialogFooter className='mt-6'>
             <Button
               onClick={handleSave}
-              className='rounded-lg px-6 bg-gradient-to-r from-[#14213D] to-[#6B7280] text-white w-full sm:w-auto cursor-pointer'
+              className='rounded-lg px-6 bg-gradient-to-r from-[#14213D] to-[#6B7280] text-white w-full sm:w-auto'
             >
               {editingUser ? 'Update User' : 'Save User'}
             </Button>

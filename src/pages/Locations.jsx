@@ -399,6 +399,542 @@
 // }
 
 // Integrated with Appwrite
+
+// import React, { useState, useEffect } from 'react'
+// import { Client, Databases, ID } from 'appwrite'
+// import {
+//   Table,
+//   TableHeader,
+//   TableRow,
+//   TableHead,
+//   TableBody,
+//   TableCell
+// } from '@/components/ui/table'
+// import { Input } from '@/components/ui/input'
+// import { Button } from '@/components/ui/button'
+// import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+// import { Badge } from '@/components/ui/badge'
+// import { toast } from 'sonner'
+// import {
+//   DropdownMenu,
+//   DropdownMenuTrigger,
+//   DropdownMenuContent,
+//   DropdownMenuItem
+// } from '@/components/ui/dropdown-menu'
+// import {
+//   MoreHorizontal,
+//   MapPin,
+//   Users,
+// } from 'lucide-react'
+// import {
+//   Dialog,
+//   DialogContent,
+//   DialogHeader,
+//   DialogTitle,
+//   DialogFooter
+// } from '@/components/ui/dialog'
+// import {
+//   Select,
+//   SelectContent,
+//   SelectItem,
+//   SelectTrigger,
+//   SelectValue
+// } from '@/components/ui/select'
+
+// // ===== APPWRITE SETUP =====
+// const client = new Client()
+//   .setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT)
+//   .setProject(import.meta.env.VITE_APPWRITE_PROJECT)
+
+// const databases = new Databases(client)
+// const databaseId = import.meta.env.VITE_APPWRITE_DATABASE_ID
+// const locationsCollectionId = import.meta.env
+//   .VITE_APPWRITE_LOCATIONS_COLLECTION_ID
+
+// export default function Locations () {
+//   const [locations, setLocations] = useState([])
+//   const [search, setSearch] = useState('')
+//   const [isModalOpen, setIsModalOpen] = useState(false)
+//   const [form, setForm] = useState({
+//     name: '',
+//     capacity: 0,
+//     owner: '',
+//     location: '',
+//     status: 'active'
+//   })
+//   const [editingLocation, setEditingLocation] = useState(null)
+
+//   const statusColors = {
+//     active: 'bg-blue-100 text-blue-700',
+//     maintenance: 'bg-yellow-100 text-yellow-700',
+//     canceled: 'bg-red-100 text-red-700',
+//     default: 'bg-gray-100 text-gray-700'
+//   }
+
+//   // ===== FETCH LOCATIONS FROM APPWRITE =====
+//   const fetchLocations = async () => {
+//     try {
+//       const response = await databases.listDocuments(
+//         databaseId,
+//         locationsCollectionId
+//       )
+//       setLocations(response.documents)
+//     } catch (error) {
+//       console.error(error)
+//       toast('Failed to fetch locations', {
+//          style: {
+//     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+//     color: "#FFFFFF",
+//     backdropFilter: "blur(12px)", // glass effect
+//     border: "1px solid rgba(255,255,255,0.2)",
+//     borderRadius: "1rem",
+//     padding: "14px 22px",
+//     fontWeight: "600",
+//     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+//     transition: "all 0.3s ease",
+//   },
+//       })
+//     }
+//   }
+
+//   useEffect(() => {
+//     fetchLocations()
+//   }, [])
+
+//   const filtered = locations.filter(l =>
+//     l.name.toLowerCase().includes(search.toLowerCase())
+//   )
+
+//   const openModal = (location = null) => {
+//     if (location) {
+//       setEditingLocation(location)
+//       setForm({ ...location })
+//     } else {
+//       setEditingLocation(null)
+//       setForm({
+//         name: '',
+//         capacity: 0,
+//         owner: '',
+//         location: '',
+//         status: 'active'
+//       })
+//     }
+//     setIsModalOpen(true)
+//   }
+
+//   // ===== SAVE LOCATION (CREATE / UPDATE) =====
+//   const handleSave = async () => {
+//     if (
+//       !form.name ||
+//       !form.capacity ||
+//       !form.owner ||
+//       !form.location ||
+//       !form.status
+//     ) {
+//       toast('All fields are required.', {
+//          style: {
+//     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+//     color: "#FFFFFF",
+//     backdropFilter: "blur(12px)", // glass effect
+//     border: "1px solid rgba(255,255,255,0.2)",
+//     borderRadius: "1rem",
+//     padding: "14px 22px",
+//     fontWeight: "600",
+//     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+//     transition: "all 0.3s ease",
+//   },
+//       })
+//       return
+//     }
+
+//     try {
+//       if (editingLocation) {
+//         await databases.updateDocument(
+//           databaseId,
+//           locationsCollectionId,
+//           editingLocation.$id,
+//           { ...form }
+//         )
+//         toast('Location updated successfully!', {
+//            style: {
+//     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+//     color: "#FFFFFF",
+//     backdropFilter: "blur(12px)", // glass effect
+//     border: "1px solid rgba(255,255,255,0.2)",
+//     borderRadius: "1rem",
+//     padding: "14px 22px",
+//     fontWeight: "600",
+//     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+//     transition: "all 0.3s ease",
+//   },
+//         })
+//       } else {
+//         await databases.createDocument(
+//           databaseId,
+//           locationsCollectionId,
+//           ID.unique(),
+//           { ...form }
+//         )
+//         toast('Location added successfully!', {
+//            style: {
+//     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+//     color: "#FFFFFF",
+//     backdropFilter: "blur(12px)", // glass effect
+//     border: "1px solid rgba(255,255,255,0.2)",
+//     borderRadius: "1rem",
+//     padding: "14px 22px",
+//     fontWeight: "600",
+//     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+//     transition: "all 0.3s ease",
+//   },
+//         })
+//       }
+//       setIsModalOpen(false)
+//       setEditingLocation(null)
+//       setForm({
+//         name: '',
+//         capacity: 0,
+//         owner: '',
+//         location: '',
+//         status: 'active'
+//       })
+//       fetchLocations() // Refresh after save
+//     } catch (error) {
+//       console.error(error)
+//       toast('Failed to save location', {
+//          style: {
+//     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+//     color: "#FFFFFF",
+//     backdropFilter: "blur(12px)", // glass effect
+//     border: "1px solid rgba(255,255,255,0.2)",
+//     borderRadius: "1rem",
+//     padding: "14px 22px",
+//     fontWeight: "600",
+//     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+//     transition: "all 0.3s ease",
+//   },
+//       })
+//     }
+//   }
+
+//   // ===== DELETE LOCATION =====
+//   const handleDelete = async id => {
+//     try {
+//       await databases.deleteDocument(databaseId, locationsCollectionId, id)
+//       toast('Location deleted successfully.', {
+//         style: {
+//     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+//     color: "#FFFFFF",
+//     backdropFilter: "blur(12px)", // glass effect
+//     border: "1px solid rgba(255,255,255,0.2)",
+//     borderRadius: "1rem",
+//     padding: "14px 22px",
+//     fontWeight: "600",
+//     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+//     transition: "all 0.3s ease",
+//   },
+//       })
+//       fetchLocations()
+//     } catch (error) {
+//       console.error(error)
+//       toast('Failed to delete location', {
+//          style: {
+//     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+//     color: "#FFFFFF",
+//     backdropFilter: "blur(12px)", // glass effect
+//     border: "1px solid rgba(255,255,255,0.2)",
+//     borderRadius: "1rem",
+//     padding: "14px 22px",
+//     fontWeight: "600",
+//     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+//     transition: "all 0.3s ease",
+//   },
+//       })
+//     }
+//   }
+
+//   return (
+//     <div className='space-y-6 w-full px-2 sm:px-4 bg-[#E5E5E5] min-h-screen py-6'>
+//       {/* ===== DASHBOARD & CARDS ===== */}
+//       <div>
+//         <h1 className='ext-3xl md:text-3xl font-extrabold text-center text-[#14213D]'>
+//           Event Locations
+//         </h1>
+//         <p className='text-sm mt-3 text-center text-[#14213D]'>
+//           Manage and track all event venues with capacity, status, and details.{' '}
+//           <br />
+//           Easily add, edit, or remove locations for smooth event planning.
+//         </p>
+//       </div>
+// {/* Dashboard Cards  */}
+// <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2'>
+//   {/* Organizer Card */}
+//   <Card className='rounded-2xl shadow-lg transition-all transform hover:shadow-2xl hover:-translate-y-1 hover:scale-105 
+//                    bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white cursor-pointer'>
+//     <CardHeader className='flex items-center justify-between'>
+//       <CardTitle className='text-sm md:text-base font-extrabold'>Organizer</CardTitle>
+//       <Users className='h-6 w-6 text-blue-300' />
+//     </CardHeader>
+//     <CardContent>
+//       <p className='text-xl md:text-2xl font-bold mt-5'>Neha & Zoha</p>
+//       <p className='text-sm md:text-base text-gray-300 mt-2'>Main Event Organizer</p>
+//     </CardContent>
+//   </Card>
+
+//   {/* Active Locations Card */}
+//   <Card className='rounded-2xl shadow-lg transition-all transform hover:shadow-2xl hover:-translate-y-1 hover:scale-105 
+//                    bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white cursor-pointer'>
+//     <CardHeader className='flex items-center justify-between'>
+//       <CardTitle className='text-xl md:text-base font-semibold'>Active <br/> Locations</CardTitle>
+//       <MapPin className='h-6 w-6 text-yellow-300' />
+//     </CardHeader>
+//     <CardContent>
+//       <p className='text-2xl md:text-3xl font-bold leading-tight'>
+//         {locations.filter(l => l.status === 'active').length}
+//       </p>
+//       <p className='text-sm md:text-base text-gray-300'>Currently Available</p>
+//     </CardContent>
+//   </Card>
+
+//   {/* Maintenance Locations Card */}
+//   <Card className='rounded-2xl shadow-lg transition-all transform hover:shadow-2xl hover:-translate-y-1 hover:scale-105 
+//                    bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white cursor-pointer'>
+//     <CardHeader className='flex items-center justify-between'>
+//       <CardTitle className='text-xl md:text-base font-semibold'>Maintenance <br/>Locations</CardTitle>
+//       <MapPin className='h-7 w-7 text-green-500' />
+//     </CardHeader>
+//     <CardContent>
+//       <p className='text-2xl md:text-3xl font-bold leading-tight'>
+//         {locations.filter(l => l.status === 'maintenance').length}
+//       </p>
+//       <p className='text-sm md:text-base text-gray-300'>Under Maintenance</p>
+//     </CardContent>
+//   </Card>
+
+//   {/* Canceled Locations Card */}
+//   <Card className='rounded-2xl shadow-lg transition-all transform hover:shadow-2xl hover:-translate-y-1 hover:scale-105 
+//                    bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white cursor-pointer'>
+//     <CardHeader className='flex items-center justify-between'>
+//       <CardTitle className='text-sm md:text-base font-semibold'>Canceled <br/>Locations</CardTitle>
+//       <MapPin className='h-6 w-6 text-red-400' />
+//     </CardHeader>
+//     <CardContent>
+//       <p className='text-2xl md:text-3xl font-bold leading-tight'>
+//         {locations.filter(l => l.status === 'canceled').length}
+//       </p>
+//       <p className='text-sm md:text-base text-gray-300'>No Longer Available</p>
+//     </CardContent>
+//   </Card>
+// </div>
+
+//       {/* ===== LOCATION CARDS GRID ===== */}
+//       <div className='grid grid-cols-1 [@media(min-width:1130px)]:grid-cols-2 lg:grid-cols-2 gap-8'>
+//         {filtered.map(l => (
+//           <Card
+//             key={l.$id}
+//             className='border rounded-2xl shadow-lg hover:shadow-2xl 
+//                  transition-transform transform hover:-translate-y-1 
+//                  bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white 
+//                  p-6 h-[230px] flex flex-col justify-between'
+//           >
+//             <CardHeader className='flex flex-row items-center justify-between p-0'>
+//               <CardTitle className='text-2xl font-semibold truncate'>
+//                 {l.name}
+//               </CardTitle>
+//               <Badge className={statusColors[l.status] || statusColors.default}>
+//                 {l.status}
+//               </Badge>
+//             </CardHeader>
+//             <CardContent className='space-y-4 text-lg p-0'>
+//               <div className='flex items-center gap-2'>
+//                 <Users className='h-6 w-6 text-blue-300' />
+//                 <span>{l.owner}</span>
+//               </div>
+//               <div className='flex items-center gap-2'>
+//                 <MapPin className='h-6 w-6 text-green-300' />
+//                 <span>{l.location}</span>
+//               </div>
+//               <div className='flex items-center gap-2'>
+//                 <Users className='h-6 w-6 text-orange-300' />
+//                 <span>{l.capacity} capacity</span>
+//               </div>
+//             </CardContent>
+//           </Card>
+//         ))}
+//       </div>
+
+//       {/* ===== SEARCH + ADD BUTTON ===== */}
+//       <div className='flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3'>
+//         <Input
+//           placeholder='Search locations...'
+//           value={search}
+//           onChange={e => setSearch(e.target.value)}
+//           className='flex-1 rounded-lg w-full bg-white border-blue-950'
+//         />
+//         <Button
+//           onClick={() => openModal()}
+//           className='rounded-lg px-6 w-full sm:w-auto bg-[#14213D] text-white hover:opacity-90 transition'
+//         >
+//           + Add Location
+//         </Button>
+//       </div>
+
+//       {/* ===== TABLE ===== */}
+//       <div className='rounded-xl border shadow-sm w-full overflow-hidden'>
+//         <Table className='w-full bg-[#14213D] text-white'>
+//           <TableHeader>
+//             <TableRow className='bg-[#0f192f]'>
+//               <TableHead className='font-semibold px-4 py-3 text-white'>
+//                 Name
+//               </TableHead>
+//               <TableHead className='font-semibold px-4 py-3 text-white'>
+//                 Capacity
+//               </TableHead>
+//               <TableHead className='font-semibold px-4 py-3 text-white'>
+//                 Owner
+//               </TableHead>
+//               <TableHead className='font-semibold px-4 py-3 text-white'>
+//                 Location
+//               </TableHead>
+//               <TableHead className='font-semibold px-4 py-3 text-white'>
+//                 Status
+//               </TableHead>
+//               <TableHead className='font-semibold px-4 py-3 text-center text-white'>
+//                 Actions
+//               </TableHead>
+//             </TableRow>
+//           </TableHeader>
+//           <TableBody>
+//             {filtered.length > 0 ? (
+//               filtered.map(l => (
+//                 <TableRow
+//                   key={l.$id}
+//                   className='hover:bg-[#1f2b4d] text-sm md:text-base border-b border-gray-700'
+//                 >
+//                   <TableCell className='px-4 py-4 font-medium'>
+//                     {l.name}
+//                   </TableCell>
+//                   <TableCell className='px-4 py-4'>{l.capacity}</TableCell>
+//                   <TableCell className='px-4 py-4'>{l.owner}</TableCell>
+//                   <TableCell className='px-4 py-4'>{l.location}</TableCell>
+//                   <TableCell className='px-4 py-4'>
+//                     <Badge
+//                       className={statusColors[l.status] || statusColors.default}
+//                     >
+//                       {l.status}
+//                     </Badge>
+//                   </TableCell>
+//                   <TableCell className='px-4 py-4 text-center'>
+//                     <DropdownMenu>
+//                       <DropdownMenuTrigger asChild>
+//                         <Button
+//                           variant='ghost'
+//                           size='sm'
+//                           className='rounded-full text-white hover:bg-white/20'
+//                         >
+//                           <MoreHorizontal />
+//                         </Button>
+//                       </DropdownMenuTrigger>
+//                       <DropdownMenuContent className='bg-white text-[#14213D]'>
+//                         <DropdownMenuItem onClick={() => openModal(l)} className="cursor-pointer">
+//                           Edit
+//                         </DropdownMenuItem>
+//                         <DropdownMenuItem
+//                           onClick={() => handleDelete(l.$id)}
+//                           className='cursor-pointer'
+//                         >
+//                           Delete
+//                         </DropdownMenuItem>
+//                       </DropdownMenuContent>
+//                     </DropdownMenu>
+//                   </TableCell>
+//                 </TableRow>
+//               ))
+//             ) : (
+//               <TableRow>
+//                 <TableCell
+//                   colSpan={6}
+//                   className='text-center py-6 text-gray-300'
+//                 >
+//                   No locations found.
+//                 </TableCell>
+//               </TableRow>
+//             )}
+//           </TableBody>
+//         </Table>
+//       </div>
+
+//       {/* ===== MODAL ===== */}
+//       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+//         <DialogContent className='sm:max-w-lg w-[95%] rounded-xl'>
+//           <DialogHeader>
+//             <DialogTitle className='text-lg font-semibold text-[#14213D]'>
+//               {editingLocation ? 'Edit Location' : 'Add Location'}
+//             </DialogTitle>
+//           </DialogHeader>
+
+//           <div className='flex flex-col gap-4 mt-3'>
+//             <Input
+//               placeholder='Name'
+//               value={form.name}
+//               onChange={e => setForm({ ...form, name: e.target.value })}
+//               className='bg-gray-50'
+//             />
+//             <Input
+//               type='number'
+//               placeholder='Capacity'
+//               value={form.capacity}
+//               onChange={e =>
+//                 setForm({ ...form, capacity: parseInt(e.target.value) || 0 })
+//               }
+//               className='bg-gray-50'
+//             />
+//             <Input
+//               placeholder='Owner Name'
+//               value={form.owner}
+//               onChange={e => setForm({ ...form, owner: e.target.value })}
+//               className='bg-gray-50'
+//             />
+//             <Input
+//               placeholder='Location'
+//               value={form.location}
+//               onChange={e => setForm({ ...form, location: e.target.value })}
+//               className='bg-gray-50'
+//             />
+//             <Select
+//               value={form.status}
+//               onValueChange={value => setForm({ ...form, status: value })}
+//             >
+//               <SelectTrigger className='w-full bg-gray-50 rounded-lg p-2'>
+//                 <SelectValue placeholder='Select Status' />
+//               </SelectTrigger>
+//               <SelectContent>
+//                 <SelectItem value='active'>Active</SelectItem>
+//                 <SelectItem value='maintenance'>Maintenance</SelectItem>
+//                 <SelectItem value='canceled'>Canceled</SelectItem>
+//               </SelectContent>
+//             </Select>
+//           </div>
+
+//           <DialogFooter className='mt-4'>
+//             <Button
+//               onClick={handleSave}
+//               className='rounded-lg px-6 bg-gradient-to-r from-[#14213D] to-[#6B7280] text-white w-full sm:w-auto cursor-pointer'
+//             >
+//               {editingLocation ? 'Update Location' : 'Save Location'}
+//             </Button>
+//           </DialogFooter>
+//         </DialogContent>
+//       </Dialog>
+//     </div>
+//   )
+// }
+
+
+
+
+// With pagination
+
 import React, { useState, useEffect } from 'react'
 import { Client, Databases, ID } from 'appwrite'
 import {
@@ -439,6 +975,14 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationPrevious,
+  PaginationNext,
+  PaginationLink
+} from "@/components/ui/pagination"
 
 // ===== APPWRITE SETUP =====
 const client = new Client()
@@ -463,6 +1007,10 @@ export default function Locations () {
   })
   const [editingLocation, setEditingLocation] = useState(null)
 
+  // ===== PAGINATION STATES =====
+  const [currentPage, setCurrentPage] = useState(1)
+  const itemsPerPage = 5
+
   const statusColors = {
     active: 'bg-blue-100 text-blue-700',
     maintenance: 'bg-yellow-100 text-yellow-700',
@@ -480,19 +1028,7 @@ export default function Locations () {
       setLocations(response.documents)
     } catch (error) {
       console.error(error)
-      toast('Failed to fetch locations', {
-         style: {
-    background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
-    color: "#FFFFFF",
-    backdropFilter: "blur(12px)", // glass effect
-    border: "1px solid rgba(255,255,255,0.2)",
-    borderRadius: "1rem",
-    padding: "14px 22px",
-    fontWeight: "600",
-    boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
-    transition: "all 0.3s ease",
-  },
-      })
+      toast('Failed to fetch locations')
     }
   }
 
@@ -502,6 +1038,13 @@ export default function Locations () {
 
   const filtered = locations.filter(l =>
     l.name.toLowerCase().includes(search.toLowerCase())
+  )
+
+  // ===== PAGINATION LOGIC =====
+  const totalPages = Math.ceil(filtered.length / itemsPerPage)
+  const paginatedData = filtered.slice(
+    (currentPage - 1) * itemsPerPage,
+    currentPage * itemsPerPage
   )
 
   const openModal = (location = null) => {
@@ -523,26 +1066,8 @@ export default function Locations () {
 
   // ===== SAVE LOCATION (CREATE / UPDATE) =====
   const handleSave = async () => {
-    if (
-      !form.name ||
-      !form.capacity ||
-      !form.owner ||
-      !form.location ||
-      !form.status
-    ) {
-      toast('All fields are required.', {
-         style: {
-    background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
-    color: "#FFFFFF",
-    backdropFilter: "blur(12px)", // glass effect
-    border: "1px solid rgba(255,255,255,0.2)",
-    borderRadius: "1rem",
-    padding: "14px 22px",
-    fontWeight: "600",
-    boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
-    transition: "all 0.3s ease",
-  },
-      })
+    if (!form.name || !form.capacity || !form.owner || !form.location || !form.status) {
+      toast('All fields are required.')
       return
     }
 
@@ -554,19 +1079,7 @@ export default function Locations () {
           editingLocation.$id,
           { ...form }
         )
-        toast('Location updated successfully!', {
-           style: {
-    background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
-    color: "#FFFFFF",
-    backdropFilter: "blur(12px)", // glass effect
-    border: "1px solid rgba(255,255,255,0.2)",
-    borderRadius: "1rem",
-    padding: "14px 22px",
-    fontWeight: "600",
-    boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
-    transition: "all 0.3s ease",
-  },
-        })
+        toast('Location updated successfully!')
       } else {
         await databases.createDocument(
           databaseId,
@@ -574,19 +1087,7 @@ export default function Locations () {
           ID.unique(),
           { ...form }
         )
-        toast('Location added successfully!', {
-           style: {
-    background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
-    color: "#FFFFFF",
-    backdropFilter: "blur(12px)", // glass effect
-    border: "1px solid rgba(255,255,255,0.2)",
-    borderRadius: "1rem",
-    padding: "14px 22px",
-    fontWeight: "600",
-    boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
-    transition: "all 0.3s ease",
-  },
-        })
+        toast('Location added successfully!')
       }
       setIsModalOpen(false)
       setEditingLocation(null)
@@ -600,19 +1101,7 @@ export default function Locations () {
       fetchLocations() // Refresh after save
     } catch (error) {
       console.error(error)
-      toast('Failed to save location', {
-         style: {
-    background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
-    color: "#FFFFFF",
-    backdropFilter: "blur(12px)", // glass effect
-    border: "1px solid rgba(255,255,255,0.2)",
-    borderRadius: "1rem",
-    padding: "14px 22px",
-    fontWeight: "600",
-    boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
-    transition: "all 0.3s ease",
-  },
-      })
+      toast('Failed to save location')
     }
   }
 
@@ -620,146 +1109,25 @@ export default function Locations () {
   const handleDelete = async id => {
     try {
       await databases.deleteDocument(databaseId, locationsCollectionId, id)
-      toast('Location deleted successfully.', {
-        style: {
-    background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
-    color: "#FFFFFF",
-    backdropFilter: "blur(12px)", // glass effect
-    border: "1px solid rgba(255,255,255,0.2)",
-    borderRadius: "1rem",
-    padding: "14px 22px",
-    fontWeight: "600",
-    boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
-    transition: "all 0.3s ease",
-  },
-      })
+      toast('Location deleted successfully.')
       fetchLocations()
     } catch (error) {
       console.error(error)
-      toast('Failed to delete location', {
-         style: {
-    background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
-    color: "#FFFFFF",
-    backdropFilter: "blur(12px)", // glass effect
-    border: "1px solid rgba(255,255,255,0.2)",
-    borderRadius: "1rem",
-    padding: "14px 22px",
-    fontWeight: "600",
-    boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
-    transition: "all 0.3s ease",
-  },
-      })
+      toast('Failed to delete location')
     }
   }
 
   return (
     <div className='space-y-6 w-full px-2 sm:px-4 bg-[#E5E5E5] min-h-screen py-6'>
-      {/* ===== DASHBOARD & CARDS ===== */}
+      {/* ===== DASHBOARD HEADER ===== */}
       <div>
         <h1 className='ext-3xl md:text-3xl font-extrabold text-center text-[#14213D]'>
           Event Locations
         </h1>
         <p className='text-sm mt-3 text-center text-[#14213D]'>
-          Manage and track all event venues with capacity, status, and details.{' '}
-          <br />
+          Manage and track all event venues with capacity, status, and details.<br/>
           Easily add, edit, or remove locations for smooth event planning.
         </p>
-      </div>
-{/* Dashboard Cards  */}
-<div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2'>
-  {/* Organizer Card */}
-  <Card className='rounded-2xl shadow-lg transition-all transform hover:shadow-2xl hover:-translate-y-1 hover:scale-105 
-                   bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white cursor-pointer'>
-    <CardHeader className='flex items-center justify-between'>
-      <CardTitle className='text-sm md:text-base font-extrabold'>Organizer</CardTitle>
-      <Users className='h-6 w-6 text-blue-300' />
-    </CardHeader>
-    <CardContent>
-      <p className='text-xl md:text-2xl font-bold mt-5'>Neha & Zoha</p>
-      <p className='text-sm md:text-base text-gray-300 mt-2'>Main Event Organizer</p>
-    </CardContent>
-  </Card>
-
-  {/* Active Locations Card */}
-  <Card className='rounded-2xl shadow-lg transition-all transform hover:shadow-2xl hover:-translate-y-1 hover:scale-105 
-                   bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white cursor-pointer'>
-    <CardHeader className='flex items-center justify-between'>
-      <CardTitle className='text-xl md:text-base font-semibold'>Active <br/> Locations</CardTitle>
-      <MapPin className='h-6 w-6 text-yellow-300' />
-    </CardHeader>
-    <CardContent>
-      <p className='text-2xl md:text-3xl font-bold leading-tight'>
-        {locations.filter(l => l.status === 'active').length}
-      </p>
-      <p className='text-sm md:text-base text-gray-300'>Currently Available</p>
-    </CardContent>
-  </Card>
-
-  {/* Maintenance Locations Card */}
-  <Card className='rounded-2xl shadow-lg transition-all transform hover:shadow-2xl hover:-translate-y-1 hover:scale-105 
-                   bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white cursor-pointer'>
-    <CardHeader className='flex items-center justify-between'>
-      <CardTitle className='text-xl md:text-base font-semibold'>Maintenance <br/>Locations</CardTitle>
-      <MapPin className='h-7 w-7 text-green-500' />
-    </CardHeader>
-    <CardContent>
-      <p className='text-2xl md:text-3xl font-bold leading-tight'>
-        {locations.filter(l => l.status === 'maintenance').length}
-      </p>
-      <p className='text-sm md:text-base text-gray-300'>Under Maintenance</p>
-    </CardContent>
-  </Card>
-
-  {/* Canceled Locations Card */}
-  <Card className='rounded-2xl shadow-lg transition-all transform hover:shadow-2xl hover:-translate-y-1 hover:scale-105 
-                   bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white cursor-pointer'>
-    <CardHeader className='flex items-center justify-between'>
-      <CardTitle className='text-sm md:text-base font-semibold'>Canceled <br/>Locations</CardTitle>
-      <MapPin className='h-6 w-6 text-red-400' />
-    </CardHeader>
-    <CardContent>
-      <p className='text-2xl md:text-3xl font-bold leading-tight'>
-        {locations.filter(l => l.status === 'canceled').length}
-      </p>
-      <p className='text-sm md:text-base text-gray-300'>No Longer Available</p>
-    </CardContent>
-  </Card>
-</div>
-
-      {/* ===== LOCATION CARDS GRID ===== */}
-      <div className='grid grid-cols-1 [@media(min-width:1130px)]:grid-cols-2 lg:grid-cols-2 gap-8'>
-        {filtered.map(l => (
-          <Card
-            key={l.$id}
-            className='border rounded-2xl shadow-lg hover:shadow-2xl 
-                 transition-transform transform hover:-translate-y-1 
-                 bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white 
-                 p-6 h-[230px] flex flex-col justify-between'
-          >
-            <CardHeader className='flex flex-row items-center justify-between p-0'>
-              <CardTitle className='text-2xl font-semibold truncate'>
-                {l.name}
-              </CardTitle>
-              <Badge className={statusColors[l.status] || statusColors.default}>
-                {l.status}
-              </Badge>
-            </CardHeader>
-            <CardContent className='space-y-4 text-lg p-0'>
-              <div className='flex items-center gap-2'>
-                <Users className='h-6 w-6 text-blue-300' />
-                <span>{l.owner}</span>
-              </div>
-              <div className='flex items-center gap-2'>
-                <MapPin className='h-6 w-6 text-green-300' />
-                <span>{l.location}</span>
-              </div>
-              <div className='flex items-center gap-2'>
-                <Users className='h-6 w-6 text-orange-300' />
-                <span>{l.capacity} capacity</span>
-              </div>
-            </CardContent>
-          </Card>
-        ))}
       </div>
 
       {/* ===== SEARCH + ADD BUTTON ===== */}
@@ -783,67 +1151,37 @@ export default function Locations () {
         <Table className='w-full bg-[#14213D] text-white'>
           <TableHeader>
             <TableRow className='bg-[#0f192f]'>
-              <TableHead className='font-semibold px-4 py-3 text-white'>
-                Name
-              </TableHead>
-              <TableHead className='font-semibold px-4 py-3 text-white'>
-                Capacity
-              </TableHead>
-              <TableHead className='font-semibold px-4 py-3 text-white'>
-                Owner
-              </TableHead>
-              <TableHead className='font-semibold px-4 py-3 text-white'>
-                Location
-              </TableHead>
-              <TableHead className='font-semibold px-4 py-3 text-white'>
-                Status
-              </TableHead>
-              <TableHead className='font-semibold px-4 py-3 text-center text-white'>
-                Actions
-              </TableHead>
+              <TableHead className='px-4 py-3 text-white'>Name</TableHead>
+              <TableHead className='px-4 py-3 text-white'>Capacity</TableHead>
+              <TableHead className='px-4 py-3 text-white'>Owner</TableHead>
+              <TableHead className='px-4 py-3 text-white'>Location</TableHead>
+              <TableHead className='px-4 py-3 text-white'>Status</TableHead>
+              <TableHead className='px-4 py-3 text-center text-white'>Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {filtered.length > 0 ? (
-              filtered.map(l => (
-                <TableRow
-                  key={l.$id}
-                  className='hover:bg-[#1f2b4d] text-sm md:text-base border-b border-gray-700'
-                >
-                  <TableCell className='px-4 py-4 font-medium'>
-                    {l.name}
-                  </TableCell>
+            {paginatedData.length > 0 ? (
+              paginatedData.map(l => (
+                <TableRow key={l.$id} className='hover:bg-[#1f2b4d]'>
+                  <TableCell className='px-4 py-4'>{l.name}</TableCell>
                   <TableCell className='px-4 py-4'>{l.capacity}</TableCell>
                   <TableCell className='px-4 py-4'>{l.owner}</TableCell>
                   <TableCell className='px-4 py-4'>{l.location}</TableCell>
                   <TableCell className='px-4 py-4'>
-                    <Badge
-                      className={statusColors[l.status] || statusColors.default}
-                    >
+                    <Badge className={statusColors[l.status] || statusColors.default}>
                       {l.status}
                     </Badge>
                   </TableCell>
                   <TableCell className='px-4 py-4 text-center'>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button
-                          variant='ghost'
-                          size='sm'
-                          className='rounded-full text-white hover:bg-white/20'
-                        >
+                        <Button variant='ghost' size='sm' className='rounded-full text-white hover:bg-white/20'>
                           <MoreHorizontal />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent className='bg-white text-[#14213D]'>
-                        <DropdownMenuItem onClick={() => openModal(l)} className="cursor-pointer">
-                          Edit
-                        </DropdownMenuItem>
-                        <DropdownMenuItem
-                          onClick={() => handleDelete(l.$id)}
-                          className='cursor-pointer'
-                        >
-                          Delete
-                        </DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => openModal(l)}>Edit</DropdownMenuItem>
+                        <DropdownMenuItem onClick={() => handleDelete(l.$id)}>Delete</DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>
@@ -851,10 +1189,7 @@ export default function Locations () {
               ))
             ) : (
               <TableRow>
-                <TableCell
-                  colSpan={6}
-                  className='text-center py-6 text-gray-300'
-                >
+                <TableCell colSpan={6} className='text-center py-6 text-gray-300'>
                   No locations found.
                 </TableCell>
               </TableRow>
@@ -862,6 +1197,39 @@ export default function Locations () {
           </TableBody>
         </Table>
       </div>
+
+      {/* ===== PAGINATION ===== */}
+      {totalPages > 1 && (
+        <Pagination className="flex justify-center mt-6">
+          <PaginationContent className="flex gap-2">
+            <PaginationItem>
+              <PaginationPrevious
+                onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
+                className={`px-4 py-2 rounded-lg border transition ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
+              />
+            </PaginationItem>
+
+            {[...Array(totalPages)].map((_, i) => (
+              <PaginationItem key={i}>
+                <PaginationLink
+                  onClick={() => setCurrentPage(i + 1)}
+                  isActive={currentPage === i + 1}
+                  className={`px-4 py-2 rounded-lg border ${currentPage === i + 1 ? 'bg-[#14213D] text-white' : 'bg-white text-[#14213D]'}`}
+                >
+                  {i + 1}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+
+            <PaginationItem>
+              <PaginationNext
+                onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
+                className={`px-4 py-2 rounded-lg border transition ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''}`}
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      )}
 
       {/* ===== MODAL ===== */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
@@ -873,37 +1241,11 @@ export default function Locations () {
           </DialogHeader>
 
           <div className='flex flex-col gap-4 mt-3'>
-            <Input
-              placeholder='Name'
-              value={form.name}
-              onChange={e => setForm({ ...form, name: e.target.value })}
-              className='bg-gray-50'
-            />
-            <Input
-              type='number'
-              placeholder='Capacity'
-              value={form.capacity}
-              onChange={e =>
-                setForm({ ...form, capacity: parseInt(e.target.value) || 0 })
-              }
-              className='bg-gray-50'
-            />
-            <Input
-              placeholder='Owner Name'
-              value={form.owner}
-              onChange={e => setForm({ ...form, owner: e.target.value })}
-              className='bg-gray-50'
-            />
-            <Input
-              placeholder='Location'
-              value={form.location}
-              onChange={e => setForm({ ...form, location: e.target.value })}
-              className='bg-gray-50'
-            />
-            <Select
-              value={form.status}
-              onValueChange={value => setForm({ ...form, status: value })}
-            >
+            <Input placeholder='Name' value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
+            <Input type='number' placeholder='Capacity' value={form.capacity} onChange={e => setForm({ ...form, capacity: parseInt(e.target.value) || 0 })} />
+            <Input placeholder='Owner Name' value={form.owner} onChange={e => setForm({ ...form, owner: e.target.value })} />
+            <Input placeholder='Location' value={form.location} onChange={e => setForm({ ...form, location: e.target.value })} />
+            <Select value={form.status} onValueChange={value => setForm({ ...form, status: value })}>
               <SelectTrigger className='w-full bg-gray-50 rounded-lg p-2'>
                 <SelectValue placeholder='Select Status' />
               </SelectTrigger>
@@ -916,10 +1258,7 @@ export default function Locations () {
           </div>
 
           <DialogFooter className='mt-4'>
-            <Button
-              onClick={handleSave}
-              className='rounded-lg px-6 bg-gradient-to-r from-[#14213D] to-[#6B7280] text-white w-full sm:w-auto cursor-pointer'
-            >
+            <Button onClick={handleSave} className='rounded-lg px-6 bg-gradient-to-r from-[#14213D] to-[#6B7280] text-white w-full sm:w-auto'>
               {editingLocation ? 'Update Location' : 'Save Location'}
             </Button>
           </DialogFooter>
