@@ -421,11 +421,7 @@
 //   DropdownMenuContent,
 //   DropdownMenuItem
 // } from '@/components/ui/dropdown-menu'
-// import {
-//   MoreHorizontal,
-//   MapPin,
-//   Users,
-// } from 'lucide-react'
+// import { MoreHorizontal, MapPin, Users } from 'lucide-react'
 // import {
 //   Dialog,
 //   DialogContent,
@@ -482,17 +478,18 @@
 //     } catch (error) {
 //       console.error(error)
 //       toast('Failed to fetch locations', {
-//          style: {
-//     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
-//     color: "#FFFFFF",
-//     backdropFilter: "blur(12px)", // glass effect
-//     border: "1px solid rgba(255,255,255,0.2)",
-//     borderRadius: "1rem",
-//     padding: "14px 22px",
-//     fontWeight: "600",
-//     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
-//     transition: "all 0.3s ease",
-//   },
+//         style: {
+//           background:
+//             'linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))', // gradient navy glass
+//           color: '#FFFFFF',
+//           backdropFilter: 'blur(12px)', // glass effect
+//           border: '1px solid rgba(255,255,255,0.2)',
+//           borderRadius: '1rem',
+//           padding: '14px 22px',
+//           fontWeight: '600',
+//           boxShadow: '0 8px 20px rgba(0,0,0,0.25)', // subtle shadow
+//           transition: 'all 0.3s ease'
+//         }
 //       })
 //     }
 //   }
@@ -532,17 +529,18 @@
 //       !form.status
 //     ) {
 //       toast('All fields are required.', {
-//          style: {
-//     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
-//     color: "#FFFFFF",
-//     backdropFilter: "blur(12px)", // glass effect
-//     border: "1px solid rgba(255,255,255,0.2)",
-//     borderRadius: "1rem",
-//     padding: "14px 22px",
-//     fontWeight: "600",
-//     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
-//     transition: "all 0.3s ease",
-//   },
+//         style: {
+//           background:
+//             'linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))', // gradient navy glass
+//           color: '#FFFFFF',
+//           backdropFilter: 'blur(12px)', // glass effect
+//           border: '1px solid rgba(255,255,255,0.2)',
+//           borderRadius: '1rem',
+//           padding: '14px 22px',
+//           fontWeight: '600',
+//           boxShadow: '0 8px 20px rgba(0,0,0,0.25)', // subtle shadow
+//           transition: 'all 0.3s ease'
+//         }
 //       })
 //       return
 //     }
@@ -556,17 +554,18 @@
 //           { ...form }
 //         )
 //         toast('Location updated successfully!', {
-//            style: {
-//     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
-//     color: "#FFFFFF",
-//     backdropFilter: "blur(12px)", // glass effect
-//     border: "1px solid rgba(255,255,255,0.2)",
-//     borderRadius: "1rem",
-//     padding: "14px 22px",
-//     fontWeight: "600",
-//     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
-//     transition: "all 0.3s ease",
-//   },
+//           style: {
+//             background:
+//               'linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))', // gradient navy glass
+//             color: '#FFFFFF',
+//             backdropFilter: 'blur(12px)', // glass effect
+//             border: '1px solid rgba(255,255,255,0.2)',
+//             borderRadius: '1rem',
+//             padding: '14px 22px',
+//             fontWeight: '600',
+//             boxShadow: '0 8px 20px rgba(0,0,0,0.25)', // subtle shadow
+//             transition: 'all 0.3s ease'
+//           }
 //         })
 //       } else {
 //         await databases.createDocument(
@@ -576,17 +575,18 @@
 //           { ...form }
 //         )
 //         toast('Location added successfully!', {
-//            style: {
-//     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
-//     color: "#FFFFFF",
-//     backdropFilter: "blur(12px)", // glass effect
-//     border: "1px solid rgba(255,255,255,0.2)",
-//     borderRadius: "1rem",
-//     padding: "14px 22px",
-//     fontWeight: "600",
-//     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
-//     transition: "all 0.3s ease",
-//   },
+//           style: {
+//             background:
+//               'linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))', // gradient navy glass
+//             color: '#FFFFFF',
+//             backdropFilter: 'blur(12px)', // glass effect
+//             border: '1px solid rgba(255,255,255,0.2)',
+//             borderRadius: '1rem',
+//             padding: '14px 22px',
+//             fontWeight: '600',
+//             boxShadow: '0 8px 20px rgba(0,0,0,0.25)', // subtle shadow
+//             transition: 'all 0.3s ease'
+//           }
 //         })
 //       }
 //       setIsModalOpen(false)
@@ -602,17 +602,18 @@
 //     } catch (error) {
 //       console.error(error)
 //       toast('Failed to save location', {
-//          style: {
-//     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
-//     color: "#FFFFFF",
-//     backdropFilter: "blur(12px)", // glass effect
-//     border: "1px solid rgba(255,255,255,0.2)",
-//     borderRadius: "1rem",
-//     padding: "14px 22px",
-//     fontWeight: "600",
-//     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
-//     transition: "all 0.3s ease",
-//   },
+//         style: {
+//           background:
+//             'linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))', // gradient navy glass
+//           color: '#FFFFFF',
+//           backdropFilter: 'blur(12px)', // glass effect
+//           border: '1px solid rgba(255,255,255,0.2)',
+//           borderRadius: '1rem',
+//           padding: '14px 22px',
+//           fontWeight: '600',
+//           boxShadow: '0 8px 20px rgba(0,0,0,0.25)', // subtle shadow
+//           transition: 'all 0.3s ease'
+//         }
 //       })
 //     }
 //   }
@@ -623,32 +624,34 @@
 //       await databases.deleteDocument(databaseId, locationsCollectionId, id)
 //       toast('Location deleted successfully.', {
 //         style: {
-//     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
-//     color: "#FFFFFF",
-//     backdropFilter: "blur(12px)", // glass effect
-//     border: "1px solid rgba(255,255,255,0.2)",
-//     borderRadius: "1rem",
-//     padding: "14px 22px",
-//     fontWeight: "600",
-//     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
-//     transition: "all 0.3s ease",
-//   },
+//           background:
+//             'linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))', // gradient navy glass
+//           color: '#FFFFFF',
+//           backdropFilter: 'blur(12px)', // glass effect
+//           border: '1px solid rgba(255,255,255,0.2)',
+//           borderRadius: '1rem',
+//           padding: '14px 22px',
+//           fontWeight: '600',
+//           boxShadow: '0 8px 20px rgba(0,0,0,0.25)', // subtle shadow
+//           transition: 'all 0.3s ease'
+//         }
 //       })
 //       fetchLocations()
 //     } catch (error) {
 //       console.error(error)
 //       toast('Failed to delete location', {
-//          style: {
-//     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
-//     color: "#FFFFFF",
-//     backdropFilter: "blur(12px)", // glass effect
-//     border: "1px solid rgba(255,255,255,0.2)",
-//     borderRadius: "1rem",
-//     padding: "14px 22px",
-//     fontWeight: "600",
-//     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
-//     transition: "all 0.3s ease",
-//   },
+//         style: {
+//           background:
+//             'linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))', // gradient navy glass
+//           color: '#FFFFFF',
+//           backdropFilter: 'blur(12px)', // glass effect
+//           border: '1px solid rgba(255,255,255,0.2)',
+//           borderRadius: '1rem',
+//           padding: '14px 22px',
+//           fontWeight: '600',
+//           boxShadow: '0 8px 20px rgba(0,0,0,0.25)', // subtle shadow
+//           transition: 'all 0.3s ease'
+//         }
 //       })
 //     }
 //   }
@@ -666,66 +669,92 @@
 //           Easily add, edit, or remove locations for smooth event planning.
 //         </p>
 //       </div>
-// {/* Dashboard Cards  */}
-// <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2'>
-//   {/* Organizer Card */}
-//   <Card className='rounded-2xl shadow-lg transition-all transform hover:shadow-2xl hover:-translate-y-1 hover:scale-105 
-//                    bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white cursor-pointer'>
-//     <CardHeader className='flex items-center justify-between'>
-//       <CardTitle className='text-sm md:text-base font-extrabold'>Organizer</CardTitle>
-//       <Users className='h-6 w-6 text-blue-300' />
-//     </CardHeader>
-//     <CardContent>
-//       <p className='text-xl md:text-2xl font-bold mt-5'>Neha & Zoha</p>
-//       <p className='text-sm md:text-base text-gray-300 mt-2'>Main Event Organizer</p>
-//     </CardContent>
-//   </Card>
+//       {/* Dashboard Cards  */}
+//       <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2'>
+//         {/* Organizer Card */}
+//         <Card
+//           className='rounded-2xl shadow-lg transition-all transform hover:shadow-2xl hover:-translate-y-1 hover:scale-105 
+//                    bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white cursor-pointer'
+//         >
+//           <CardHeader className='flex items-center justify-between'>
+//             <CardTitle className='text-sm md:text-base font-extrabold'>
+//               Organizer
+//             </CardTitle>
+//             <Users className='h-6 w-6 text-blue-300' />
+//           </CardHeader>
+//           <CardContent>
+//             <p className='text-xl md:text-2xl font-bold mt-5'>Neha & Zoha</p>
+//             <p className='text-sm md:text-base text-gray-300 mt-2'>
+//               Main Event Organizer
+//             </p>
+//           </CardContent>
+//         </Card>
 
-//   {/* Active Locations Card */}
-//   <Card className='rounded-2xl shadow-lg transition-all transform hover:shadow-2xl hover:-translate-y-1 hover:scale-105 
-//                    bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white cursor-pointer'>
-//     <CardHeader className='flex items-center justify-between'>
-//       <CardTitle className='text-xl md:text-base font-semibold'>Active <br/> Locations</CardTitle>
-//       <MapPin className='h-6 w-6 text-yellow-300' />
-//     </CardHeader>
-//     <CardContent>
-//       <p className='text-2xl md:text-3xl font-bold leading-tight'>
-//         {locations.filter(l => l.status === 'active').length}
-//       </p>
-//       <p className='text-sm md:text-base text-gray-300'>Currently Available</p>
-//     </CardContent>
-//   </Card>
+//         {/* Active Locations Card */}
+//         <Card
+//           className='rounded-2xl shadow-lg transition-all transform hover:shadow-2xl hover:-translate-y-1 hover:scale-105 
+//                    bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white cursor-pointer'
+//         >
+//           <CardHeader className='flex items-center justify-between'>
+//             <CardTitle className='text-xl md:text-base font-semibold'>
+//               Active <br /> Locations
+//             </CardTitle>
+//             <MapPin className='h-6 w-6 text-yellow-300' />
+//           </CardHeader>
+//           <CardContent>
+//             <p className='text-2xl md:text-3xl font-bold leading-tight'>
+//               {locations.filter(l => l.status === 'active').length}
+//             </p>
+//             <p className='text-sm md:text-base text-gray-300'>
+//               Currently Available
+//             </p>
+//           </CardContent>
+//         </Card>
 
-//   {/* Maintenance Locations Card */}
-//   <Card className='rounded-2xl shadow-lg transition-all transform hover:shadow-2xl hover:-translate-y-1 hover:scale-105 
-//                    bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white cursor-pointer'>
-//     <CardHeader className='flex items-center justify-between'>
-//       <CardTitle className='text-xl md:text-base font-semibold'>Maintenance <br/>Locations</CardTitle>
-//       <MapPin className='h-7 w-7 text-green-500' />
-//     </CardHeader>
-//     <CardContent>
-//       <p className='text-2xl md:text-3xl font-bold leading-tight'>
-//         {locations.filter(l => l.status === 'maintenance').length}
-//       </p>
-//       <p className='text-sm md:text-base text-gray-300'>Under Maintenance</p>
-//     </CardContent>
-//   </Card>
+//         {/* Maintenance Locations Card */}
+//         <Card
+//           className='rounded-2xl shadow-lg transition-all transform hover:shadow-2xl hover:-translate-y-1 hover:scale-105 
+//                    bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white cursor-pointer'
+//         >
+//           <CardHeader className='flex items-center justify-between'>
+//             <CardTitle className='text-xl md:text-base font-semibold'>
+//               Maintenance <br />
+//               Locations
+//             </CardTitle>
+//             <MapPin className='h-7 w-7 text-green-500' />
+//           </CardHeader>
+//           <CardContent>
+//             <p className='text-2xl md:text-3xl font-bold leading-tight'>
+//               {locations.filter(l => l.status === 'maintenance').length}
+//             </p>
+//             <p className='text-sm md:text-base text-gray-300'>
+//               Under Maintenance
+//             </p>
+//           </CardContent>
+//         </Card>
 
-//   {/* Canceled Locations Card */}
-//   <Card className='rounded-2xl shadow-lg transition-all transform hover:shadow-2xl hover:-translate-y-1 hover:scale-105 
-//                    bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white cursor-pointer'>
-//     <CardHeader className='flex items-center justify-between'>
-//       <CardTitle className='text-sm md:text-base font-semibold'>Canceled <br/>Locations</CardTitle>
-//       <MapPin className='h-6 w-6 text-red-400' />
-//     </CardHeader>
-//     <CardContent>
-//       <p className='text-2xl md:text-3xl font-bold leading-tight'>
-//         {locations.filter(l => l.status === 'canceled').length}
-//       </p>
-//       <p className='text-sm md:text-base text-gray-300'>No Longer Available</p>
-//     </CardContent>
-//   </Card>
-// </div>
+//         {/* Canceled Locations Card */}
+//         <Card
+//           className='rounded-2xl shadow-lg transition-all transform hover:shadow-2xl hover:-translate-y-1 hover:scale-105 
+//                    bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white cursor-pointer'
+//         >
+//           <CardHeader className='flex items-center justify-between'>
+//             <CardTitle className='text-sm md:text-base font-semibold'>
+//               Canceled <br />
+//               Locations
+//             </CardTitle>
+//             <MapPin className='h-6 w-6 text-red-400' />
+//           </CardHeader>
+//           <CardContent>
+//             <p className='text-2xl md:text-3xl font-bold leading-tight'>
+//               {locations.filter(l => l.status === 'canceled').length}
+//             </p>
+//             <p className='text-sm md:text-base text-gray-300'>
+//               No Longer Available
+//             </p>
+//           </CardContent>
+//         </Card>
+//       </div>
 
 //       {/* ===== LOCATION CARDS GRID ===== */}
 //       <div className='grid grid-cols-1 [@media(min-width:1130px)]:grid-cols-2 lg:grid-cols-2 gap-8'>
@@ -836,7 +865,10 @@
 //                         </Button>
 //                       </DropdownMenuTrigger>
 //                       <DropdownMenuContent className='bg-white text-[#14213D]'>
-//                         <DropdownMenuItem onClick={() => openModal(l)} className="cursor-pointer">
+//                         <DropdownMenuItem
+//                           onClick={() => openModal(l)}
+//                           className='cursor-pointer'
+//                         >
 //                           Edit
 //                         </DropdownMenuItem>
 //                         <DropdownMenuItem
@@ -932,9 +964,6 @@
 
 
 
-
-// With pagination
-
 import React, { useState, useEffect } from 'react'
 import { Client, Databases, ID } from 'appwrite'
 import {
@@ -956,11 +985,7 @@ import {
   DropdownMenuContent,
   DropdownMenuItem
 } from '@/components/ui/dropdown-menu'
-import {
-  MoreHorizontal,
-  MapPin,
-  Users,
-} from 'lucide-react'
+import { MoreHorizontal, MapPin, Users } from 'lucide-react'
 import {
   Dialog,
   DialogContent,
@@ -975,14 +1000,16 @@ import {
   SelectTrigger,
   SelectValue
 } from '@/components/ui/select'
+
+// ✅ ShadCN Pagination import
 import {
   Pagination,
   PaginationContent,
   PaginationItem,
-  PaginationPrevious,
   PaginationNext,
+  PaginationPrevious,
   PaginationLink
-} from "@/components/ui/pagination"
+} from '@/components/ui/pagination'
 
 // ===== APPWRITE SETUP =====
 const client = new Client()
@@ -1007,7 +1034,7 @@ export default function Locations () {
   })
   const [editingLocation, setEditingLocation] = useState(null)
 
-  // ===== PAGINATION STATES =====
+  // ✅ Pagination states
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 5
 
@@ -1040,12 +1067,10 @@ export default function Locations () {
     l.name.toLowerCase().includes(search.toLowerCase())
   )
 
-  // ===== PAGINATION LOGIC =====
+  // ✅ Pagination logic
   const totalPages = Math.ceil(filtered.length / itemsPerPage)
-  const paginatedData = filtered.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  )
+  const startIndex = (currentPage - 1) * itemsPerPage
+  const paginatedData = filtered.slice(startIndex, startIndex + itemsPerPage)
 
   const openModal = (location = null) => {
     if (location) {
@@ -1066,7 +1091,13 @@ export default function Locations () {
 
   // ===== SAVE LOCATION (CREATE / UPDATE) =====
   const handleSave = async () => {
-    if (!form.name || !form.capacity || !form.owner || !form.location || !form.status) {
+    if (
+      !form.name ||
+      !form.capacity ||
+      !form.owner ||
+      !form.location ||
+      !form.status
+    ) {
       toast('All fields are required.')
       return
     }
@@ -1119,16 +1150,140 @@ export default function Locations () {
 
   return (
     <div className='space-y-6 w-full px-2 sm:px-4 bg-[#E5E5E5] min-h-screen py-6'>
-      {/* ===== DASHBOARD HEADER ===== */}
+          {/* ===== DASHBOARD & CARDS ===== */}
       <div>
         <h1 className='ext-3xl md:text-3xl font-extrabold text-center text-[#14213D]'>
           Event Locations
         </h1>
         <p className='text-sm mt-3 text-center text-[#14213D]'>
-          Manage and track all event venues with capacity, status, and details.<br/>
+          Manage and track all event venues with capacity, status, and details.{' '}
+          <br />
           Easily add, edit, or remove locations for smooth event planning.
         </p>
       </div>
+      {/* Dashboard Cards  */}
+      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2'>
+        {/* Organizer Card */}
+        <Card
+          className='rounded-2xl shadow-lg transition-all transform hover:shadow-2xl hover:-translate-y-1 hover:scale-105 
+                   bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white cursor-pointer'
+        >
+          <CardHeader className='flex items-center justify-between'>
+            <CardTitle className='text-sm md:text-base font-extrabold'>
+              Organizer
+            </CardTitle>
+            <Users className='h-6 w-6 text-blue-300' />
+          </CardHeader>
+          <CardContent>
+            <p className='text-xl md:text-2xl font-bold mt-5'>Neha & Zoha</p>
+            <p className='text-sm md:text-base text-gray-300 mt-2'>
+              Main Event Organizer
+            </p>
+          </CardContent>
+        </Card>
+
+        {/* Active Locations Card */}
+        <Card
+          className='rounded-2xl shadow-lg transition-all transform hover:shadow-2xl hover:-translate-y-1 hover:scale-105 
+                   bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white cursor-pointer'
+        >
+          <CardHeader className='flex items-center justify-between'>
+            <CardTitle className='text-xl md:text-base font-semibold'>
+              Active <br /> Locations
+            </CardTitle>
+            <MapPin className='h-6 w-6 text-yellow-300' />
+          </CardHeader>
+          <CardContent>
+            <p className='text-2xl md:text-3xl font-bold leading-tight'>
+              {locations.filter(l => l.status === 'active').length}
+            </p>
+            <p className='text-sm md:text-base text-gray-300'>
+              Currently Available
+            </p>
+          </CardContent>
+        </Card>
+
+        {/* Maintenance Locations Card */}
+        <Card
+          className='rounded-2xl shadow-lg transition-all transform hover:shadow-2xl hover:-translate-y-1 hover:scale-105 
+                   bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white cursor-pointer'
+        >
+          <CardHeader className='flex items-center justify-between'>
+            <CardTitle className='text-xl md:text-base font-semibold'>
+              Maintenance <br />
+              Locations
+            </CardTitle>
+            <MapPin className='h-7 w-7 text-green-500' />
+          </CardHeader>
+          <CardContent>
+            <p className='text-2xl md:text-3xl font-bold leading-tight'>
+              {locations.filter(l => l.status === 'maintenance').length}
+            </p>
+            <p className='text-sm md:text-base text-gray-300'>
+              Under Maintenance
+            </p>
+          </CardContent>
+        </Card>
+
+        {/* Canceled Locations Card */}
+        <Card
+          className='rounded-2xl shadow-lg transition-all transform hover:shadow-2xl hover:-translate-y-1 hover:scale-105 
+                   bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white cursor-pointer'
+        >
+          <CardHeader className='flex items-center justify-between'>
+            <CardTitle className='text-sm md:text-base font-semibold'>
+              Canceled <br />
+              Locations
+            </CardTitle>
+            <MapPin className='h-6 w-6 text-red-400' />
+          </CardHeader>
+          <CardContent>
+            <p className='text-2xl md:text-3xl font-bold leading-tight'>
+              {locations.filter(l => l.status === 'canceled').length}
+            </p>
+            <p className='text-sm md:text-base text-gray-300'>
+              No Longer Available
+            </p>
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* ===== LOCATION CARDS GRID ===== */}
+      <div className='grid grid-cols-1 [@media(min-width:1130px)]:grid-cols-2 lg:grid-cols-2 gap-8'>
+        {filtered.map(l => (
+          <Card
+            key={l.$id}
+            className='border rounded-2xl shadow-lg hover:shadow-2xl 
+                 transition-transform transform hover:-translate-y-1 
+                 bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white 
+                 p-6 h-[230px] flex flex-col justify-between'
+          >
+            <CardHeader className='flex flex-row items-center justify-between p-0'>
+              <CardTitle className='text-2xl font-semibold truncate'>
+                {l.name}
+              </CardTitle>
+              <Badge className={statusColors[l.status] || statusColors.default}>
+                {l.status}
+              </Badge>
+            </CardHeader>
+            <CardContent className='space-y-4 text-lg p-0'>
+              <div className='flex items-center gap-2'>
+                <Users className='h-6 w-6 text-blue-300' />
+                <span>{l.owner}</span>
+              </div>
+              <div className='flex items-center gap-2'>
+                <MapPin className='h-6 w-6 text-green-300' />
+                <span>{l.location}</span>
+              </div>
+              <div className='flex items-center gap-2'>
+                <Users className='h-6 w-6 text-orange-300' />
+                <span>{l.capacity} capacity</span>
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
 
       {/* ===== SEARCH + ADD BUTTON ===== */}
       <div className='flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3'>
@@ -1151,37 +1306,70 @@ export default function Locations () {
         <Table className='w-full bg-[#14213D] text-white'>
           <TableHeader>
             <TableRow className='bg-[#0f192f]'>
-              <TableHead className='px-4 py-3 text-white'>Name</TableHead>
-              <TableHead className='px-4 py-3 text-white'>Capacity</TableHead>
-              <TableHead className='px-4 py-3 text-white'>Owner</TableHead>
-              <TableHead className='px-4 py-3 text-white'>Location</TableHead>
-              <TableHead className='px-4 py-3 text-white'>Status</TableHead>
-              <TableHead className='px-4 py-3 text-center text-white'>Actions</TableHead>
+              <TableHead className='font-semibold px-4 py-3 text-white'>
+                Name
+              </TableHead>
+              <TableHead className='font-semibold px-4 py-3 text-white'>
+                Capacity
+              </TableHead>
+              <TableHead className='font-semibold px-4 py-3 text-white'>
+                Owner
+              </TableHead>
+              <TableHead className='font-semibold px-4 py-3 text-white'>
+                Location
+              </TableHead>
+              <TableHead className='font-semibold px-4 py-3 text-white'>
+                Status
+              </TableHead>
+              <TableHead className='font-semibold px-4 py-3 text-center text-white'>
+                Actions
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {paginatedData.length > 0 ? (
               paginatedData.map(l => (
-                <TableRow key={l.$id} className='hover:bg-[#1f2b4d]'>
-                  <TableCell className='px-4 py-4'>{l.name}</TableCell>
+                <TableRow
+                  key={l.$id}
+                  className='hover:bg-[#1f2b4d] text-sm md:text-base border-b border-gray-700'
+                >
+                  <TableCell className='px-4 py-4 font-medium'>
+                    {l.name}
+                  </TableCell>
                   <TableCell className='px-4 py-4'>{l.capacity}</TableCell>
                   <TableCell className='px-4 py-4'>{l.owner}</TableCell>
                   <TableCell className='px-4 py-4'>{l.location}</TableCell>
                   <TableCell className='px-4 py-4'>
-                    <Badge className={statusColors[l.status] || statusColors.default}>
+                    <Badge
+                      className={statusColors[l.status] || statusColors.default}
+                    >
                       {l.status}
                     </Badge>
                   </TableCell>
                   <TableCell className='px-4 py-4 text-center'>
                     <DropdownMenu>
                       <DropdownMenuTrigger asChild>
-                        <Button variant='ghost' size='sm' className='rounded-full text-white hover:bg-white/20'>
+                        <Button
+                          variant='ghost'
+                          size='sm'
+                          className='rounded-full text-white hover:bg-white/20'
+                        >
                           <MoreHorizontal />
                         </Button>
                       </DropdownMenuTrigger>
                       <DropdownMenuContent className='bg-white text-[#14213D]'>
-                        <DropdownMenuItem onClick={() => openModal(l)}>Edit</DropdownMenuItem>
-                        <DropdownMenuItem onClick={() => handleDelete(l.$id)}>Delete</DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={() => openModal(l)}
+                          className='cursor-pointer'
+                        >
+                          Edit
+                        </DropdownMenuItem>
+                        <DropdownMenuItem
+                          onClick={() => handleDelete(l.$id)}
+                          className='cursor-pointer'
+                        >
+                          Delete
+                        </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>
@@ -1189,7 +1377,10 @@ export default function Locations () {
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={6} className='text-center py-6 text-gray-300'>
+                <TableCell
+                  colSpan={6}
+                  className='text-center py-6 text-gray-300'
+                >
                   No locations found.
                 </TableCell>
               </TableRow>
@@ -1198,40 +1389,86 @@ export default function Locations () {
         </Table>
       </div>
 
-      {/* ===== PAGINATION ===== */}
-      {totalPages > 1 && (
-        <Pagination className="flex justify-center mt-6">
-          <PaginationContent className="flex gap-2">
-            <PaginationItem>
-              <PaginationPrevious
-                onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
-                className={`px-4 py-2 rounded-lg border transition ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : ''}`}
-              />
-            </PaginationItem>
-
-            {[...Array(totalPages)].map((_, i) => (
-              <PaginationItem key={i}>
-                <PaginationLink
-                  onClick={() => setCurrentPage(i + 1)}
-                  isActive={currentPage === i + 1}
-                  className={`px-4 py-2 rounded-lg border ${currentPage === i + 1 ? 'bg-[#14213D] text-white' : 'bg-white text-[#14213D]'}`}
-                >
-                  {i + 1}
-                </PaginationLink>
+      {/* ✅ Pagination below table */}
+      {/* {totalPages > 1 && (
+        <div className='flex justify-center mt-4'>
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious
+                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  className={currentPage === 1 ? 'opacity-50 pointer-events-none' : ''}
+                />
               </PaginationItem>
-            ))}
 
-            <PaginationItem>
-              <PaginationNext
-                onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
-                className={`px-4 py-2 rounded-lg border transition ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : ''}`}
-              />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-      )}
+              {Array.from({ length: totalPages }).map((_, index) => (
+                <PaginationItem key={index}>
+                  <PaginationLink
+                    isActive={currentPage === index + 1}
+                    onClick={() => setCurrentPage(index + 1)}
+                  >
+                    {index + 1}
+                  </PaginationLink>
+                </PaginationItem>
+              ))}
 
-      {/* ===== MODAL ===== */}
+              <PaginationItem>
+                <PaginationNext
+                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                  className={currentPage === totalPages ? 'opacity-50 pointer-events-none' : ''}
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </div>
+      )} */}
+{/* 🔹 Pagination UI */}
+{totalPages > 1 && (
+  <Pagination className="flex justify-center mt-6">
+    <PaginationContent className="flex gap-2">
+      <PaginationItem>
+        <PaginationPrevious
+          onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
+          className={`px-4 py-2 rounded-lg border transition ${
+            currentPage === 1
+              ? "opacity-50 pointer-events-none bg-gray-200 text-gray-500"
+              : "bg-white text-[#14213D] hover:bg-[#e5e5e5]"
+          }`}
+        />
+      </PaginationItem>
+
+      {[...Array(totalPages)].map((_, i) => (
+        <PaginationItem key={i}>
+          <PaginationLink
+            isActive={currentPage === i + 1}
+            onClick={() => setCurrentPage(i + 1)}
+            className={`px-4 py-2 rounded-lg border transition ${
+              currentPage === i + 1
+                ? "bg-[#14213D] text-white border-[#14213D]"
+                : "bg-white text-[#14213D] hover:bg-[#e5e5e5]"
+            }`}
+          >
+            {i + 1}
+          </PaginationLink>
+        </PaginationItem>
+      ))}
+
+      <PaginationItem>
+        <PaginationNext
+          onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
+          className={`px-4 py-2 rounded-lg border transition ${
+            currentPage === totalPages
+              ? "opacity-50 pointer-events-none bg-gray-200 text-gray-500"
+              : "bg-white text-[#14213D] hover:bg-[#e5e5e5]"
+          }`}
+        />
+      </PaginationItem>
+    </PaginationContent>
+  </Pagination>
+)}
+
+    
+     {/* ===== MODAL ===== */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent className='sm:max-w-lg w-[95%] rounded-xl'>
           <DialogHeader>
@@ -1241,11 +1478,37 @@ export default function Locations () {
           </DialogHeader>
 
           <div className='flex flex-col gap-4 mt-3'>
-            <Input placeholder='Name' value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} />
-            <Input type='number' placeholder='Capacity' value={form.capacity} onChange={e => setForm({ ...form, capacity: parseInt(e.target.value) || 0 })} />
-            <Input placeholder='Owner Name' value={form.owner} onChange={e => setForm({ ...form, owner: e.target.value })} />
-            <Input placeholder='Location' value={form.location} onChange={e => setForm({ ...form, location: e.target.value })} />
-            <Select value={form.status} onValueChange={value => setForm({ ...form, status: value })}>
+            <Input
+              placeholder='Event Name'
+              value={form.name}
+              onChange={e => setForm({ ...form, name: e.target.value })}
+              className='bg-gray-50'
+            />
+            <Input
+              type='number'
+              placeholder='Capacity'
+              value={form.capacity}
+              onChange={e =>
+                setForm({ ...form, capacity: parseInt(e.target.value) || 0 })
+              }
+              className='bg-gray-50'
+            />
+            <Input
+              placeholder='Owner Name'
+              value={form.owner}
+              onChange={e => setForm({ ...form, owner: e.target.value })}
+              className='bg-gray-50'
+            />
+            <Input
+              placeholder='Location'
+              value={form.location}
+              onChange={e => setForm({ ...form, location: e.target.value })}
+              className='bg-gray-50'
+            />
+            <Select
+              value={form.status}
+              onValueChange={value => setForm({ ...form, status: value })}
+            >
               <SelectTrigger className='w-full bg-gray-50 rounded-lg p-2'>
                 <SelectValue placeholder='Select Status' />
               </SelectTrigger>
@@ -1258,7 +1521,10 @@ export default function Locations () {
           </div>
 
           <DialogFooter className='mt-4'>
-            <Button onClick={handleSave} className='rounded-lg px-6 bg-gradient-to-r from-[#14213D] to-[#6B7280] text-white w-full sm:w-auto'>
+            <Button
+              onClick={handleSave}
+              className='rounded-lg px-6 bg-gradient-to-r from-[#14213D] to-[#6B7280] text-white w-full sm:w-auto cursor-pointer'
+            >
               {editingLocation ? 'Update Location' : 'Save Location'}
             </Button>
           </DialogFooter>
