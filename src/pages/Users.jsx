@@ -1311,7 +1311,7 @@ export default function Users() {
       </div>
 
 {/* 🔹 Pagination UI */}
-{totalPages > 1 && (
+{/* {totalPages > 1 && (
   <Pagination className="flex justify-center mt-6">
     <PaginationContent className="flex gap-2">
       <PaginationItem>
@@ -1353,7 +1353,54 @@ export default function Users() {
       </PaginationItem>
     </PaginationContent>
   </Pagination>
+)} */}
+{totalPages > 1 && (
+  <Pagination className="flex justify-center mt-6">
+    <PaginationContent className="flex gap-2">
+      {/* Previous Button */}
+      <PaginationItem>
+        <PaginationPrevious
+          onClick={() => setCurrentPage(p => Math.max(p - 1, 1))}
+          className={`px-4 py-2 rounded-lg border transition ${
+            currentPage === 1
+              ? "opacity-50 pointer-events-none bg-gray-200 text-gray-500"
+              : "bg-white text-[#14213D] hover:bg-[#e5e5e5] cursor-pointer"
+          }`}
+        />
+      </PaginationItem>
+
+      {/* Page Numbers */}
+      {[...Array(totalPages)].map((_, i) => (
+        <PaginationItem key={i}>
+          <PaginationLink
+            isActive={currentPage === i + 1}
+            onClick={() => setCurrentPage(i + 1)}
+            className={`px-4 py-2 rounded-lg border transition ${
+              currentPage === i + 1
+                ? "bg-[#14213D] text-white border-[#14213D]"
+                : "bg-white text-[#14213D] hover:bg-[#e5e5e5] cursor-pointer"
+            }`}
+          >
+            {i + 1}
+          </PaginationLink>
+        </PaginationItem>
+      ))}
+
+      {/* Next Button */}
+      <PaginationItem>
+        <PaginationNext
+          onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))}
+          className={`px-4 py-2 rounded-lg border transition ${
+            currentPage === totalPages
+              ? "opacity-50 pointer-events-none bg-gray-200 text-gray-500"
+              : "bg-white text-[#14213D] hover:bg-[#e5e5e5] cursor-pointer"
+          }`}
+        />
+      </PaginationItem>
+    </PaginationContent>
+  </Pagination>
 )}
+
 
       {/* Modal (Add/Edit User) */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>

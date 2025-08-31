@@ -1246,7 +1246,7 @@ export default function Events () {
     
 {/* ✅ Pagination for Cards */}
 
-{cardTotalPages > 1 && (
+{/* {cardTotalPages > 1 && (
   <Pagination className="flex justify-center mt-6">
     <PaginationContent className="flex gap-2">
       <PaginationItem>
@@ -1288,7 +1288,54 @@ export default function Events () {
       </PaginationItem>
     </PaginationContent>
   </Pagination>
+)} */}
+{cardTotalPages > 1 && (
+  <Pagination className="flex justify-center mt-6">
+    <PaginationContent className="flex gap-2">
+      {/* Previous Button */}
+      <PaginationItem>
+        <PaginationPrevious
+          onClick={() => setCardPage(p => Math.max(p - 1, 1))}
+          className={`px-4 py-2 rounded-lg border transition ${
+            cardPage === 1
+              ? "opacity-50 pointer-events-none bg-gray-200 text-gray-500"
+              : "bg-white text-[#14213D] hover:bg-[#e5e5e5] cursor-pointer"
+          }`}
+        />
+      </PaginationItem>
+
+      {/* Page Numbers */}
+      {[...Array(cardTotalPages)].map((_, i) => (
+        <PaginationItem key={i}>
+          <PaginationLink
+            isActive={cardPage === i + 1}
+            onClick={() => setCardPage(i + 1)}
+            className={`px-4 py-2 rounded-lg border transition ${
+              cardPage === i + 1
+                ? "bg-[#14213D] text-white border-[#14213D]"
+                : "bg-white text-[#14213D] hover:bg-[#e5e5e5] cursor-pointer"
+            }`}
+          >
+            {i + 1}
+          </PaginationLink>
+        </PaginationItem>
+      ))}
+
+      {/* Next Button */}
+      <PaginationItem>
+        <PaginationNext
+          onClick={() => setCardPage(p => Math.min(p + 1, cardTotalPages))}
+          className={`px-4 py-2 rounded-lg border transition ${
+            cardPage === cardTotalPages
+              ? "opacity-50 pointer-events-none bg-gray-200 text-gray-500"
+              : "bg-white text-[#14213D] hover:bg-[#e5e5e5] cursor-pointer"
+          }`}
+        />
+      </PaginationItem>
+    </PaginationContent>
+  </Pagination>
 )}
+
 
 
 
@@ -1348,7 +1395,7 @@ export default function Events () {
       </div>
 
 {/* ✅ Pagination for Table */}
-{tableTotalPages > 1 && (
+{/* {tableTotalPages > 1 && (
   <Pagination className="flex justify-center mt-6">
     <PaginationContent className="flex gap-2">
       <PaginationItem>
@@ -1390,7 +1437,54 @@ export default function Events () {
       </PaginationItem>
     </PaginationContent>
   </Pagination>
+)} */}
+{tableTotalPages > 1 && (
+  <Pagination className="flex justify-center mt-6">
+    <PaginationContent className="flex gap-2">
+      {/* Previous Button */}
+      <PaginationItem>
+        <PaginationPrevious
+          onClick={() => setTablePage(p => Math.max(p - 1, 1))}
+          className={`px-4 py-2 rounded-lg border transition ${
+            tablePage === 1
+              ? "opacity-50 pointer-events-none bg-gray-200 text-gray-500"
+              : "bg-white text-[#14213D] hover:bg-[#e5e5e5] cursor-pointer"
+          }`}
+        />
+      </PaginationItem>
+
+      {/* Page Numbers */}
+      {[...Array(tableTotalPages)].map((_, i) => (
+        <PaginationItem key={i}>
+          <PaginationLink
+            isActive={tablePage === i + 1}
+            onClick={() => setTablePage(i + 1)}
+            className={`px-4 py-2 rounded-lg border transition ${
+              tablePage === i + 1
+                ? "bg-[#14213D] text-white border-[#14213D]"
+                : "bg-white text-[#14213D] hover:bg-[#e5e5e5] cursor-pointer"
+            }`}
+          >
+            {i + 1}
+          </PaginationLink>
+        </PaginationItem>
+      ))}
+
+      {/* Next Button */}
+      <PaginationItem>
+        <PaginationNext
+          onClick={() => setTablePage(p => Math.min(p + 1, tableTotalPages))}
+          className={`px-4 py-2 rounded-lg border transition ${
+            tablePage === tableTotalPages
+              ? "opacity-50 pointer-events-none bg-gray-200 text-gray-500"
+              : "bg-white text-[#14213D] hover:bg-[#e5e5e5] cursor-pointer"
+          }`}
+        />
+      </PaginationItem>
+    </PaginationContent>
+  </Pagination>
 )}
+
 
 
 
