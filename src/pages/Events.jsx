@@ -1620,14 +1620,7 @@ export default function Events() {
       setEvents(formattedEvents)
     } catch (err) {
       console.error(err)
-      toast.error('Failed to fetch events.', {
-        style: {
-          background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))",
-          color: "#FFFFFF",
-          border: "1px solid rgba(255,255,255,0.2)",
-          borderRadius: "1rem"
-        }
-      })
+      toast.error('Failed to fetch events.',)
     }
   }
 
