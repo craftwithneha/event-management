@@ -938,7 +938,585 @@
 
 
 
-// All done bs jerk aa raha cards ka
+// // All done bs jerk aa raha cards ka
+// import React, { useState, useEffect } from 'react'
+// import {
+//   Table,
+//   TableHeader,
+//   TableRow,
+//   TableHead,
+//   TableBody,
+//   TableCell
+// } from '@/components/ui/table'
+// import { Input } from '@/components/ui/input'
+// import { Button } from '@/components/ui/button'
+// import { toast } from 'sonner'
+// import {
+//   MoreHorizontal,
+//   MapPin,
+//   Calendar as CalendarIcon,
+//   Users as UsersIcon,
+//   Minus,
+//   Plus
+// } from 'lucide-react'
+// import {
+//   DropdownMenu,
+//   DropdownMenuTrigger,
+//   DropdownMenuContent,
+//   DropdownMenuItem
+// } from '@/components/ui/dropdown-menu'
+// import {
+//   Dialog,
+//   DialogContent,
+//   DialogHeader,
+//   DialogTitle,
+//   DialogFooter
+// } from '@/components/ui/dialog'
+// import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
+// import {
+//   Select,
+//   SelectTrigger,
+//   SelectValue,
+//   SelectContent,
+//   SelectItem
+// } from '@/components/ui/select'
+// import {
+//   Popover,
+//   PopoverTrigger,
+//   PopoverContent
+// } from '@/components/ui/popover'
+// import { Calendar } from '@/components/ui/calendar'
+// import { format, formatISO } from 'date-fns'
+// import { cn } from '@/lib/utils'
+// import { Badge } from '@/components/ui/badge'
+// import { Client, Databases, ID } from 'appwrite'
+// import {
+//   Pagination,
+//   PaginationContent,
+//   PaginationItem,
+//   PaginationPrevious,
+//   PaginationNext,
+//   PaginationLink
+// } from '@/components/ui/pagination'
+
+// const client = new Client()
+//   .setEndpoint(import.meta.env.VITE_APPWRITE_ENDPOINT)
+//   .setProject(import.meta.env.VITE_APPWRITE_PROJECT)
+
+// const databases = new Databases(client)
+// const EVENTS_COLLECTION = import.meta.env.VITE_APPWRITE_EVENTS_COLLECTION_ID
+// const DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID
+
+// export default function Events () {
+//   const [events, setEvents] = useState([])
+//   const [search, setSearch] = useState('')
+//   const [isModalOpen, setIsModalOpen] = useState(false)
+//   const [form, setForm] = useState({
+//     name: '',
+//     location: '',
+//     date: '',
+//     persons: 0,
+//     status: 'Upcoming'
+//   })
+//   const [editingEvent, setEditingEvent] = useState(null)
+//   const [isDateOpen, setIsDateOpen] = useState(false)
+
+//   // ✅ Separate Pagination States
+//   const [cardPage, setCardPage] = useState(1)
+//   const cardItemsPerPage = 4
+//   const [tablePage, setTablePage] = useState(1)
+//   const tableItemsPerPage = 5
+
+//   // Fetch events
+//   const fetchEvents = async () => {
+//     try {
+//       const response = await databases.listDocuments(DATABASE_ID, EVENTS_COLLECTION)
+//       const formattedEvents = response.documents.map(doc => ({
+//         id: doc.$id,
+//         name: doc.name,
+//         location: doc.location,
+//         date: doc.date ? format(new Date(doc.date), 'yyyy-MM-dd') : '',
+//         persons: doc.persons,
+//         status: doc.status
+//       }))
+//       setEvents(formattedEvents)
+//     } catch (err) {
+//       console.error(err)
+//       toast.error('Failed to fetch events.'),{
+        
+//   style: {
+//      background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+//      color: "#FFFFFF",
+//      backdropFilter: "blur(12px)", // glass effect
+//      border: "1px solid rgba(255,255,255,0.2)",
+//      borderRadius: "1rem",
+//      padding: "14px 22px",
+//      fontWeight: "600",
+//      boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+//      transition: "all 0.3s ease",
+//    },
+//       }
+//     }
+//   }
+
+//   useEffect(() => {
+//     fetchEvents()
+//   }, [])
+
+//   const filtered = events.filter(e =>
+//     e.name.toLowerCase().includes(search.toLowerCase())
+//   )
+
+//   // ✅ Cards pagination
+//   const cardLastIndex = cardPage * cardItemsPerPage
+//   const cardFirstIndex = cardLastIndex - cardItemsPerPage
+//   const cardEvents = filtered.slice(cardFirstIndex, cardLastIndex)
+//   const cardTotalPages = Math.ceil(filtered.length / cardItemsPerPage)
+
+//   // ✅ Table pagination
+//   const tableLastIndex = tablePage * tableItemsPerPage
+//   const tableFirstIndex = tableLastIndex - tableItemsPerPage
+//   const tableEvents = filtered.slice(tableFirstIndex, tableLastIndex)
+//   const tableTotalPages = Math.ceil(filtered.length / tableItemsPerPage)
+
+//   const getStatusBadge = status => {
+//     let color = 'bg-gray-100 text-gray-700'
+//     if (status === 'Upcoming') color = 'bg-blue-100 text-blue-700'
+//     if (status === 'Live') color = 'bg-green-100 text-green-700'
+//     if (status === 'Canceled') color = 'bg-red-100 text-red-700'
+//     return <Badge className={cn('text-xs', color)}>{status}</Badge>
+//   }
+
+//   // ✅ Save or Update Event
+//   const handleSave = async () => {
+//     try {
+//       if (!form.name || !form.location || !form.date) {
+//         toast.error('Please fill all fields.'),{
+          
+//   style: {
+//      background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+//      color: "#FFFFFF",
+//      backdropFilter: "blur(12px)", // glass effect
+//      border: "1px solid rgba(255,255,255,0.2)",
+//      borderRadius: "1rem",
+//      padding: "14px 22px",
+//      fontWeight: "600",
+//      boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+//      transition: "all 0.3s ease",
+//    },
+//         }
+//         return
+//       }
+
+//       if (editingEvent) {
+//         await databases.updateDocument(DATABASE_ID, EVENTS_COLLECTION, editingEvent.id, {
+//           name: form.name,
+//           location: form.location,
+//           date: form.date,
+//           persons: form.persons,
+//           status: form.status
+//         })
+//         toast.success('Event updated successfully!'),{
+          
+//   style: {
+//      background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+//      color: "#FFFFFF",
+//      backdropFilter: "blur(12px)", // glass effect
+//      border: "1px solid rgba(255,255,255,0.2)",
+//      borderRadius: "1rem",
+//      padding: "14px 22px",
+//      fontWeight: "600",
+//      boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+//      transition: "all 0.3s ease",
+//    },
+//         }
+//       } else {
+//         await databases.createDocument(DATABASE_ID, EVENTS_COLLECTION, ID.unique(), {
+//           name: form.name,
+//           location: form.location,
+//           date: form.date,
+//           persons: form.persons,
+//           status: form.status
+//         })
+//         toast.success('Event added successfully!'),{
+          
+//   style: {
+//      background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+//      color: "#FFFFFF",
+//      backdropFilter: "blur(12px)", // glass effect
+//      border: "1px solid rgba(255,255,255,0.2)",
+//      borderRadius: "1rem",
+//      padding: "14px 22px",
+//      fontWeight: "600",
+//      boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+//      transition: "all 0.3s ease",
+//    },
+//         }
+//       }
+
+//       setIsModalOpen(false)
+//       setForm({ name: '', location: '', date: '', persons: 0, status: 'Upcoming' })
+//       setEditingEvent(null)
+//       fetchEvents()
+//     } catch (err) {
+//       console.error(err)
+//       toast.error('Failed to save event.'),{
+        
+//   style: {
+//      background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
+//      color: "#FFFFFF",
+//      backdropFilter: "blur(12px)", // glass effect
+//      border: "1px solid rgba(255,255,255,0.2)",
+//      borderRadius: "1rem",
+//      padding: "14px 22px",
+//      fontWeight: "600",
+//      boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
+//      transition: "all 0.3s ease",
+//    },
+//       }
+//     }
+//   }
+
+//   return (
+//     <div className='space-y-6 w-full px-2 sm:px-4 bg-[#E5E5E5] min-h-screen py-6'>
+//       <div>
+//         <h1 className='text-3xl md:text-3xl font-extrabold text-center text-[#14213D]'>
+//           Events
+//         </h1>
+//         <p className='text-sm mt-2 text-center text-[#14213D]'>
+//           Discover upcoming and past events with key details on dates, venues,
+//           and highlights.
+//           <br /> Stay informed and connected with everything that matters.
+//         </p>
+//       </div>
+
+//       {/* Search + Add Event */}
+//       <div className='flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3'>
+//         <Input
+//           placeholder='Search events...'
+//           value={search}
+//           onChange={e => setSearch(e.target.value)}
+//           className='flex-1 rounded-lg w-full bg-white border-blue-950'
+//         />
+//         <Button
+//           onClick={() => {
+//             setForm({ name: '', location: '', date: '', persons: 0, status: 'Upcoming' })
+//             setEditingEvent(null)
+//             setIsModalOpen(true)
+//           }}
+//           className='rounded-lg px-6 w-full sm:w-auto bg-[#14213D] text-white hover:opacity-90 transition'
+//         >
+//           + Add Event
+//         </Button>
+//       </div>
+
+//       {/* Event Cards */}
+//       <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
+//         {cardEvents.length === 0 && (
+//           <p className='text-[#14213D] col-span-full text-center'>
+//             No events found
+//           </p>
+//         )}
+//         {cardEvents.map(e => (
+//           <Card key={e.id} className='border rounded-2xl shadow-md hover:shadow-2xl transition-transform transform hover:-translate-y-1 bg-gradient-to-br from-[#14213D] to-[#1f2b4d] text-white'>
+//             <CardHeader className='flex flex-row items-center justify-between'>
+//               <CardTitle className='text-xl font-semibold truncate'>
+//                 {e.name}
+//               </CardTitle>
+//               <div>{getStatusBadge(e.status)}</div>
+//             </CardHeader>
+//             <CardContent className='space-y-4 text-sm'>
+//               <div className='flex items-center gap-2'>
+//                 <MapPin className='h-5 w-5 text-blue-300' />
+//                 <span>{e.location}</span>
+//               </div>
+//               <div className='flex items-center gap-2'>
+//                 <CalendarIcon className='h-5 w-5 text-green-300' />
+//                 <span>{e.date}</span>
+//               </div>
+//               <div className='flex items-center gap-2'>
+//                 <UsersIcon className='h-5 w-5 text-orange-300' />
+//                 <span>{e.persons} persons</span>
+//               </div>
+//             </CardContent>
+//           </Card>
+//         ))}
+//       </div>
+
+    
+// {/* ✅ Pagination for Cards */}
+
+// {cardTotalPages > 1 && (
+//   <Pagination className="flex justify-center mt-6">
+//     <PaginationContent className="flex gap-2">
+//       {/* Previous Button */}
+//       <PaginationItem>
+//         <PaginationPrevious
+//           onClick={() => setCardPage(p => Math.max(p - 1, 1))}
+//           className={`px-4 py-2 rounded-lg border transition ${
+//             cardPage === 1
+//               ? "opacity-50 pointer-events-none bg-gray-200 text-gray-500"
+//               : "bg-white text-[#14213D] hover:bg-[#e5e5e5] cursor-pointer"
+//           }`}
+//         />
+//       </PaginationItem>
+
+//       {/* Page Numbers */}
+//       {[...Array(cardTotalPages)].map((_, i) => (
+//         <PaginationItem key={i}>
+//           <PaginationLink
+//             isActive={cardPage === i + 1}
+//             onClick={() => setCardPage(i + 1)}
+//             className={`px-4 py-2 rounded-lg border transition ${
+//               cardPage === i + 1
+//                 ? "bg-[#14213D] text-white border-[#14213D]"
+//                 : "bg-white text-[#14213D] hover:bg-[#e5e5e5] cursor-pointer"
+//             }`}
+//           >
+//             {i + 1}
+//           </PaginationLink>
+//         </PaginationItem>
+//       ))}
+
+//       {/* Next Button */}
+//       <PaginationItem>
+//         <PaginationNext
+//           onClick={() => setCardPage(p => Math.min(p + 1, cardTotalPages))}
+//           className={`px-4 py-2 rounded-lg border transition ${
+//             cardPage === cardTotalPages
+//               ? "opacity-50 pointer-events-none bg-gray-200 text-gray-500"
+//               : "bg-white text-[#14213D] hover:bg-[#e5e5e5] cursor-pointer"
+//           }`}
+//         />
+//       </PaginationItem>
+//     </PaginationContent>
+//   </Pagination>
+// )}
+
+
+
+
+//       {/* Events Table */}
+//       <div className='rounded-xl border shadow-sm w-full overflow-hidden'>
+//         <Table className='w-full bg-[#14213D] text-white'>
+//           <TableHeader>
+//             <TableRow className='bg-[#0f192f]'>
+//               <TableHead className='font-semibold px-4 py-3 text-white'>Name</TableHead>
+//               <TableHead className='font-semibold px-4 py-3 text-white'>Location</TableHead>
+//               <TableHead className='font-semibold px-4 py-3 text-white'>Date</TableHead>
+//               <TableHead className='font-semibold px-4 py-3 text-white'>Persons</TableHead>
+//               <TableHead className='font-semibold px-4 py-3 text-white'>Status</TableHead>
+//               <TableHead className='font-semibold px-4 py-3 text-center text-white'>Actions</TableHead>
+//             </TableRow>
+//           </TableHeader>
+//           <TableBody>
+//             {tableEvents.length > 0 ? (
+//               tableEvents.map(e => (
+//                 <TableRow key={e.id} className='hover:bg-[#1f2b4d] text-sm md:text-base border-b border-gray-700'>
+//                   <TableCell className='px-4 py-4'>{e.name}</TableCell>
+//                   <TableCell className='px-4 py-4'>{e.location}</TableCell>
+//                   <TableCell className='px-4 py-4'>{e.date}</TableCell>
+//                   <TableCell className='px-4 py-4'>{e.persons}</TableCell>
+//                   <TableCell className='px-4 py-4'>{getStatusBadge(e.status)}</TableCell>
+//                   <TableCell className='px-4 py-4 text-center'>
+//                     <DropdownMenu>
+//                       <DropdownMenuTrigger asChild>
+//                         <Button variant='ghost' size='sm' className='rounded-full text-white hover:bg-white/20'>
+//                           <MoreHorizontal />
+//                         </Button>
+//                       </DropdownMenuTrigger>
+//                       <DropdownMenuContent className='bg-white text-[#14213D]'>
+//                         <DropdownMenuItem 
+//                           onClick={() => {
+//                             setEditingEvent(e)
+//                             setForm({ ...e })
+//                             setIsModalOpen(true)
+//                           }} 
+//                           className="cursor-pointer"
+//                         >
+//                           Edit
+//                         </DropdownMenuItem>
+//                         <DropdownMenuItem className='cursor-pointer'>Delete</DropdownMenuItem>
+//                       </DropdownMenuContent>
+//                     </DropdownMenu>
+//                   </TableCell>
+//                 </TableRow>
+//               ))
+//             ) : (
+//               <TableRow>
+//                 <TableCell colSpan={6} className='text-center py-6 text-gray-300'>No events found.</TableCell>
+//               </TableRow>
+//             )}
+//           </TableBody>
+//         </Table>
+//       </div>
+
+// {/* ✅ Pagination for Table */}
+
+// {tableTotalPages > 1 && (
+//   <Pagination className="flex justify-center mt-6">
+//     <PaginationContent className="flex gap-2">
+//       {/* Previous Button */}
+//       <PaginationItem>
+//         <PaginationPrevious
+//           onClick={() => setTablePage(p => Math.max(p - 1, 1))}
+//           className={`px-4 py-2 rounded-lg border transition ${
+//             tablePage === 1
+//               ? "opacity-50 pointer-events-none bg-gray-200 text-gray-500"
+//               : "bg-white text-[#14213D] hover:bg-[#e5e5e5] cursor-pointer"
+//           }`}
+//         />
+//       </PaginationItem>
+
+//       {/* Page Numbers */}
+//       {[...Array(tableTotalPages)].map((_, i) => (
+//         <PaginationItem key={i}>
+//           <PaginationLink
+//             isActive={tablePage === i + 1}
+//             onClick={() => setTablePage(i + 1)}
+//             className={`px-4 py-2 rounded-lg border transition ${
+//               tablePage === i + 1
+//                 ? "bg-[#14213D] text-white border-[#14213D]"
+//                 : "bg-white text-[#14213D] hover:bg-[#e5e5e5] cursor-pointer"
+//             }`}
+//           >
+//             {i + 1}
+//           </PaginationLink>
+//         </PaginationItem>
+//       ))}
+
+//       {/* Next Button */}
+//       <PaginationItem>
+//         <PaginationNext
+//           onClick={() => setTablePage(p => Math.min(p + 1, tableTotalPages))}
+//           className={`px-4 py-2 rounded-lg border transition ${
+//             tablePage === tableTotalPages
+//               ? "opacity-50 pointer-events-none bg-gray-200 text-gray-500"
+//               : "bg-white text-[#14213D] hover:bg-[#e5e5e5] cursor-pointer"
+//           }`}
+//         />
+//       </PaginationItem>
+//     </PaginationContent>
+//   </Pagination>
+// )}
+
+
+
+
+//       {/* Modal */}
+//       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
+//         <DialogContent className='sm:max-w-lg w-[95%] rounded-xl'>
+//           <DialogHeader>
+//             <DialogTitle className='text-lg font-semibold text-[#14213D] cursor-pointer'>
+//               {editingEvent ? 'Edit Event' : 'Add Event'}
+//             </DialogTitle>
+//           </DialogHeader>
+
+//           <div className='flex flex-col gap-4 mt-3'>
+//             <Input
+//               placeholder='Event Name'
+//               value={form.name}
+//               onChange={e => setForm({ ...form, name: e.target.value })}
+//               className='bg-gray-50'
+//             />
+//             <Input
+//               placeholder='Location'
+//               value={form.location}
+//               onChange={e => setForm({ ...form, location: e.target.value })}
+//               className='bg-gray-50'
+//             />
+
+//             <Popover open={isDateOpen} onOpenChange={setIsDateOpen}>
+//               <PopoverTrigger asChild>
+//                 <Button
+//                   variant='outline'
+//                   className={cn(
+//                     'w-full justify-between bg-gray-50 text-left font-normal',
+//                     !form.date && 'text-muted-foreground'
+//                   )}
+//                 >
+//                   {form.date ? (
+//                     format(new Date(form.date), 'PPP')
+//                   ) : (
+//                     <span>Pick a date</span>
+//                   )}
+//                   <CalendarIcon className='ml-2 h-5 w-5 opacity-70' />
+//                 </Button>
+//               </PopoverTrigger>
+//               <PopoverContent className='w-auto p-0 bg-white rounded-xl shadow-lg'>
+//                 <Calendar
+//                   mode='single'
+//                   selected={form.date ? new Date(form.date) : undefined}
+//                   onSelect={day => {
+//                     if (day) {
+//                       setForm({ ...form, date: formatISO(day) })
+//                       setIsDateOpen(false)
+//                     }
+//                   }}
+//                   initialFocus
+//                 />
+//               </PopoverContent>
+//             </Popover>
+
+//             <div className='flex items-center gap-2'>
+//               <Button
+//                 type='button'
+//                 variant='outline'
+//                 size='icon'
+//                 onClick={() =>
+//                   setForm({ ...form, persons: Math.max(0, form.persons - 1) })
+//                 }
+//               >
+//                 <Minus className='h-4 w-4' />
+//               </Button>
+//               <Input
+//                 type='number'
+//                 value={form.persons}
+//                 onChange={e =>
+//                   setForm({ ...form, persons: parseInt(e.target.value) || 0 })
+//                 }
+//                 className='w-20 text-center bg-gray-50'
+//               />
+//               <Button
+//                 type='button'
+//                 variant='outline'
+//                 size='icon'
+//                 onClick={() => setForm({ ...form, persons: form.persons + 1 })}
+//               >
+//                 <Plus className='h-4 w-4' />
+//               </Button>
+//             </div>
+
+//             <Select
+//               value={form.status}
+//               onValueChange={val => setForm({ ...form, status: val })}
+//             >
+//               <SelectTrigger className='w-full bg-gray-50'>
+//                 <SelectValue placeholder='Select status' />
+//               </SelectTrigger>
+//               <SelectContent>
+//                 <SelectItem value='Upcoming'>Upcoming</SelectItem>
+//                 <SelectItem value='Live'>Live</SelectItem>
+//                 <SelectItem value='Canceled'>Canceled</SelectItem>
+//               </SelectContent>
+//             </Select>
+//           </div>
+
+//           <DialogFooter className='mt-4'>
+//             <Button
+//               onClick={handleSave}
+//               className='rounded-lg px-6 bg-gradient-to-r from-[#14213D] to-[#6B7280] text-white w-full sm:w-auto cursor-pointer'
+//             >
+//               {editingEvent ? 'Update Event' : 'Save Event'}
+//             </Button>
+//           </DialogFooter>
+//         </DialogContent>
+//       </Dialog>
+//     </div>
+//   )
+// }
+
+
 import React, { useState, useEffect } from 'react'
 import {
   Table,
@@ -1007,7 +1585,7 @@ const databases = new Databases(client)
 const EVENTS_COLLECTION = import.meta.env.VITE_APPWRITE_EVENTS_COLLECTION_ID
 const DATABASE_ID = import.meta.env.VITE_APPWRITE_DATABASE_ID
 
-export default function Events () {
+export default function Events() {
   const [events, setEvents] = useState([])
   const [search, setSearch] = useState('')
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -1042,20 +1620,14 @@ export default function Events () {
       setEvents(formattedEvents)
     } catch (err) {
       console.error(err)
-      toast.error('Failed to fetch events.'),{
-        
-  style: {
-     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
-     color: "#FFFFFF",
-     backdropFilter: "blur(12px)", // glass effect
-     border: "1px solid rgba(255,255,255,0.2)",
-     borderRadius: "1rem",
-     padding: "14px 22px",
-     fontWeight: "600",
-     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
-     transition: "all 0.3s ease",
-   },
-      }
+      toast.error('Failed to fetch events.', {
+        style: {
+          background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))",
+          color: "#FFFFFF",
+          border: "1px solid rgba(255,255,255,0.2)",
+          borderRadius: "1rem"
+        }
+      })
     }
   }
 
@@ -1091,20 +1663,14 @@ export default function Events () {
   const handleSave = async () => {
     try {
       if (!form.name || !form.location || !form.date) {
-        toast.error('Please fill all fields.'),{
-          
-  style: {
-     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
-     color: "#FFFFFF",
-     backdropFilter: "blur(12px)", // glass effect
-     border: "1px solid rgba(255,255,255,0.2)",
-     borderRadius: "1rem",
-     padding: "14px 22px",
-     fontWeight: "600",
-     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
-     transition: "all 0.3s ease",
-   },
-        }
+        toast.error('Please fill all fields.', {
+          style: {
+            background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))",
+            color: "#FFFFFF",
+            border: "1px solid rgba(255,255,255,0.2)",
+            borderRadius: "1rem"
+          }
+        })
         return
       }
 
@@ -1116,20 +1682,14 @@ export default function Events () {
           persons: form.persons,
           status: form.status
         })
-        toast.success('Event updated successfully!'),{
-          
-  style: {
-     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
-     color: "#FFFFFF",
-     backdropFilter: "blur(12px)", // glass effect
-     border: "1px solid rgba(255,255,255,0.2)",
-     borderRadius: "1rem",
-     padding: "14px 22px",
-     fontWeight: "600",
-     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
-     transition: "all 0.3s ease",
-   },
-        }
+        toast.success('Event updated successfully!', {
+          style: {
+            background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))",
+            color: "#FFFFFF",
+            border: "1px solid rgba(255,255,255,0.2)",
+            borderRadius: "1rem"
+          }
+        })
       } else {
         await databases.createDocument(DATABASE_ID, EVENTS_COLLECTION, ID.unique(), {
           name: form.name,
@@ -1138,20 +1698,14 @@ export default function Events () {
           persons: form.persons,
           status: form.status
         })
-        toast.success('Event added successfully!'),{
-          
-  style: {
-     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
-     color: "#FFFFFF",
-     backdropFilter: "blur(12px)", // glass effect
-     border: "1px solid rgba(255,255,255,0.2)",
-     borderRadius: "1rem",
-     padding: "14px 22px",
-     fontWeight: "600",
-     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
-     transition: "all 0.3s ease",
-   },
-        }
+        toast.success('Event added successfully!', {
+          style: {
+            background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))",
+            color: "#FFFFFF",
+            border: "1px solid rgba(255,255,255,0.2)",
+            borderRadius: "1rem"
+          }
+        })
       }
 
       setIsModalOpen(false)
@@ -1160,25 +1714,46 @@ export default function Events () {
       fetchEvents()
     } catch (err) {
       console.error(err)
-      toast.error('Failed to save event.'),{
-        
-  style: {
-     background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))", // gradient navy glass
-     color: "#FFFFFF",
-     backdropFilter: "blur(12px)", // glass effect
-     border: "1px solid rgba(255,255,255,0.2)",
-     borderRadius: "1rem",
-     padding: "14px 22px",
-     fontWeight: "600",
-     boxShadow: "0 8px 20px rgba(0,0,0,0.25)", // subtle shadow
-     transition: "all 0.3s ease",
-   },
-      }
+      toast.error('Failed to save event.', {
+        style: {
+          background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))",
+          color: "#FFFFFF",
+          border: "1px solid rgba(255,255,255,0.2)",
+          borderRadius: "1rem"
+        }
+      })
+    }
+  }
+
+  // ✅ Delete Event
+  const handleDelete = async (id) => {
+    try {
+      await databases.deleteDocument(DATABASE_ID, EVENTS_COLLECTION, id)
+      toast.success('Event deleted successfully!', {
+        style: {
+          background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))",
+          color: "#FFFFFF",
+          border: "1px solid rgba(255,255,255,0.2)",
+          borderRadius: "1rem"
+        }
+      })
+      fetchEvents()
+    } catch (err) {
+      console.error(err)
+      toast.error('Failed to delete event.', {
+        style: {
+          background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))",
+          color: "#FFFFFF",
+          border: "1px solid rgba(255,255,255,0.2)",
+          borderRadius: "1rem"
+        }
+      })
     }
   }
 
   return (
     <div className='space-y-6 w-full px-2 sm:px-4 bg-[#E5E5E5] min-h-screen py-6'>
+      {/* ======= HEADER ======= */}
       <div>
         <h1 className='text-3xl md:text-3xl font-extrabold text-center text-[#14213D]'>
           Events
@@ -1190,7 +1765,7 @@ export default function Events () {
         </p>
       </div>
 
-      {/* Search + Add Event */}
+      {/* ======= Search + Add Event ======= */}
       <div className='flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3'>
         <Input
           placeholder='Search events...'
@@ -1210,7 +1785,7 @@ export default function Events () {
         </Button>
       </div>
 
-      {/* Event Cards */}
+      {/* ======= Event Cards ======= */}
       <div className='grid grid-cols-1 lg:grid-cols-2 gap-6'>
         {cardEvents.length === 0 && (
           <p className='text-[#14213D] col-span-full text-center'>
@@ -1243,103 +1818,38 @@ export default function Events () {
         ))}
       </div>
 
-    
-{/* ✅ Pagination for Cards */}
+      {/* ======= Pagination for Cards ======= */}
+      {cardTotalPages > 1 && (
+        <Pagination className="flex justify-center mt-6">
+          <PaginationContent className="flex gap-2">
+            <PaginationItem>
+              <PaginationPrevious
+                onClick={() => setCardPage(p => Math.max(p - 1, 1))}
+                className={`px-4 py-2 rounded-lg border transition ${cardPage === 1 ? "opacity-50 pointer-events-none bg-gray-200 text-gray-500" : "bg-white text-[#14213D] hover:bg-[#e5e5e5] cursor-pointer"}`}
+              />
+            </PaginationItem>
+            {[...Array(cardTotalPages)].map((_, i) => (
+              <PaginationItem key={i}>
+                <PaginationLink
+                  isActive={cardPage === i + 1}
+                  onClick={() => setCardPage(i + 1)}
+                  className={`px-4 py-2 rounded-lg border transition ${cardPage === i + 1 ? "bg-[#14213D] text-white border-[#14213D]" : "bg-white text-[#14213D] hover:bg-[#e5e5e5] cursor-pointer"}`}
+                >
+                  {i + 1}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+            <PaginationItem>
+              <PaginationNext
+                onClick={() => setCardPage(p => Math.min(p + 1, cardTotalPages))}
+                className={`px-4 py-2 rounded-lg border transition ${cardPage === cardTotalPages ? "opacity-50 pointer-events-none bg-gray-200 text-gray-500" : "bg-white text-[#14213D] hover:bg-[#e5e5e5] cursor-pointer"}`}
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      )}
 
-{/* {cardTotalPages > 1 && (
-  <Pagination className="flex justify-center mt-6">
-    <PaginationContent className="flex gap-2">
-      <PaginationItem>
-        <PaginationPrevious
-          onClick={() => setCardPage(p => Math.max(p - 1, 1))}
-          className={`px-4 py-2 rounded-lg border transition ${
-            cardPage === 1
-              ? "opacity-50 pointer-events-none bg-gray-200 text-gray-500"
-              : "bg-white text-[#14213D] hover:bg-[#e5e5e5]"
-          }`}
-        />
-      </PaginationItem>
-
-      {[...Array(cardTotalPages)].map((_, i) => (
-        <PaginationItem key={i}>
-          <PaginationLink
-            isActive={cardPage === i + 1}
-            onClick={() => setCardPage(i + 1)}
-            className={`px-4 py-2 rounded-lg border transition ${
-              cardPage === i + 1
-                ? "bg-[#14213D] text-white border-[#14213D]"
-                : "bg-white text-[#14213D] hover:bg-[#e5e5e5]"
-            }`}
-          >
-            {i + 1}
-          </PaginationLink>
-        </PaginationItem>
-      ))}
-
-      <PaginationItem>
-        <PaginationNext
-          onClick={() => setCardPage(p => Math.min(p + 1, cardTotalPages))}
-          className={`px-4 py-2 rounded-lg border transition ${
-            cardPage === cardTotalPages
-              ? "opacity-50 pointer-events-none bg-gray-200 text-gray-500"
-              : "bg-white text-[#14213D] hover:bg-[#e5e5e5]"
-          }`}
-        />
-      </PaginationItem>
-    </PaginationContent>
-  </Pagination>
-)} */}
-{cardTotalPages > 1 && (
-  <Pagination className="flex justify-center mt-6">
-    <PaginationContent className="flex gap-2">
-      {/* Previous Button */}
-      <PaginationItem>
-        <PaginationPrevious
-          onClick={() => setCardPage(p => Math.max(p - 1, 1))}
-          className={`px-4 py-2 rounded-lg border transition ${
-            cardPage === 1
-              ? "opacity-50 pointer-events-none bg-gray-200 text-gray-500"
-              : "bg-white text-[#14213D] hover:bg-[#e5e5e5] cursor-pointer"
-          }`}
-        />
-      </PaginationItem>
-
-      {/* Page Numbers */}
-      {[...Array(cardTotalPages)].map((_, i) => (
-        <PaginationItem key={i}>
-          <PaginationLink
-            isActive={cardPage === i + 1}
-            onClick={() => setCardPage(i + 1)}
-            className={`px-4 py-2 rounded-lg border transition ${
-              cardPage === i + 1
-                ? "bg-[#14213D] text-white border-[#14213D]"
-                : "bg-white text-[#14213D] hover:bg-[#e5e5e5] cursor-pointer"
-            }`}
-          >
-            {i + 1}
-          </PaginationLink>
-        </PaginationItem>
-      ))}
-
-      {/* Next Button */}
-      <PaginationItem>
-        <PaginationNext
-          onClick={() => setCardPage(p => Math.min(p + 1, cardTotalPages))}
-          className={`px-4 py-2 rounded-lg border transition ${
-            cardPage === cardTotalPages
-              ? "opacity-50 pointer-events-none bg-gray-200 text-gray-500"
-              : "bg-white text-[#14213D] hover:bg-[#e5e5e5] cursor-pointer"
-          }`}
-        />
-      </PaginationItem>
-    </PaginationContent>
-  </Pagination>
-)}
-
-
-
-
-      {/* Events Table */}
+      {/* ======= Events Table ======= */}
       <div className='rounded-xl border shadow-sm w-full overflow-hidden'>
         <Table className='w-full bg-[#14213D] text-white'>
           <TableHeader>
@@ -1379,7 +1889,12 @@ export default function Events () {
                         >
                           Edit
                         </DropdownMenuItem>
-                        <DropdownMenuItem className='cursor-pointer'>Delete</DropdownMenuItem>
+                        <DropdownMenuItem 
+                          onClick={() => handleDelete(e.id)} 
+                          className="cursor-pointer"
+                        >
+                          Delete
+                        </DropdownMenuItem>
                       </DropdownMenuContent>
                     </DropdownMenu>
                   </TableCell>
@@ -1394,101 +1909,38 @@ export default function Events () {
         </Table>
       </div>
 
-{/* ✅ Pagination for Table */}
-{/* {tableTotalPages > 1 && (
-  <Pagination className="flex justify-center mt-6">
-    <PaginationContent className="flex gap-2">
-      <PaginationItem>
-        <PaginationPrevious
-          onClick={() => setTablePage(p => Math.max(p - 1, 1))}
-          className={`px-4 py-2 rounded-lg border transition ${
-            tablePage === 1
-              ? "opacity-50 pointer-events-none bg-gray-200 text-gray-500"
-              : "bg-white text-[#14213D] hover:bg-[#e5e5e5]"
-          }`}
-        />
-      </PaginationItem>
+      {/* ======= Pagination for Table ======= */}
+      {tableTotalPages > 1 && (
+        <Pagination className="flex justify-center mt-6">
+          <PaginationContent className="flex gap-2">
+            <PaginationItem>
+              <PaginationPrevious
+                onClick={() => setTablePage(p => Math.max(p - 1, 1))}
+                className={`px-4 py-2 rounded-lg border transition ${tablePage === 1 ? "opacity-50 pointer-events-none bg-gray-200 text-gray-500" : "bg-white text-[#14213D] hover:bg-[#e5e5e5] cursor-pointer"}`}
+              />
+            </PaginationItem>
+            {[...Array(tableTotalPages)].map((_, i) => (
+              <PaginationItem key={i}>
+                <PaginationLink
+                  isActive={tablePage === i + 1}
+                  onClick={() => setTablePage(i + 1)}
+                  className={`px-4 py-2 rounded-lg border transition ${tablePage === i + 1 ? "bg-[#14213D] text-white border-[#14213D]" : "bg-white text-[#14213D] hover:bg-[#e5e5e5] cursor-pointer"}`}
+                >
+                  {i + 1}
+                </PaginationLink>
+              </PaginationItem>
+            ))}
+            <PaginationItem>
+              <PaginationNext
+                onClick={() => setTablePage(p => Math.min(p + 1, tableTotalPages))}
+                className={`px-4 py-2 rounded-lg border transition ${tablePage === tableTotalPages ? "opacity-50 pointer-events-none bg-gray-200 text-gray-500" : "bg-white text-[#14213D] hover:bg-[#e5e5e5] cursor-pointer"}`}
+              />
+            </PaginationItem>
+          </PaginationContent>
+        </Pagination>
+      )}
 
-      {[...Array(tableTotalPages)].map((_, i) => (
-        <PaginationItem key={i}>
-          <PaginationLink
-            isActive={tablePage === i + 1}
-            onClick={() => setTablePage(i + 1)}
-            className={`px-4 py-2 rounded-lg border transition ${
-              tablePage === i + 1
-                ? "bg-[#14213D] text-white border-[#14213D]"
-                : "bg-white text-[#14213D] hover:bg-[#e5e5e5]"
-            }`}
-          >
-            {i + 1}
-          </PaginationLink>
-        </PaginationItem>
-      ))}
-
-      <PaginationItem>
-        <PaginationNext
-          onClick={() => setTablePage(p => Math.min(p + 1, tableTotalPages))}
-          className={`px-4 py-2 rounded-lg border transition ${
-            tablePage === tableTotalPages
-              ? "opacity-50 pointer-events-none bg-gray-200 text-gray-500"
-              : "bg-white text-[#14213D] hover:bg-[#e5e5e5]"
-          }`}
-        />
-      </PaginationItem>
-    </PaginationContent>
-  </Pagination>
-)} */}
-{tableTotalPages > 1 && (
-  <Pagination className="flex justify-center mt-6">
-    <PaginationContent className="flex gap-2">
-      {/* Previous Button */}
-      <PaginationItem>
-        <PaginationPrevious
-          onClick={() => setTablePage(p => Math.max(p - 1, 1))}
-          className={`px-4 py-2 rounded-lg border transition ${
-            tablePage === 1
-              ? "opacity-50 pointer-events-none bg-gray-200 text-gray-500"
-              : "bg-white text-[#14213D] hover:bg-[#e5e5e5] cursor-pointer"
-          }`}
-        />
-      </PaginationItem>
-
-      {/* Page Numbers */}
-      {[...Array(tableTotalPages)].map((_, i) => (
-        <PaginationItem key={i}>
-          <PaginationLink
-            isActive={tablePage === i + 1}
-            onClick={() => setTablePage(i + 1)}
-            className={`px-4 py-2 rounded-lg border transition ${
-              tablePage === i + 1
-                ? "bg-[#14213D] text-white border-[#14213D]"
-                : "bg-white text-[#14213D] hover:bg-[#e5e5e5] cursor-pointer"
-            }`}
-          >
-            {i + 1}
-          </PaginationLink>
-        </PaginationItem>
-      ))}
-
-      {/* Next Button */}
-      <PaginationItem>
-        <PaginationNext
-          onClick={() => setTablePage(p => Math.min(p + 1, tableTotalPages))}
-          className={`px-4 py-2 rounded-lg border transition ${
-            tablePage === tableTotalPages
-              ? "opacity-50 pointer-events-none bg-gray-200 text-gray-500"
-              : "bg-white text-[#14213D] hover:bg-[#e5e5e5] cursor-pointer"
-          }`}
-        />
-      </PaginationItem>
-    </PaginationContent>
-  </Pagination>
-)}
-
-
-
-
-      {/* Modal */}
+      {/* ======= Modal ======= */}
       <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
         <DialogContent className='sm:max-w-lg w-[95%] rounded-xl'>
           <DialogHeader>
@@ -1502,81 +1954,74 @@ export default function Events () {
               placeholder='Event Name'
               value={form.name}
               onChange={e => setForm({ ...form, name: e.target.value })}
-              className='bg-gray-50'
+              className='rounded-lg border-gray-300'
             />
             <Input
               placeholder='Location'
               value={form.location}
               onChange={e => setForm({ ...form, location: e.target.value })}
-              className='bg-gray-50'
+              className='rounded-lg border-gray-300'
             />
 
+            {/* Date Picker */}
             <Popover open={isDateOpen} onOpenChange={setIsDateOpen}>
               <PopoverTrigger asChild>
                 <Button
                   variant='outline'
-                  className={cn(
-                    'w-full justify-between bg-gray-50 text-left font-normal',
-                    !form.date && 'text-muted-foreground'
-                  )}
+                  className={cn('w-full justify-start rounded-lg text-left font-normal', !form.date && 'text-muted-foreground')}
                 >
-                  {form.date ? (
-                    format(new Date(form.date), 'PPP')
-                  ) : (
-                    <span>Pick a date</span>
-                  )}
-                  <CalendarIcon className='ml-2 h-5 w-5 opacity-70' />
+                  <CalendarIcon className='mr-2 h-4 w-4' />
+                  {form.date ? format(new Date(form.date), 'PPP') : 'Pick a date'}
                 </Button>
               </PopoverTrigger>
-              <PopoverContent className='w-auto p-0 bg-white rounded-xl shadow-lg'>
+              <PopoverContent className='w-auto p-0' align='start'>
                 <Calendar
                   mode='single'
                   selected={form.date ? new Date(form.date) : undefined}
-                  onSelect={day => {
-                    if (day) {
-                      setForm({ ...form, date: formatISO(day) })
-                      setIsDateOpen(false)
-                    }
+                  onSelect={date => {
+                    setForm({ ...form, date: date ? formatISO(date, { representation: 'date' }) : '' })
+                    setIsDateOpen(false)
                   }}
                   initialFocus
                 />
               </PopoverContent>
             </Popover>
 
+            {/* Persons Input */}
             <div className='flex items-center gap-2'>
               <Button
-                type='button'
                 variant='outline'
                 size='icon'
                 onClick={() =>
-                  setForm({ ...form, persons: Math.max(0, form.persons - 1) })
+                  setForm(prev => ({ ...prev, persons: Math.max(0, prev.persons - 1) }))
                 }
               >
-                <Minus className='h-4 w-4' />
+                <Minus />
               </Button>
               <Input
                 type='number'
+                placeholder='Persons'
                 value={form.persons}
-                onChange={e =>
-                  setForm({ ...form, persons: parseInt(e.target.value) || 0 })
-                }
-                className='w-20 text-center bg-gray-50'
+                onChange={e => setForm({ ...form, persons: Number(e.target.value) })}
+                className='rounded-lg border-gray-300 text-center'
               />
               <Button
-                type='button'
                 variant='outline'
                 size='icon'
-                onClick={() => setForm({ ...form, persons: form.persons + 1 })}
+                onClick={() =>
+                  setForm(prev => ({ ...prev, persons: prev.persons + 1 }))
+                }
               >
-                <Plus className='h-4 w-4' />
+                <Plus />
               </Button>
             </div>
 
+            {/* Status Dropdown */}
             <Select
               value={form.status}
               onValueChange={val => setForm({ ...form, status: val })}
             >
-              <SelectTrigger className='w-full bg-gray-50'>
+              <SelectTrigger className='rounded-lg'>
                 <SelectValue placeholder='Select status' />
               </SelectTrigger>
               <SelectContent>
@@ -1587,12 +2032,12 @@ export default function Events () {
             </Select>
           </div>
 
-          <DialogFooter className='mt-4'>
+          <DialogFooter>
             <Button
               onClick={handleSave}
-              className='rounded-lg px-6 bg-gradient-to-r from-[#14213D] to-[#6B7280] text-white w-full sm:w-auto cursor-pointer'
+              className='rounded-lg bg-[#14213D] text-white hover:opacity-90 w-full'
             >
-              {editingEvent ? 'Update Event' : 'Save Event'}
+              Save
             </Button>
           </DialogFooter>
         </DialogContent>
