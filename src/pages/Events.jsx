@@ -1663,14 +1663,7 @@ export default function Events() {
   const handleSave = async () => {
     try {
       if (!form.name || !form.location || !form.date) {
-        toast.error('Please fill all fields.', {
-          style: {
-            background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))",
-            color: "#FFFFFF",
-            border: "1px solid rgba(255,255,255,0.2)",
-            borderRadius: "1rem"
-          }
-        })
+        toast.error('Please fill all fields.')
         return
       }
 
@@ -1682,14 +1675,7 @@ export default function Events() {
           persons: form.persons,
           status: form.status
         })
-        toast.success('Event updated successfully!', {
-          style: {
-            background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))",
-            color: "#FFFFFF",
-            border: "1px solid rgba(255,255,255,0.2)",
-            borderRadius: "1rem"
-          }
-        })
+        toast.success('Event updated successfully!')
       } else {
         await databases.createDocument(DATABASE_ID, EVENTS_COLLECTION, ID.unique(), {
           name: form.name,
@@ -1698,14 +1684,7 @@ export default function Events() {
           persons: form.persons,
           status: form.status
         })
-        toast.success('Event added successfully!', {
-          style: {
-            background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))",
-            color: "#FFFFFF",
-            border: "1px solid rgba(255,255,255,0.2)",
-            borderRadius: "1rem"
-          }
-        })
+        toast.success('Event added successfully!')
       }
 
       setIsModalOpen(false)
@@ -1714,14 +1693,8 @@ export default function Events() {
       fetchEvents()
     } catch (err) {
       console.error(err)
-      toast.error('Failed to save event.', {
-        style: {
-          background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))",
-          color: "#FFFFFF",
-          border: "1px solid rgba(255,255,255,0.2)",
-          borderRadius: "1rem"
-        }
-      })
+      toast.error('Failed to save event.'
+      )
     }
   }
 
@@ -1729,25 +1702,12 @@ export default function Events() {
   const handleDelete = async (id) => {
     try {
       await databases.deleteDocument(DATABASE_ID, EVENTS_COLLECTION, id)
-      toast.success('Event deleted successfully!', {
-        style: {
-          background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))",
-          color: "#FFFFFF",
-          border: "1px solid rgba(255,255,255,0.2)",
-          borderRadius: "1rem"
-        }
-      })
+      toast.success('Event deleted successfully!'
+        )
       fetchEvents()
     } catch (err) {
       console.error(err)
-      toast.error('Failed to delete event.', {
-        style: {
-          background: "linear-gradient(135deg, rgba(20,33,61,0.85), rgba(30,45,80,0.85))",
-          color: "#FFFFFF",
-          border: "1px solid rgba(255,255,255,0.2)",
-          borderRadius: "1rem"
-        }
-      })
+      toast.error('Failed to delete event.')
     }
   }
 
